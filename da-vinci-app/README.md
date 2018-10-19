@@ -14,6 +14,7 @@ Questo comando scaricherà una copia del codice sul pc. A questo punto apri un n
 ```bash
 npm install
 ```
+Per consentire al sito di comunicare con il sito della scuola è necessario disattivare la cross-origin protection (un'impostazione di sicurezza che hanno di default quasi tutti i browser); il modo più semplice è con dei plugin ([qui](https://chrome.google.com/webstore/detail/allow-control-allow-origi/nlfbmbojpeacfghkpbjhddihlkkiljbi?hl=en) quello per Chrome, mentre [qui](https://addons.mozilla.org/en-US/firefox/addon/cors-everywhere/) potete scaricare quello per firefox)
 
 # Running
 Ogni volta che vuoi modificare l'app e vedere che effetto hanno le modifiche, usa il comando:
