@@ -6,89 +6,49 @@
   <link rel="stylesheet" href="res/onsen/css/onsenui.min.css">
   <link rel="stylesheet" href="res/onsen/css/onsen-css-components.min.css">
   <script src="res/onsen/js/onsenui.min.js"></script>
+
+  <style>
+  .profile-pic {
+    width: 100%;
+    background-color: blue;
+    margin: 0px auto 0px;
+    border: 0px solid;
+  }
+
+  .profile-pic > img {
+    display: block;
+    max-width: 100%;
+  }
+
+  ons-list-item {
+    color: #444;
+  }
+</style>
 </head>
 <body>
-  <script> window.App = {} </script>
-  <script src="js/menu.js"></script>
-  <script src="js/index.js"></script>
-  
+  <div id="app">  
   <ons-splitter>
     <ons-splitter-side id="menu" side="left" width="220px" collapse swipeable>
       <ons-page>
-        <div class="profile-pic">
-          <img src="https://monaca.io/img/logos/download_image_onsenui_01.png">
-        </div>
-        
+        <div class="profile-pic"><img :src="menu.image"></div>      
         <ons-list>
-          <ons-list-item onclick="fn.load('home.html')" tappable>
-            <div class="left">
-              <ons-icon fixed-width class="list-item__icon" icon="md-calendar"></ons-icon>
-            </div>
-            <div class="center">Agenda</div>
-          </ons-list-item>
-          <ons-list-item onclick="fn.load('home.html')" tappable>
-            <div class="left">
-              <ons-icon fixed-width class="list-item__icon" icon="md-time"></ons-icon>
-            </div>
-            <div class="center">Orari</div>
-          </ons-list-item>
-          <br>
-            <ons-list-title>comunicati</ons-list-title>
-            <ons-list-item onclick="fn.load('home.html')" tappable>
+          <span v-for="category in menu.categories">
+            <span v-if=" category.name != ''">
+              <br><ons-list-title>{{ category.name }}</ons-list-title>
+            </span>
+            <ons-list-item v-for="element in category.elements" onclick="fn.load('home.html')" tappable>
               <div class="left">
-                <ons-icon fixed-width class="list-item__icon" icon="md-graduation-cap"></ons-icon>
+                <ons-icon fixed-width class="list-item__icon" :icon="element.icon"></ons-icon>
               </div>
-              <div class="center">Studenti</div>
+              <div class="center">{{ element.name}}</div>
             </ons-list-item>
-            <ons-list-item onclick="fn.load('home.html')" tappable>
-              <div class="left">
-                <ons-icon fixed-width class="list-item__icon" icon="md-accounts"></ons-icon>
-              </div>
-              <div class="center">Genitori</div>
-            </ons-list-item>
-            <ons-list-item onclick="fn.load('home.html')" tappable>
-              <div class="left">
-                <ons-icon fixed-width class="list-item__icon" icon="md-case"></ons-icon>
-              </div>
-              <div class="center">Docenti</div>
-            </ons-list-item>
-            <ons-list-item onclick="fn.load('home.html')" tappable>
-              <div class="left">
-                <ons-icon fixed-width class="list-item__icon" icon="md-download"></ons-icon>
-              </div>
-              <div class="center">Salvati</div>
-            </ons-list-item>
-            <br>
-            <ons-list-title>utilità</ons-list-title>
-            <ons-list-item onclick="fn.load('home.html')" tappable>
-              <div class="left">
-                <ons-icon fixed-width class="list-item__icon" icon="md-settings"></ons-icon>
-              </div>
-            <div class="center">Impostazioni</div>
-          </ons-list-item>
+          </span>
         </ons-list>
       </ons-page>
-      <style>
-      .profile-pic {
-        width: 100%;
-        background-color: blue;
-        margin: 0px auto 0px;
-        border: 0px solid;
-      }
-
-      .profile-pic > img {
-        display: block;
-        max-width: 100%;
-      }
-
-      ons-list-item {
-        color: #444;
-      }
-    </style>
     </ons-splitter-side>
     <ons-splitter-content id="content" page="home.html"></ons-splitter-content>
   </ons-splitter>
-
+</div>
 
   <template id="home.html">
     <ons-page>
@@ -137,10 +97,14 @@
       </ons-toolbar>
     </ons-page>
   </template>
-    
   <script src="res/vue/vue.js"></script>
   <script src="res/axios/axios.min.js"></script>
   <script src="js/davapi.js"></script>
+  
+  <script> window.App = {} </script>
+  <script src="js/menu.js"></script>
+  <script src="js/index.js"></script>
+  
   <script>
   
   window.fn = {};
