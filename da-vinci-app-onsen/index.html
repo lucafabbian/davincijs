@@ -7,9 +7,17 @@
     <!-- Styles -->
     <link rel="stylesheet" href="res/onsen/css/onsenui.min.css">
     <link rel="stylesheet" href="res/onsen/css/onsen-css-components.min.css">
-
+    <style>
+    .fade-enter-active, .fade-leave-active {
+      transition: opacity 0;
+    }
+    .fade-enter, .fade-leave-to /* .fade-leave-active below version 2.1.8 */ {
+      opacity: 0;
+    }
+    </style>
   </head>
   <body>
+    
     
     <!-- Html -->
     <div id="app">  
@@ -19,29 +27,30 @@
         </ons-splitter-side>
         <ons-splitter-content id="content">
           <ons-page>
-            
-            <app-navbar title="Home">
-              <ons-toolbar-button onclick="alert('ciao')">
-                <ons-icon icon="md-menu"></ons-icon>
-              </ons-toolbar-button>
-            </app-navbar>
-            <p style="text-align: center; opacity: 0.6; padding-top: 20px;">
-              Swipe right to open the menu!
-            </p>
+            <transition name="fade">
+              <keep-alive>
+                <component v-bind:is="page"></component>
+              </keep-alive>
+            </transition>
           </ons-page>
-        
         </ons-splitter-content>
       </ons-splitter>
     </div>
     
+    
     <!-- Scripts -->
-    <script> window.app = {} </script>
+    <!-- Dependencies -->
+    <script> window.app = {data : {} } </script>
     <script src="res/onsen/js/onsenui.min.js"></script>
     <script src="res/vue/vue.js"></script>
     <script src="res/axios/axios.min.js"></script>
     <script src="js/davapi.js"></script>
-
+      
+    <!-- Components -->
     <script src="js/layout.js"></script>
+    <script src="js/pages.js"></script>
+
+    <!-- Index.js -->
     <script src="js/index.js"></script>
   </body>
 </html>

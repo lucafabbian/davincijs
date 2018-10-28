@@ -19,12 +19,13 @@ Vue.component('app-navbar', {
 
 
 // Side menu
-app.menu ={
+app.data.menu ={
   image: 'https://monaca.io/img/logos/download_image_onsenui_01.png', 
   categories: [ {
       name: "",
       elements:[
-        {name: "Agenda", icon:"md-calendar"},    
+        {name: "Home",   icon:"md-home",     page:"app-page-home"},    
+        {name: "Agenda", icon:"md-calendar", page:"app-page-agenda"},    
         {name: "Orari",  icon:"md-time"},      
       ]
     }, {
@@ -53,7 +54,7 @@ Vue.component('app-menu', {
         <span v-if=" category.name != ''">
           <br><ons-list-title>{{ category.name }}</ons-list-title>
         </span>
-        <ons-list-item v-for="element in category.elements" onclick="fn.load('home.html')" tappable>
+        <ons-list-item v-for="element in category.elements" v-on:click="changePage(element.page)" tappable>
           <div class="left">
             <ons-icon fixed-width class="list-item__icon" :icon="element.icon"></ons-icon>
           </div>
@@ -61,7 +62,13 @@ Vue.component('app-menu', {
         </ons-list-item>
       </span>
     </ons-list>
-  </ons-page>`
+  </ons-page>`,
+  methods: {
+    changePage: function (page) {
+      this.$root.page = page;  
+      document.getElementById('menu').close();
+    }
+  }
 }) 
 
 

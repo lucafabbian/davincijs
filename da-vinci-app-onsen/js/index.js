@@ -1,5 +1,8 @@
 
 
 
-var vm = new Vue({  el: '#app',  data: app })
+var vm = new Vue({  
+  el: '#app', 
+  data: app.data
+ })
 console.log("Vue")
