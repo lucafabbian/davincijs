@@ -15,8 +15,8 @@ app.davinciApi = {
   getOrarioDocente: (docente) => axios.post(app.davinciApi.apiUrl+"orario/docente", docente),
   
   // Comunicati
-  getComunicatiStudenti: (last_n) => axios.get(app.davinciApi.apiUrl+"comunicati/studenti/"+last_n),
-  getComunicatiGenitori: (last_n) => axios.get(app.davinciApi.apiUrl+"comunicati/genitori/"+last_n),
-  getComunicatiDocenti : (last_n) => axios.get(app.davinciApi.apiUrl+"comunicati/docenti/"+last_n),
+  getComunicatiStudenti: (last_n = 20) => axios.get(app.davinciApi.apiUrl+"comunicati/studenti/"+last_n),
+  getComunicatiGenitori: (last_n = 20) => axios.get(app.davinciApi.apiUrl+"comunicati/genitori/"+last_n),
+  getComunicatiDocenti : (last_n = 20) => axios.get(app.davinciApi.apiUrl+"comunicati/docenti/"+last_n),
 
 }
