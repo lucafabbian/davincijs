@@ -8,8 +8,8 @@ self.__precacheManifest = [
     "url": "/robots.txt"
   },
   {
-    "revision": "e8019d507e8cb51d169ab4f94a0cda12",
-    "url": "/fonts/fa-brands-400.e8019d50.eot"
+    "revision": "b351bd62abcd96e924d9f44a3da169a7",
+    "url": "/fonts/Material-Design-Iconic-Font.b351bd62.ttf"
   },
   {
     "revision": "eb744532bff244b544b9",
@@ -36,16 +36,16 @@ self.__precacheManifest = [
     "url": "/fonts/Material-Design-Iconic-Font.a4d31128.woff2"
   },
   {
+    "revision": "d2a55d331bdd1a7ea97a8a1fbb3c569c",
+    "url": "/fonts/Material-Design-Iconic-Font.d2a55d33.woff"
+  },
+  {
     "revision": "6814d0e8136d34e313623eb7129d538e",
     "url": "/fonts/fa-brands-400.6814d0e8.woff2"
   },
   {
     "revision": "b75b4bfe0d58faeced5006c785eaae23",
     "url": "/fonts/fa-solid-900.b75b4bfe.woff2"
-  },
-  {
-    "revision": "d2a55d331bdd1a7ea97a8a1fbb3c569c",
-    "url": "/fonts/Material-Design-Iconic-Font.d2a55d33.woff"
   },
   {
     "revision": "2c159d0d05473040b53ec79df8797d32",
@@ -56,20 +56,20 @@ self.__precacheManifest = [
     "url": "/fonts/fa-brands-400.da408238.woff"
   },
   {
-    "revision": "8982d6627b7ebed9c92d",
-    "url": "/js/app.38c18667.js"
+    "revision": "5e13c1f870135225fcba",
+    "url": "/js/app.e8bcad57.js"
   },
   {
     "revision": "eb744532bff244b544b9",
     "url": "/js/chunk-vendors.265deb5d.js"
   },
   {
-    "revision": "fdf44bc43e8fa2358bbb7d9165d78455",
-    "url": "/fonts/fa-brands-400.fdf44bc4.ttf"
+    "revision": "e8019d507e8cb51d169ab4f94a0cda12",
+    "url": "/fonts/fa-brands-400.e8019d50.eot"
   },
   {
-    "revision": "b351bd62abcd96e924d9f44a3da169a7",
-    "url": "/fonts/Material-Design-Iconic-Font.b351bd62.ttf"
+    "revision": "fdf44bc43e8fa2358bbb7d9165d78455",
+    "url": "/fonts/fa-brands-400.fdf44bc4.ttf"
   },
   {
     "revision": "19e65b89cee273a249fba4c09b951b74",
@@ -96,19 +96,19 @@ self.__precacheManifest = [
     "url": "/img/ionicons.aff28a20.svg"
   },
   {
-    "revision": "de1d242d8acb26ec43c0d071fe78e72d",
-    "url": "/img/fa-solid-900.de1d242d.svg"
-  },
-  {
     "revision": "83e6c29fb363b2f0ea6cc18fefff729c",
     "url": "/img/fa-brands-400.83e6c29f.svg"
   },
   {
-    "revision": "72e1e18e1355c4f8d0020cdf2a40d466",
+    "revision": "de1d242d8acb26ec43c0d071fe78e72d",
+    "url": "/img/fa-solid-900.de1d242d.svg"
+  },
+  {
+    "revision": "ccbb139660845a3a52378fd132538883",
     "url": "/index.html"
   },
   {
-    "revision": "8982d6627b7ebed9c92d",
-    "url": "/css/app.7ee33da2.css"
+    "revision": "5e13c1f870135225fcba",
+    "url": "/css/app.83b09824.css"
   }
 ];

@@ -22,7 +22,7 @@ export default {
   },
   methods: {
     switchPage: function(page){
-      if(this.$store.layout.pageStack[this.$store.layout.pageStack - 1] !== page){
+      if(this.$store.layout.pageStack[this.$store.layout.pageStack.length - 1] !== page){
          this.$store.layout.pageStack.push(page)
          this.$store.layout.splitterOpen = false
        }

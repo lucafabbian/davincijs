@@ -31,7 +31,7 @@ let layout = {
 new Vue({ // eslint-disable-line no-new
   el: '#app',
   render: h => h(App),
-  beforeCreate(){
+  beforeCreate () {
     this.$ons.platform.select('Android')
   },
   data: {

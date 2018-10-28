@@ -1,7 +1,7 @@
 <template>
   <v-ons-page>
     <v-ons-toolbar>
-      <MenuButton/>
+      <MenuButton @click="() => $store.layout.splitterOpen = !$store.layout.splitterOpen"></MenuButton>
       <div class="center"> {{ $store.info.title }}</div>
     </v-ons-toolbar>
     <p style="text-align: center">

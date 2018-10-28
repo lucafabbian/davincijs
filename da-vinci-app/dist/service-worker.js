@@ -14,7 +14,7 @@
 importScripts("https://storage.googleapis.com/workbox-cdn/releases/3.6.2/workbox-sw.js");
 
 importScripts(
-  "/precache-manifest.a3767fd0720505e4e087dbc1710f41cb.js"
+  "/precache-manifest.6ffc3fb9675c024671734f4e1c6f333b.js"
 );
 
 workbox.core.setCacheNameDetails({prefix: "da-vinci-app"});
