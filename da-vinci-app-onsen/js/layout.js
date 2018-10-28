@@ -31,9 +31,9 @@ app.data.menu ={
     }, {
       name: "comunicati",
       elements:[
-        {name: "Studenti",  icon:"md-graduation-cap"},      
-        {name: "Genitori",  icon:"md-accounts"},      
-        {name: "Docenti",   icon:"md-case"}, 
+        {name: "Studenti",  icon:"md-graduation-cap", page:"app-page-comunicati-studenti"},      
+        {name: "Genitori",  icon:"md-accounts",       page:"app-page-comunicati-genitori"},      
+        {name: "Docenti",   icon:"md-case",           page:"app-page-comunicati-docenti"}, 
         {name: "Salvati",   icon:"md-download"},                 
       ]
     }, {

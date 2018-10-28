@@ -1,10 +1,9 @@
-// Set default page
-window.app.data.page = 'app-page-home' 
+
+window.app.data.page = 'app-page-home' // Set default page
 
 // Home page
 Vue.component('app-page-home', {
-  props: ['title'],
-  template: `
+   template: `
   <div>
     <app-navbar title="Home">
       <ons-toolbar-button onclick="alert('ciao')">
@@ -19,8 +18,7 @@ Vue.component('app-page-home', {
 
 // Agenda
 Vue.component('app-page-agenda', {
-  props: ['title'],
-  template: `
+   template: `
   <div>
     <app-navbar title="Agenda">
       <ons-toolbar-button onclick="alert('ciao')">
@@ -33,3 +31,17 @@ Vue.component('app-page-agenda', {
   </div>`
 })
 
+// Comunicati
+Vue.component('app-page-comunicati-studenti', {
+   template: `
+  <div>
+    <app-navbar title="Comunicati studenti">
+      <ons-toolbar-button onclick="alert('ciao')">
+        <ons-icon icon="md-share"></ons-icon>
+      </ons-toolbar-button>
+    </app-navbar>
+    <p style="text-align: center; opacity: 0.6; padding-top: 20px;">
+      Comunicati studenti
+    </p>
+  </div>`
+})
