@@ -2,15 +2,157 @@
 <html>
 <head>
   <title>DaVinci App</title>
-  <link rel="stylesheet" href="res/onsen/css/onsenui.css">
+  <meta charset="utf-8"> 
+  <link rel="stylesheet" href="res/onsen/css/onsenui.min.css">
   <link rel="stylesheet" href="res/onsen/css/onsen-css-components.min.css">
   <script src="res/onsen/js/onsenui.min.js"></script>
 </head>
 <body>
   
-  <ons-button onclick="alert('Hello World!')">Click Me</ons-button>
+  <ons-splitter>
+    <ons-splitter-side id="menu" side="left" width="220px" collapse swipeable>
+      <ons-page>
+        <div class="profile-pic">
+          <img src="https://monaca.io/img/logos/download_image_onsenui_01.png">
+        </div>
+        
+        <ons-list>
+          <ons-list-item onclick="fn.load('home.html')" tappable>
+            <div class="left">
+              <ons-icon fixed-width class="list-item__icon" icon="md-calendar"></ons-icon>
+            </div>
+            <div class="center">Agenda</div>
+          </ons-list-item>
+          <ons-list-item onclick="fn.load('home.html')" tappable>
+            <div class="left">
+              <ons-icon fixed-width class="list-item__icon" icon="md-time"></ons-icon>
+            </div>
+            <div class="center">Orari</div>
+          </ons-list-item>
+          <br>
+            <ons-list-title>comunicati</ons-list-title>
+            <ons-list-item onclick="fn.load('home.html')" tappable>
+              <div class="left">
+                <ons-icon fixed-width class="list-item__icon" icon="md-graduation-cap"></ons-icon>
+              </div>
+              <div class="center">Studenti</div>
+            </ons-list-item>
+            <ons-list-item onclick="fn.load('home.html')" tappable>
+              <div class="left">
+                <ons-icon fixed-width class="list-item__icon" icon="md-accounts"></ons-icon>
+              </div>
+              <div class="center">Genitori</div>
+            </ons-list-item>
+            <ons-list-item onclick="fn.load('home.html')" tappable>
+              <div class="left">
+                <ons-icon fixed-width class="list-item__icon" icon="md-case"></ons-icon>
+              </div>
+              <div class="center">Docenti</div>
+            </ons-list-item>
+            <ons-list-item onclick="fn.load('home.html')" tappable>
+              <div class="left">
+                <ons-icon fixed-width class="list-item__icon" icon="md-download"></ons-icon>
+              </div>
+              <div class="center">Salvati</div>
+            </ons-list-item>
+            <br>
+            <ons-list-title>utilità</ons-list-title>
+            <ons-list-item onclick="fn.load('home.html')" tappable>
+              <div class="left">
+                <ons-icon fixed-width class="list-item__icon" icon="md-settings"></ons-icon>
+              </div>
+            <div class="center">Impostazioni</div>
+          </ons-list-item>
+        </ons-list>
+      </ons-page>
+      <style>
+      .profile-pic {
+        width: 100%;
+        background-color: blue;
+        margin: 0px auto 0px;
+        border: 0px solid;
+      }
+
+      .profile-pic > img {
+        display: block;
+        max-width: 100%;
+      }
+
+      ons-list-item {
+        color: #444;
+      }
+    </style>
+    </ons-splitter-side>
+    <ons-splitter-content id="content" page="home.html"></ons-splitter-content>
+  </ons-splitter>
+
+
+  <template id="home.html">
+    <ons-page>
+      <ons-toolbar>
+        <div class="left">
+          <ons-toolbar-button onclick="fn.open()">
+            <ons-icon icon="md-menu"></ons-icon>
+          </ons-toolbar-button>
+        </div>
+        <div class="center">
+          Main
+        </div>
+      </ons-toolbar>
+      <p style="text-align: center; opacity: 0.6; padding-top: 20px;">
+        Swipe right to open the menu!
+      </p>
+    </ons-page>
+  </template>
+
+  <template id="settings.html">
+    <ons-page>
+      <ons-toolbar>
+        <div class="left">
+          <ons-toolbar-button onclick="fn.open()">
+            <ons-icon icon="md-menu"></ons-icon>
+          </ons-toolbar-button>
+        </div>
+        <div class="center">
+          Settings
+        </div>
+      </ons-toolbar>
+    </ons-page>
+  </template>
+
+  <template id="about.html">
+    <ons-page>
+      <ons-toolbar>
+        <div class="left">
+          <ons-toolbar-button onclick="fn.open()">
+            <ons-icon icon="md-menu"></ons-icon>
+          </ons-toolbar-button>
+        </div>
+        <div class="center">
+          About
+        </div>
+      </ons-toolbar>
+    </ons-page>
+  </template>
     
   <script src="res/vue/vue.js"></script>
   <script src="res/axios/axios.min.js"></script>
+  <script>
+  
+  window.fn = {};
+
+window.fn.open = function() {
+  var menu = document.getElementById('menu');
+  menu.open();
+};
+
+window.fn.load = function(page) {
+  var content = document.getElementById('content');
+  var menu = document.getElementById('menu');
+  content.load(page)
+    .then(menu.close.bind(menu));
+};
+  
+  </script>
 </body>
 </html>
