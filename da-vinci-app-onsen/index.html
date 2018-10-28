@@ -1,107 +1,47 @@
 <!DOCTYPE html>
 <html>
-<head>
-  <title>DaVinci App</title>
-  <meta charset="utf-8"> 
-  <link rel="stylesheet" href="res/onsen/css/onsenui.min.css">
-  <link rel="stylesheet" href="res/onsen/css/onsen-css-components.min.css">
-  <script src="res/onsen/js/onsenui.min.js"></script>
-
-  <style>
-  .profile-pic {
-    width: 100%;
-    background-color: blue;
-    margin: 0px auto 0px;
-    border: 0px solid;
-  }
-
-  .profile-pic > img {
-    display: block;
-    max-width: 100%;
-  }
-
-  ons-list-item {
-    color: #444;
-  }
-</style>
-</head>
-<body>
-  <div id="app">  
-  <ons-splitter>
-    <ons-splitter-side id="menu" side="left" width="220px" collapse swipeable>
-      <app-menu></app-menu>
-    </ons-splitter-side>
-    <ons-splitter-content id="content">
-      <ons-page>
-        <app-navbar title="Home">
-          <ons-toolbar-button onclick="alert('ciao')">
-            <ons-icon icon="md-menu"></ons-icon>
-          </ons-toolbar-button>
-        </app-navbar>
-        <p style="text-align: center; opacity: 0.6; padding-top: 20px;">
-          Swipe right to open the menu!
-        </p>
-      </ons-page>
+  <head>
+    <title>DaVinci App</title>
+    <meta charset="utf-8"> 
     
-    </ons-splitter-content>
-  </ons-splitter>
-</div>
+    <!-- Styles -->
+    <link rel="stylesheet" href="res/onsen/css/onsenui.min.css">
+    <link rel="stylesheet" href="res/onsen/css/onsen-css-components.min.css">
 
+  </head>
+  <body>
+    
+    <!-- Html -->
+    <div id="app">  
+      <ons-splitter>
+        <ons-splitter-side id="menu" side="left" width="220px" collapse swipeable>
+          <app-menu></app-menu>
+        </ons-splitter-side>
+        <ons-splitter-content id="content">
+          <ons-page>
+            
+            <app-navbar title="Home">
+              <ons-toolbar-button onclick="alert('ciao')">
+                <ons-icon icon="md-menu"></ons-icon>
+              </ons-toolbar-button>
+            </app-navbar>
+            <p style="text-align: center; opacity: 0.6; padding-top: 20px;">
+              Swipe right to open the menu!
+            </p>
+          </ons-page>
+        
+        </ons-splitter-content>
+      </ons-splitter>
+    </div>
+    
+    <!-- Scripts -->
+    <script> window.app = {} </script>
+    <script src="res/onsen/js/onsenui.min.js"></script>
+    <script src="res/vue/vue.js"></script>
+    <script src="res/axios/axios.min.js"></script>
+    <script src="js/davapi.js"></script>
 
-  <template id="settings.html">
-    <ons-page>
-      <ons-toolbar>
-        <div class="left">
-          <ons-toolbar-button onclick="fn.open()">
-            <ons-icon icon="md-menu"></ons-icon>
-          </ons-toolbar-button>
-        </div>
-        <div class="center">
-          Settings
-        </div>
-      </ons-toolbar>
-    </ons-page>
-  </template>
-
-  <template id="about.html">
-    <ons-page>
-      <ons-toolbar>
-        <div class="left">
-          <ons-toolbar-button onclick="fn.open()">
-            <ons-icon icon="md-menu"></ons-icon>
-          </ons-toolbar-button>
-        </div>
-        <div class="center">
-          About
-        </div>
-      </ons-toolbar>
-    </ons-page>
-  </template>
-  <script src="res/vue/vue.js"></script>
-  <script src="res/axios/axios.min.js"></script>
-  <script src="js/davapi.js"></script>
-  
-  <script> window.App = {} </script>
-  <script src="js/components.js"></script>
-  <script src="js/menu.js"></script>
-  <script src="js/index.js"></script>
-  
-  <script>
-  
-  window.fn = {};
-
-window.fn.open = function() {
-  var menu = document.getElementById('menu');
-  menu.open();
-};
-
-window.fn.load = function(page) {
-  var content = document.getElementById('content');
-  var menu = document.getElementById('menu');
-  content.load(page)
-    .then(menu.close.bind(menu));
-};
-  
-  </script>
-</body>
+    <script src="js/layout.js"></script>
+    <script src="js/index.js"></script>
+  </body>
 </html>

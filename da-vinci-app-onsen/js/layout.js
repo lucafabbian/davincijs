@@ -1,9 +1,10 @@
+// Navbar
 Vue.component('app-navbar', {
   props: ['title'],
   template: `<div>
   <ons-toolbar>
     <div class="left">
-      <ons-toolbar-button onclick="fn.open()">
+      <ons-toolbar-button onclick="document.getElementById('menu').open()">
         <ons-icon icon="md-menu"></ons-icon>
       </ons-toolbar-button>
     </div>
@@ -16,9 +17,37 @@ Vue.component('app-navbar', {
   </div>`
 })
 
+
+// Side menu
+app.menu ={
+  image: 'https://monaca.io/img/logos/download_image_onsenui_01.png', 
+  categories: [ {
+      name: "",
+      elements:[
+        {name: "Agenda", icon:"md-calendar"},    
+        {name: "Orari",  icon:"md-time"},      
+      ]
+    }, {
+      name: "comunicati",
+      elements:[
+        {name: "Studenti",  icon:"md-graduation-cap"},      
+        {name: "Genitori",  icon:"md-accounts"},      
+        {name: "Docenti",   icon:"md-case"}, 
+        {name: "Salvati",   icon:"md-download"},                 
+      ]
+    }, {
+      name: "utilità",
+      elements:[
+        {name: "Impostazioni", icon:"md-settings"}
+      ]
+    }, ],
+}
+
 Vue.component('app-menu', {
   template: `<ons-page>
-    <div class="profile-pic"><img :src="$root.menu.image"></div>      
+    <div class="profile-pic">
+      <img :src="$root.menu.image" style="display: block; max-width: 100%;">
+    </div>      
     <ons-list>
       <span v-for="category in $root.menu.categories">
         <span v-if=" category.name != ''">
