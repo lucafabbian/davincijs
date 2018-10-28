@@ -1,3 +1,7 @@
+/** Da Vinci Api
+In questo script sono contenuti tutti i metodi necessari per comunicare con il
+server del liceo. 
+NOTA: il browser deve avere abilitato il cross-origin */
 app.davinciApi = {
   
   // Base url
@@ -15,8 +19,8 @@ app.davinciApi = {
   getOrarioDocente: (docente) => axios.post(app.davinciApi.apiUrl+"orario/docente", docente),
   
   // Comunicati
-  getComunicatiStudenti: (last_n = 20) => axios.get(app.davinciApi.apiUrl+"comunicati/studenti/"+last_n),
-  getComunicatiGenitori: (last_n = 20) => axios.get(app.davinciApi.apiUrl+"comunicati/genitori/"+last_n),
-  getComunicatiDocenti : (last_n = 20) => axios.get(app.davinciApi.apiUrl+"comunicati/docenti/"+last_n),
+  getComunicatiStudenti: (last_n = 20) => axios.get(app.davinciApi.apiUrl+"comunicati/studenti/" + last_n),
+  getComunicatiGenitori: (last_n = 20) => axios.get(app.davinciApi.apiUrl+"comunicati/genitori/" + last_n),
+  getComunicatiDocenti : (last_n = 20) => axios.get(app.davinciApi.apiUrl+"comunicati/docenti/"  + last_n),
 
 }
