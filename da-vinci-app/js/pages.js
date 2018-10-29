@@ -36,7 +36,7 @@ Vue.component('app-page-agenda', {
 
 // Comunicati
 Vue.component('app-card-comunicato', {
-  props: ['name', 'index'],
+  props: ['name', 'url', 'index'],
   template: `
   <ons-card>
     <ons-row>
@@ -45,7 +45,7 @@ Vue.component('app-card-comunicato', {
       <ons-icon icon="md-star-border" size="25px"></ons-icon>
       </ons-col>
       <ons-col width="10px"></ons-col>
-      <ons-col>{{ title }}</ons-col>
+      <ons-col v-on:click="window.open(url)">{{ title }}</ons-col>
 
     </ons-row>
   </ons-card>
@@ -75,9 +75,23 @@ Vue.component('app-page-comunicati-studenti', {
 
      </span>
      <span v-else>
-     <app-card-comunicato v-for="(comunicato, index) in $root.comunicatiStudenti" :index="index" :name="comunicato.nome">
+     <app-card-comunicato v-for="(comunicato, index) in $root.comunicatiStudenti" :index="index" :name="comunicato.nome" :url="comunicato.url">
      </app-card-comunicato>
      </span>
+     
+   </app-page>`
+})
+
+Vue.component('app-page-comunicati-genitori', {
+  template: `
+   <app-page title="Comunicati studenti">
+     <template slot="actions">
+       <ons-toolbar-button onclick="alert('ciao')">
+         <ons-icon icon="md-share"></ons-icon>
+       </ons-toolbar-button>
+     </template>
+     
+     <iframe style="width: 100%; height:100%" src="./res/pdfjs/web/viewer.html"></iframe>
      
    </app-page>`
 })
