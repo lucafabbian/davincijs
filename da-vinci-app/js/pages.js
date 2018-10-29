@@ -98,9 +98,7 @@ Vue.component('app-page-agenda', {
 // Pdf reader
 Vue.component('app-pdfviewer', {
   props: ['url'],
-  template: `
-  <iframe style="width: 100%; height:100%" :src="'./res/pdfjs/web/viewer.html?file=' + url"></iframe>
- `,  
+  template: `<iframe style="width: 100%; height:100%" :src="'./res/pdfjs/web/viewer.html?file=' + url"></iframe>`,  
 })
 
 // Comunicati
@@ -110,49 +108,44 @@ Vue.component('app-card-comunicato', {
   <ons-card tappable>
     <ons-row tappable>
       <ons-col width="30px" style="text-align: center; font-size: 90%">
-      {{ number }}    <br>
+      {{ number }} <br>
       <ons-icon 
-       :style=" $root.comunicatiPreferiti.includes(urlName) ? 'color: #daa900' : 'color: #d6d6d6'"
-       :icon="$root.comunicatiPreferiti.includes(urlName) ? 'md-star' : 'md-star-border'" 
+       :style="'color: ' + (isPreferred ? '#daa900' : '#d6d6d6')"
+       :icon="isPreferred ? 'md-star' : 'md-star-border'" 
        size="25px"
        v-on:click="
-       if(!$root.comunicatiPreferiti.includes(urlName)){
+       if(!isPreferred){
           $root.comunicatiPreferiti.push(urlName);
         }else{
-          $root.comunicatiPreferiti.splice(   $root.comunicatiPreferiti.indexOf(urlName), 1 ); 
+          $root.comunicatiPreferiti.splice($root.comunicatiPreferiti.indexOf(urlName), 1); 
         }" 
       ></ons-icon>
       </ons-col>
       <ons-col width="10px"></ons-col>
-      <ons-col 
-        v-on:click="
-         if(!$root.comunicatiLetti.includes(url)) $root.comunicatiLetti.push(urlName); 
-         $emit('openPdf', url)" 
-        :style=" 'fontWeight: ' + ($root.comunicatiLetti.includes(urlName) ? '400' : '600')"
-      > {{ title }}</ons-col>
+      <ons-col v-on:click="openPdf" :style=" 'fontWeight: ' + (isRead ? '400' : '600')"> {{ title }}</ons-col>
     </ons-row>
   </ons-card>
  `,
   computed: {
-     number: function () {
-      return (this.name.match(/^[0-9]*/) || ["0"])[0] || "?"
-     },
-     title: function () {
-      return (this.name.substring(this.number.length + 1).replace(".pdf", "").replace(/\_/g," "))
-     },
-     urlName: function(){
-       return this.url.substring(this.url.lastIndexOf('/'))
-     }
+     number : function(){ return (this.name.match(/^[0-9]*/) || ["0"])[0] || "?"  },
+     title  : function(){ return (this.name.substring(this.number.length + 1).replace(".pdf", "").replace(/\_/g," ")) },
+     urlName: function(){ return this.url.substring(this.url.lastIndexOf('/')) },
+     isPreferred    : function(){ return this.$root.comunicatiPreferiti.includes(this.urlName) },
+     isRead         : function(){ return this.$root.comunicatiLetti    .includes(this.urlName) },
    },
+   methods: {
+     openPdf: function(){ 
+       if(!this.$root.comunicatiLetti.includes(this.url)) this.$root.comunicatiLetti.push(this.urlName); 
+       this.$emit('openPdf', this.url)
+     }
+   }
 })
 
-// Comunicati studenti
-Vue.component('app-page-comunicati-studenti', {
-  data: function(){
-    return{ scrollEnabled: true, isPdfViewer: false, pdfViewerUrl: "file.pdf"}
-  },
+Vue.component('app-page-comunicati', {
+  props: ['title', 'comunicati'],
+  data: () =>{ return{ scrollEnabled: true, isPdfViewer: false, pdfViewerUrl: "file.pdf"}},
   template: `
-   <app-page title="Comunicati studenti" :scrollable="scrollEnabled">
+   <app-page :title="title" :scrollable="scrollEnabled">
      <template slot="actions">
      <span v-if="isPdfViewer">
        <ons-toolbar-button v-on:click="alert('ciao')">
@@ -167,97 +160,32 @@ Vue.component('app-page-comunicati-studenti', {
      <app-pdfviewer v-if="isPdfViewer" :url="pdfViewerUrl"></app-pdfviewer>
      <div v-show="!isPdfViewer">
        <ons-pull-hook onPull="refreshComunicatiStudenti()"> Ricarico...  </ons-pull-hook>
-       <span v-if=" $root.comunicatiStudenti.length === 0">
-       <ons-progress-circular style="text-align: center; opacity: 0.6; padding-top: 20px;" indeterminate></ons-progress-circular>
-
+       <span v-if="comunicati.length === 0">
+          <ons-icon icon="md-spinner" size="28px" spin></ons-icon>
        </span>
        <span v-else>
-       <app-card-comunicato v-for="(comunicato, index) in $root.comunicatiStudenti" 
-        :index="index" 
-        :name="comunicato.nome" 
-        :url="comunicato.url"
+       <app-card-comunicato v-for="(comunicato, index) in comunicati" 
+        :index="index" :name="comunicato.nome" :url="comunicato.url"
         v-on:openPdf="pdfViewerUrl = $event; scrollEnabled= false; isPdfViewer = true;"
        >
        </app-card-comunicato>
        </span>
      </div>
-   </app-page>`,
+   </app-page>`
+  
 })
 
-// Comunicati genitori
-Vue.component('app-page-comunicati-genitori', {
-  data: function(){
-    return{ scrollEnabled: true, isPdfViewer: false, pdfViewerUrl: "file.pdf"}
-  },
-  template: `
-   <app-page title="Comunicati genitori" :scrollable="scrollEnabled">
-     <template slot="actions">
-     <span v-if="isPdfViewer">
-       <ons-toolbar-button v-on:click="alert('ciao')">
-         <ons-icon icon="md-share"></ons-icon>
-       </ons-toolbar-button>
-       <ons-toolbar-button v-on:click="isPdfViewer = false; scrollEnabled = true">
-         <ons-icon icon="md-close"></ons-icon>
-       </ons-toolbar-button>
-     </span>
-     </template>
-      
-     <app-pdfviewer v-if="isPdfViewer" :url="pdfViewerUrl"></app-pdfviewer>
-     <div v-show="!isPdfViewer">
-       <ons-pull-hook onPull="refreshComunicatiGenitori()"> Ricarico...  </ons-pull-hook>
-       <span v-if=" $root.comunicatiGenitori.length === 0">
-       <ons-progress-circular style="text-align: center; opacity: 0.6; padding-top: 20px;" indeterminate></ons-progress-circular>
+// Pagine dei comunicati (sono uguali tranne per il titolo e l'elenco dei comunicati)
+var comunicati = [
+  {id: 'studenti', title: 'Comunicati studenti', obj:'comunicatiStudenti'},
+  {id: 'genitori', title: 'Comunicati genitori', obj:'comunicatiGenitori'},
+  {id: 'docenti' , title: 'Comunicati docenti' , obj:'comunicatiDocenti' }
+];
 
-       </span>
-       <span v-else>
-       <app-card-comunicato v-for="(comunicato, index) in $root.comunicatiGenitori" 
-        :index="index" 
-        :name="comunicato.nome" 
-        :url="comunicato.url"
-        v-on:openPdf="pdfViewerUrl = $event; scrollEnabled= false; isPdfViewer = true;"
-       >
-       </app-card-comunicato>
-       </span>
-     </div>
-   </app-page>`,
-})
-
-// Comunicati docenti
-Vue.component('app-page-comunicati-docenti', {
-  data: function(){
-    return{ scrollEnabled: true, isPdfViewer: false, pdfViewerUrl: "file.pdf"}
-  },
-  template: `
-   <app-page title="Comunicati docenti" :scrollable="scrollEnabled">
-     <template slot="actions">
-     <span v-if="isPdfViewer">
-       <ons-toolbar-button v-on:click="alert('ciao')">
-         <ons-icon icon="md-share"></ons-icon>
-       </ons-toolbar-button>
-       <ons-toolbar-button v-on:click="isPdfViewer = false; scrollEnabled = true">
-         <ons-icon icon="md-close"></ons-icon>
-       </ons-toolbar-button>
-     </span>
-     </template>
-      
-     <app-pdfviewer v-if="isPdfViewer" :url="pdfViewerUrl"></app-pdfviewer>
-     <div v-show="!isPdfViewer">
-       <ons-pull-hook onPull="refreshComunicatiDocenti()"> Ricarico...  </ons-pull-hook>
-       <span v-if=" $root.comunicatiDocenti.length === 0">
-       <ons-progress-circular style="text-align: center; opacity: 0.6; padding-top: 20px;" indeterminate></ons-progress-circular>
-
-       </span>
-       <span v-else>
-       <app-card-comunicato v-for="(comunicato, index) in $root.comunicatiDocenti" 
-        :index="index" 
-        :name="comunicato.nome" 
-        :url="comunicato.url"
-        v-on:openPdf="pdfViewerUrl = $event; scrollEnabled= false; isPdfViewer = true;"
-       >
-       </app-card-comunicato>
-       </span>
-     </div>
-   </app-page>`,
+comunicati.forEach( function(elem){
+  Vue.component('app-page-comunicati-' + elem.id, {
+    template: `<app-page-comunicati title="${elem.title}" :comunicati="$root.${elem.obj}"></app-page-comunicati>`,  
+  })
 })
 
 // Impostazioni
