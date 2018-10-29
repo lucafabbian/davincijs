@@ -56,7 +56,7 @@ Vue.component('app-card-comunicato', {
       <ons-col width="10px"></ons-col>
       <ons-col 
         v-on:click="$root.comunicatiLetti.push(url); $emit('openPdf', url)" 
-        :style=" 'fontWeight: ' + ($root.comunicatiLetti.includes(url) ? '500' : '800')"
+        :style=" ($root.comunicatiLetti.includes(url) ? 'opacity: 0.6' : '')"
       > {{ title }}</ons-col>
     </ons-row>
   </ons-card>
