@@ -65,7 +65,7 @@ Vue.component('app-menu', {
           <div class="left">
             <ons-icon fixed-width class="list-item__icon" :icon="element.icon"></ons-icon>
           </div>
-          <div class="center">{{ element.name}}</div>
+          <div class="center">{{ element.name }}</div>
         </ons-list-item>
       </span>
     </ons-list>
