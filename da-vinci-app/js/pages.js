@@ -1,3 +1,4 @@
+
 // Home page
 Vue.component('app-page-home', {
    template: `
