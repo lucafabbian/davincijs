@@ -45,16 +45,16 @@ Vue.component('app-pdfviewer', {
 
 // Comunicati
 Vue.component('app-card-comunicato', {
-  props: ['name', 'url', 'index'],
+  props: ['name', 'url', 'index', 'styleObject'],
   template: `
   <ons-card>
     <ons-row>
       <ons-col width="30px" style="text-align: center">
-      <b>{{ number }}</b>  <br>
+      <b v-bind:style="styleObject">{{ number }}</b>  <br>
       <ons-icon icon="md-star-border" size="25px"></ons-icon>
       </ons-col>
       <ons-col width="10px"></ons-col>
-      <ons-col v-on:click="$emit('openPdf', url)">{{ title }}</ons-col>
+      <ons-col v-on:click="$emit('openPdf', url)" v-bind:style="styleObject">{{ title }}</ons-col>
 
     </ons-row>
   </ons-card>
@@ -88,7 +88,7 @@ Vue.component('app-page-comunicati-studenti', {
       
      <app-pdfviewer v-if="isPdfViewer" :url="pdfViewerUrl"></app-pdfviewer>
      <div v-show="!isPdfViewer">
-       <ons-pull-hook onPull="refreshComunicatiStudenti()"> Refreshing...  </ons-pull-hook>
+       <ons-pull-hook onPull="refreshComunicatiStudenti()"> Ricarico...  </ons-pull-hook>
        <span v-if=" $root.comunicatiStudenti.length === 0">
        <ons-progress-circular style="text-align: center; opacity: 0.6; padding-top: 20px;" indeterminate></ons-progress-circular>
 
@@ -98,7 +98,8 @@ Vue.component('app-page-comunicati-studenti', {
         :index="index" 
         :name="comunicato.nome" 
         :url="comunicato.url"
-        v-on:openPdf="pdfViewerUrl = $event; scrollEnabled= false; isPdfViewer = true"
+        :styleObject="index in $root.comunicatiLetti ? {fontWeight: 500} : {fontWeight: 800}"
+        v-on:openPdf="pdfViewerUrl = $event; scrollEnabled= false; isPdfViewer = true; $root.comunicatiLetti.push(index)"
        >
        </app-card-comunicato>
        </span>
