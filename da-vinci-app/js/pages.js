@@ -14,7 +14,7 @@ Vue.component('app-page-home', {
       <p style="text-align: center; opacity: 0.6; padding-top: 20px;">
         Swipe right to open the menu!
       </p>
-      <a href="res/pdfjs/web/viewer.html">pdf</a>
+      <a href="./res/pdfjs/web/viewer.html">pdf</a>
 
     </app-page>`
 })
