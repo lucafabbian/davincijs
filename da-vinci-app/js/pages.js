@@ -51,11 +51,23 @@ Vue.component('app-card-comunicato', {
     <ons-row>
       <ons-col width="30px" style="text-align: center">
       <b>{{ number }}</b>  <br>
-      <ons-icon icon="md-star-border" size="25px"></ons-icon>
+      <ons-icon 
+       style="color: #daa900;"
+       :icon="$root.comunicatiPreferiti.includes(url) ? 'md-star' : 'md-star-border'" 
+       size="25px"
+       v-on:click="
+       if(!$root.comunicatiPreferiti.includes(url)){
+          $root.comunicatiPreferiti.push(url);
+        }else{
+          $root.comunicatiPreferiti.splice(   $root.comunicatiPreferiti.indexOf(url), 1 ); 
+        }" 
+      ></ons-icon>
       </ons-col>
       <ons-col width="10px"></ons-col>
       <ons-col 
-        v-on:click="$root.comunicatiLetti.push(url); $emit('openPdf', url)" 
+        v-on:click="
+         if(!$root.comunicatiLetti.includes(url)) $root.comunicatiLetti.push(url); 
+         $emit('openPdf', url)" 
         :style=" 'fontWeight: ' + ($root.comunicatiLetti.includes(url) ? '400' : '600')"
       > {{ title }}</ons-col>
     </ons-row>
