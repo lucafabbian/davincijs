@@ -1,9 +1,12 @@
+<<<<<<< HEAD:da-vinci-app/js/davinciapi.js
 /** Da Vinci Api
 In questo file sono contenuti tutti i metodi necessari per comunicare con il
 server del liceo. 
 NOTA: il browser deve avere abilitato il cross-origin */
 
 /* In app.davinciApi sono contenute le chiamate al server */
+=======
+>>>>>>> 85df46260a581d244ad0b4c5fd5c53d9397ba4b8:da-vinci-app-onsen/js/davapi.js
 app.davinciApi = {
   
   // Base url
@@ -21,9 +24,9 @@ app.davinciApi = {
   getOrarioDocente: (docente) => axios.post(app.davinciApi.apiUrl+"orario/docente", docente),
   
   // Comunicati
-  getComunicatiStudenti: (last_n = 20) => axios.get(app.davinciApi.apiUrl+"comunicati/studenti/" + last_n),
-  getComunicatiGenitori: (last_n = 20) => axios.get(app.davinciApi.apiUrl+"comunicati/genitori/" + last_n),
-  getComunicatiDocenti : (last_n = 20) => axios.get(app.davinciApi.apiUrl+"comunicati/docenti/"  + last_n),
+  getComunicatiStudenti: (last_n) => axios.get(app.davinciApi.apiUrl+"comunicati/studenti/"+last_n),
+  getComunicatiGenitori: (last_n) => axios.get(app.davinciApi.apiUrl+"comunicati/genitori/"+last_n),
+  getComunicatiDocenti : (last_n) => axios.get(app.davinciApi.apiUrl+"comunicati/docenti/"+last_n),
 
 }
 
