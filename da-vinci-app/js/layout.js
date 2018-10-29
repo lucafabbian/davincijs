@@ -41,7 +41,7 @@ app.data.menu ={
         {name: "Studenti",  icon:"md-graduation-cap", page:"app-page-comunicati-studenti"},      
         {name: "Genitori",  icon:"md-accounts",       page:"app-page-comunicati-genitori"},      
         {name: "Docenti",   icon:"md-case",           page:"app-page-comunicati-docenti"}, 
-        {name: "Salvati",   icon:"md-download"},                 
+        {name: "Preferiti",   icon:"md-star"},                 
       ]
     }, {
       name: "utilità",
