@@ -49,10 +49,10 @@ Vue.component('app-card-comunicato', {
   template: `
   <ons-card>
     <ons-row>
-      <ons-col width="30px" style="text-align: center; opacity: 0.9; font-size: 90%">
+      <ons-col width="30px" style="text-align: center; font-size: 90%">
       {{ number }}    <br>
       <ons-icon 
-       style="color: #daa900;"
+       :style=" $root.comunicatiPreferiti.includes(url) ? 'color: #daa900' : 'color: #d6d6d6'"
        :icon="$root.comunicatiPreferiti.includes(url) ? 'md-star' : 'md-star-border'" 
        size="25px"
        v-on:click="
