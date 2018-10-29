@@ -63,7 +63,7 @@ Vue.component('app-card-comunicato', {
  `,
   computed: {
      number: function () {
-      return (this.name.match(/^[0-9]*/) || ["0"])[0]
+      return (this.name.match(/^[0-9]*/) || ["0"])[0] || "?"
      },
      title: function () {
       return (this.name.substring(this.number.length + 1).replace(".pdf", "").replace(/\_/g," "))
