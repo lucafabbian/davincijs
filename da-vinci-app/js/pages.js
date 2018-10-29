@@ -76,9 +76,14 @@ Vue.component('app-page-comunicati-studenti', {
   template: `
    <app-page title="Comunicati studenti" :scrollable="scrollEnabled">
      <template slot="actions">
-       <ons-toolbar-button onclick="alert('ciao')">
+     <span v-if="isPdfViewer">
+       <ons-toolbar-button v-on:click="alert('ciao')">
          <ons-icon icon="md-share"></ons-icon>
        </ons-toolbar-button>
+       <ons-toolbar-button v-on:click="isPdfViewer = false; scrollEnabled = true">
+         <ons-icon icon="md-close"></ons-icon>
+       </ons-toolbar-button>
+     </span>
      </template>
       
      <app-pdfviewer v-if="isPdfViewer" :url="pdfViewerUrl"></app-pdfviewer>
