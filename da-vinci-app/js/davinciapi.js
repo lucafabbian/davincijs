@@ -1,7 +1,9 @@
 /** Da Vinci Api
-In questo script sono contenuti tutti i metodi necessari per comunicare con il
+In questo file sono contenuti tutti i metodi necessari per comunicare con il
 server del liceo. 
 NOTA: il browser deve avere abilitato il cross-origin */
+
+/* In app.davinciApi sono contenute le chiamate al server */
 app.davinciApi = {
   
   // Base url
@@ -23,4 +25,18 @@ app.davinciApi = {
   getComunicatiGenitori: (last_n = 20) => axios.get(app.davinciApi.apiUrl+"comunicati/genitori/" + last_n),
   getComunicatiDocenti : (last_n = 20) => axios.get(app.davinciApi.apiUrl+"comunicati/docenti/"  + last_n),
 
+}
+
+/* In app.actions sono contenuti i metodi per aggiornare i dati in base 
+alla risposta di app.davinciApi */
+app.actions = {
+  refreshComunicatiStudenti: (done) => {
+    app.davinciApi.getComunicatiStudenti()
+      .then(function (result) {
+        app.data.comunicatiStudenti = result.data;
+        if(done) done();
+      });
+  },
+  
+  
 }
