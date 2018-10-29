@@ -1,5 +1,5 @@
 
-window.app.data.page = 'app-page-home' // Set default page
+window.app.data.page = 'app-page-comunicati-studenti' // Set default page
 
 // Home page
 Vue.component('app-page-home', {
@@ -59,10 +59,18 @@ Vue.component('app-page-comunicati-studenti', {
        </ons-toolbar-button>
      </template>
      
-     <ons-pull-hook id="pull-hook">
-     </ons-pull-hook>
+     <ons-pull-hook onPull="refreshComunicatiStudenti()"> Refreshing...  </ons-pull-hook>
      <app-card-comunicato v-for="comunicato in $root.comunicatiStudenti" :name="comunicato.nome">
      </app-card-comunicato>
      
    </app-page>`
 })
+
+var refreshComunicatiStudenti = function(done){
+  app.davinciApi.getComunicatiStudenti()
+    .then(function (result) {
+      console.log("refreshed")
+      app.data.comunicatiStudenti = result.data;
+      done();
+    });
+}
