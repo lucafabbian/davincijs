@@ -196,3 +196,19 @@ Vue.component('app-page-comunicati-docenti', {
      </div>
    </app-page>`,
 })
+
+// Impostazioni
+Vue.component('app-page-impostazioni', {
+  template: `
+   <app-page title="Impostazioni">
+     <template slot="actions">
+       <ons-toolbar-button onclick="alert('ciao')">
+         <ons-icon icon="md-menu"></ons-icon>
+       </ons-toolbar-button>
+     </template>
+     <p style="text-align: center; opacity: 0.6; padding-top: 20px;">
+       This is impostazioni!
+     </p>
+   </app-page>`
+})
+
