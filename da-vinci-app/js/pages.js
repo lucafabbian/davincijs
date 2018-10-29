@@ -1,5 +1,8 @@
 
+<<<<<<< HEAD
 window.app.data.page = 'app-page-agenda' // Set default page
+=======
+>>>>>>> 344cb6ff2d1fa5df804e5bfcaa8cbfbd2703fee7
 
 // Home page
 Vue.component('app-page-home', {
@@ -137,7 +140,7 @@ Vue.component('app-page-comunicati-studenti', {
      <template slot="actions">
      <span v-if="isPdfViewer">
        <ons-toolbar-button v-on:click="alert('ciao')">
-         <ons-icon icon="md-share"></ons-icon>
+         <ons-icon icon="md-share"></ons-icon>undefined
        </ons-toolbar-button>
        <ons-toolbar-button v-on:click="isPdfViewer = false; scrollEnabled = true">
          <ons-icon icon="md-close"></ons-icon>
@@ -252,12 +255,12 @@ Vue.component('app-page-impostazioni', {
      </template>
     <ons-list>
       <ons-list-header>Generali</ons-list-header>
-      <ons-list-item expandable>Sezione all'avvio
+      <ons-list-item expandable v-on:click="document.getElementById(app.data.defaultPage).checked = true">Sezione all'avvio
       <div class="expandable-content">
         <span v-for="category in $root.menu.categories">
           <ons-list-item v-for="element in category.elements" tappable>
             <label class="left">
-              <ons-radio name="color" :input-id="element.name"></ons-radio>
+              <ons-radio name="color" :input-id="element.page" v-on:click="app.data.defaultPage=element.page"></ons-radio>
             </label>
             <label :for="element.name" class="center">
               {{ element.name }}
