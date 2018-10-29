@@ -1,5 +1,6 @@
 
-app.data.comunicatiStudenti = []
+app.data.comunicatiStudenti = [];
+app.data.comunicatiLetti = [];
 
 
 /** Storage
