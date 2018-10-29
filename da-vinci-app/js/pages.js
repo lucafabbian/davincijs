@@ -1,5 +1,5 @@
 
-window.app.data.page = 'app-page-agenda' // Set default page
+window.app.data.page = 'app-page-impostazioni' // Set default page
 
 // Home page
 Vue.component('app-page-home', {
@@ -223,7 +223,21 @@ Vue.component('app-page-impostazioni', {
      </template>
     <ons-list>
       <ons-list-header>Generali</ons-list-header>
-      <ons-list-item tappable v-on:click="">Sezione all'avvio</ons-list-item>
+      <ons-list-item expandable>Sezione all'avvio
+      <div class="expandable-content">
+        <span v-for="category in $root.menu.categories">
+          <ons-list-item v-for="element in category.elements" tappable>
+            <label class="left">
+              <ons-radio name="color" :input-id="element.name"></ons-radio>
+            </label>
+            <label :for="element.name" class="center">
+              {{ element.name }}
+            </label>
+          </ons-list-item>
+        </span>
+      </div>
+
+      </ons-list-item>
       <ons-list-header>Informazioni</ons-list-header>
     </ons-list>
    </app-page>`
