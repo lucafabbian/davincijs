@@ -54,7 +54,7 @@ Vue.component('app-card-comunicato', {
       <ons-icon icon="md-star-border" size="25px"></ons-icon>
       </ons-col>
       <ons-col width="10px"></ons-col>
-      <ons-col v-on:click="window.open(url)">{{ title }}</ons-col>
+      <ons-col v-on:click="$emit('openPdf', url)">{{ title }}</ons-col>
 
     </ons-row>
   </ons-card>
@@ -66,12 +66,12 @@ Vue.component('app-card-comunicato', {
      title: function () {
       return (this.name.substring(this.number.length + 1).replace(".pdf", "").replace(/\_/g," "))
      },
-   }
+   },
 })
 
 Vue.component('app-page-comunicati-studenti', {
   data: function(){
-    return{ isPdfViewer: true, pdfViewerUrl: "file.pdf"}
+    return{ isPdfViewer: false, pdfViewerUrl: "file.pdf"}
   },
   template: `
    <app-page title="Comunicati studenti">
@@ -89,11 +89,16 @@ Vue.component('app-page-comunicati-studenti', {
 
        </span>
        <span v-else>
-       <app-card-comunicato v-for="(comunicato, index) in $root.comunicatiStudenti" :index="index" :name="comunicato.nome" :url="comunicato.url">
+       <app-card-comunicato v-for="(comunicato, index) in $root.comunicatiStudenti" 
+        :index="index" 
+        :name="comunicato.nome" 
+        :url="comunicato.url"
+        v-on:openPdf="pdfViewerUrl = $event; isPdfViewer = true"
+       >
        </app-card-comunicato>
        </span>
      </div>
-   </app-page>`
+   </app-page>`,
 })
 
 Vue.component('app-page-comunicati-genitori', {
