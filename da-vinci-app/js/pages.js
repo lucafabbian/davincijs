@@ -118,7 +118,6 @@ Vue.component('app-card-comunicato', {
        v-on:click="
        if(!$root.comunicatiPreferiti.includes(urlName)){
           $root.comunicatiPreferiti.push(urlName);
-          console.log(urlName);
         }else{
           $root.comunicatiPreferiti.splice(   $root.comunicatiPreferiti.indexOf(urlName), 1 ); 
         }" 
