@@ -45,17 +45,19 @@ Vue.component('app-pdfviewer', {
 
 // Comunicati
 Vue.component('app-card-comunicato', {
-  props: ['name', 'url', 'index', 'styleObject'],
+  props: ['name', 'url', 'index'],
   template: `
   <ons-card>
     <ons-row>
       <ons-col width="30px" style="text-align: center">
-      <b v-bind:style="styleObject">{{ number }}</b>  <br>
+      <b>{{ number }}</b>  <br>
       <ons-icon icon="md-star-border" size="25px"></ons-icon>
       </ons-col>
       <ons-col width="10px"></ons-col>
-      <ons-col v-on:click="$emit('openPdf', url)" v-bind:style="styleObject">{{ title }}</ons-col>
-
+      <ons-col 
+        v-on:click="$root.comunicatiLetti.push(url); $emit('openPdf', url)" 
+        :style=" 'fontWeight: ' + ($root.comunicatiLetti.includes(url) ? '500' : '800')"
+      > {{ title }}</ons-col>
     </ons-row>
   </ons-card>
  `,
@@ -98,8 +100,7 @@ Vue.component('app-page-comunicati-studenti', {
         :index="index" 
         :name="comunicato.nome" 
         :url="comunicato.url"
-        :styleObject="$root.comunicatiLetti.includes(comunicato) ? {fontWeight: 500} : {fontWeight: 800}"
-        v-on:openPdf="pdfViewerUrl = $event; scrollEnabled= false; isPdfViewer = true; $root.comunicatiLetti.push(comunicato)"
+        v-on:openPdf="pdfViewerUrl = $event; scrollEnabled= false; isPdfViewer = true;"
        >
        </app-card-comunicato>
        </span>
