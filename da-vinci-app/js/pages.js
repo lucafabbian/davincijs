@@ -71,10 +71,10 @@ Vue.component('app-card-comunicato', {
 
 Vue.component('app-page-comunicati-studenti', {
   data: function(){
-    return{ isPdfViewer: false, pdfViewerUrl: "file.pdf"}
+    return{ scrollEnabled: true, isPdfViewer: false, pdfViewerUrl: "file.pdf"}
   },
   template: `
-   <app-page title="Comunicati studenti">
+   <app-page title="Comunicati studenti" :scrollable="scrollEnabled">
      <template slot="actions">
        <ons-toolbar-button onclick="alert('ciao')">
          <ons-icon icon="md-share"></ons-icon>
@@ -93,7 +93,7 @@ Vue.component('app-page-comunicati-studenti', {
         :index="index" 
         :name="comunicato.nome" 
         :url="comunicato.url"
-        v-on:openPdf="pdfViewerUrl = $event; isPdfViewer = true"
+        v-on:openPdf="pdfViewerUrl = $event; scrollEnabled= false; isPdfViewer = true"
        >
        </app-card-comunicato>
        </span>

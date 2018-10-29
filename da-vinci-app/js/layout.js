@@ -1,6 +1,9 @@
 // Page layout + navbar
 Vue.component('app-page', {
-  props: ['title'],
+  props: {
+    title: 'String', 
+    scrollable: { type: 'Boolean', default: true },
+  },
   template: `
   <div>  
     <ons-toolbar class="toolbar">
@@ -15,7 +18,7 @@ Vue.component('app-page', {
       </div>
     </ons-toolbar>
     <div class="page__background"></div>
-    <div class="page__content">
+    <div class="page__content" :style=" scrollable ? '' : 'overflow-y:hidden'">
       <slot></slot>
     </div>
   </div>  `
