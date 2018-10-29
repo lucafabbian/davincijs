@@ -83,6 +83,7 @@ Vue.component('app-card-comunicato', {
    },
 })
 
+// Comunicati studenti
 Vue.component('app-page-comunicati-studenti', {
   data: function(){
     return{ scrollEnabled: true, isPdfViewer: false, pdfViewerUrl: "file.pdf"}
@@ -120,13 +121,78 @@ Vue.component('app-page-comunicati-studenti', {
    </app-page>`,
 })
 
+// Comunicati genitori
 Vue.component('app-page-comunicati-genitori', {
+  data: function(){
+    return{ scrollEnabled: true, isPdfViewer: false, pdfViewerUrl: "file.pdf"}
+  },
   template: `
-   <app-page title="Comunicati studenti">
+   <app-page title="Comunicati genitori" :scrollable="scrollEnabled">
      <template slot="actions">
-       <ons-toolbar-button onclick="alert('ciao')">
+     <span v-if="isPdfViewer">
+       <ons-toolbar-button v-on:click="alert('ciao')">
          <ons-icon icon="md-share"></ons-icon>
        </ons-toolbar-button>
-     </template>     
-   </app-page>`
+       <ons-toolbar-button v-on:click="isPdfViewer = false; scrollEnabled = true">
+         <ons-icon icon="md-close"></ons-icon>
+       </ons-toolbar-button>
+     </span>
+     </template>
+      
+     <app-pdfviewer v-if="isPdfViewer" :url="pdfViewerUrl"></app-pdfviewer>
+     <div v-show="!isPdfViewer">
+       <ons-pull-hook onPull="refreshComunicatiGenitori()"> Ricarico...  </ons-pull-hook>
+       <span v-if=" $root.comunicatiGenitori.length === 0">
+       <ons-progress-circular style="text-align: center; opacity: 0.6; padding-top: 20px;" indeterminate></ons-progress-circular>
+
+       </span>
+       <span v-else>
+       <app-card-comunicato v-for="(comunicato, index) in $root.comunicatiGenitori" 
+        :index="index" 
+        :name="comunicato.nome" 
+        :url="comunicato.url"
+        v-on:openPdf="pdfViewerUrl = $event; scrollEnabled= false; isPdfViewer = true;"
+       >
+       </app-card-comunicato>
+       </span>
+     </div>
+   </app-page>`,
+})
+
+// Comunicati docenti
+Vue.component('app-page-comunicati-docenti', {
+  data: function(){
+    return{ scrollEnabled: true, isPdfViewer: false, pdfViewerUrl: "file.pdf"}
+  },
+  template: `
+   <app-page title="Comunicati docenti" :scrollable="scrollEnabled">
+     <template slot="actions">
+     <span v-if="isPdfViewer">
+       <ons-toolbar-button v-on:click="alert('ciao')">
+         <ons-icon icon="md-share"></ons-icon>
+       </ons-toolbar-button>
+       <ons-toolbar-button v-on:click="isPdfViewer = false; scrollEnabled = true">
+         <ons-icon icon="md-close"></ons-icon>
+       </ons-toolbar-button>
+     </span>
+     </template>
+      
+     <app-pdfviewer v-if="isPdfViewer" :url="pdfViewerUrl"></app-pdfviewer>
+     <div v-show="!isPdfViewer">
+       <ons-pull-hook onPull="refreshComunicatiDocenti()"> Ricarico...  </ons-pull-hook>
+       <span v-if=" $root.comunicatiDocenti.length === 0">
+       <ons-progress-circular style="text-align: center; opacity: 0.6; padding-top: 20px;" indeterminate></ons-progress-circular>
+
+       </span>
+       <span v-else>
+       <app-card-comunicato v-for="(comunicato, index) in $root.comunicatiDocenti" 
+        :index="index" 
+        :name="comunicato.nome" 
+        :url="comunicato.url"
+        v-on:openPdf="pdfViewerUrl = $event; scrollEnabled= false; isPdfViewer = true;"
+       >
+       </app-card-comunicato>
+       </span>
+     </div>
+   </app-page>`,
 })
