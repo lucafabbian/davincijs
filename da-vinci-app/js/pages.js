@@ -52,24 +52,24 @@ Vue.component('app-card-comunicato', {
       <ons-col width="30px" style="text-align: center; font-size: 90%">
       {{ number }}    <br>
       <ons-icon 
-       :style=" $root.comunicatiPreferiti.includes(url) ? 'color: #daa900' : 'color: #d6d6d6'"
-       :icon="$root.comunicatiPreferiti.includes(url) ? 'md-star' : 'md-star-border'" 
+       :style=" $root.comunicatiPreferiti.includes(urlName) ? 'color: #daa900' : 'color: #d6d6d6'"
+       :icon="$root.comunicatiPreferiti.includes(urlName) ? 'md-star' : 'md-star-border'" 
        size="25px"
        v-on:click="
-       if(!$root.comunicatiPreferiti.includes(url)){
-          $root.comunicatiPreferiti.push(url);
-          console.log(url);
+       if(!$root.comunicatiPreferiti.includes(urlName)){
+          $root.comunicatiPreferiti.push(urlName);
+          console.log(urlName);
         }else{
-          $root.comunicatiPreferiti.splice(   $root.comunicatiPreferiti.indexOf(url), 1 ); 
+          $root.comunicatiPreferiti.splice(   $root.comunicatiPreferiti.indexOf(urlName), 1 ); 
         }" 
       ></ons-icon>
       </ons-col>
       <ons-col width="10px"></ons-col>
       <ons-col 
         v-on:click="
-         if(!$root.comunicatiLetti.includes(url)) $root.comunicatiLetti.push(url); 
+         if(!$root.comunicatiLetti.includes(url)) $root.comunicatiLetti.push(urlName); 
          $emit('openPdf', url)" 
-        :style=" 'fontWeight: ' + ($root.comunicatiLetti.includes(url) ? '400' : '600')"
+        :style=" 'fontWeight: ' + ($root.comunicatiLetti.includes(urlName) ? '400' : '600')"
       > {{ title }}</ons-col>
     </ons-row>
   </ons-card>
@@ -81,6 +81,9 @@ Vue.component('app-card-comunicato', {
      title: function () {
       return (this.name.substring(this.number.length + 1).replace(".pdf", "").replace(/\_/g," "))
      },
+     urlName: function(){
+       return this.url.substring(this.url.lastIndexOf('/'))
+     }
    },
 })
 
