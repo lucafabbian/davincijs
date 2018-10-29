@@ -46,7 +46,7 @@ app.data.menu ={
     }, {
       name: "utilità",
       elements:[
-        {name: "Impostazioni", icon:"md-settings", page:"app-page-settings"}
+        {name: "Impostazioni", icon:"md-settings", page:"app-page-impostazioni"}
       ]
     }, ],
 }
