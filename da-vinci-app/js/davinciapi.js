@@ -27,6 +27,8 @@ app.davinciApi = {
 
 }
 
+app.davinciApi.getAgenda().then( (data) => console.log('agenda', data)).catch( (err) => console.log("error",err))
+
 /* In app.actions sono contenuti i metodi per aggiornare i dati in base 
 alla risposta di app.davinciApi */
 app.actions = {
