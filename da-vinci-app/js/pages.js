@@ -34,6 +34,15 @@ Vue.component('app-page-agenda', {
    </app-page>`
 })
 
+
+// Pdf reader
+Vue.component('app-pdfviewer', {
+  props: ['url'],
+  template: `
+  <iframe style="width: 100%; height:100%" :src="'./res/pdfjs/web/viewer.html?file=' + url"></iframe>
+ `,  
+})
+
 // Comunicati
 Vue.component('app-card-comunicato', {
   props: ['name', 'url', 'index'],
@@ -61,6 +70,9 @@ Vue.component('app-card-comunicato', {
 })
 
 Vue.component('app-page-comunicati-studenti', {
+  data: function(){
+    return{ isPdfViewer: true, pdfViewerUrl: "file.pdf"}
+  },
   template: `
    <app-page title="Comunicati studenti">
      <template slot="actions">
@@ -68,17 +80,19 @@ Vue.component('app-page-comunicati-studenti', {
          <ons-icon icon="md-share"></ons-icon>
        </ons-toolbar-button>
      </template>
-     
-     <ons-pull-hook onPull="refreshComunicatiStudenti()"> Refreshing...  </ons-pull-hook>
-     <span v-if=" $root.comunicatiStudenti.length === 0">
-     <ons-progress-circular style="text-align: center; opacity: 0.6; padding-top: 20px;" indeterminate></ons-progress-circular>
+      
+     <app-pdfviewer v-if="isPdfViewer" :url="pdfViewerUrl"></app-pdfviewer>
+     <div v-show="!isPdfViewer">
+       <ons-pull-hook onPull="refreshComunicatiStudenti()"> Refreshing...  </ons-pull-hook>
+       <span v-if=" $root.comunicatiStudenti.length === 0">
+       <ons-progress-circular style="text-align: center; opacity: 0.6; padding-top: 20px;" indeterminate></ons-progress-circular>
 
-     </span>
-     <span v-else>
-     <app-card-comunicato v-for="(comunicato, index) in $root.comunicatiStudenti" :index="index" :name="comunicato.nome" :url="comunicato.url">
-     </app-card-comunicato>
-     </span>
-     
+       </span>
+       <span v-else>
+       <app-card-comunicato v-for="(comunicato, index) in $root.comunicatiStudenti" :index="index" :name="comunicato.nome" :url="comunicato.url">
+       </app-card-comunicato>
+       </span>
+     </div>
    </app-page>`
 })
 
@@ -89,9 +103,6 @@ Vue.component('app-page-comunicati-genitori', {
        <ons-toolbar-button onclick="alert('ciao')">
          <ons-icon icon="md-share"></ons-icon>
        </ons-toolbar-button>
-     </template>
-     
-     <iframe style="width: 100%; height:100%" src="./res/pdfjs/web/viewer.html"></iframe>
-     
+     </template>     
    </app-page>`
 })
