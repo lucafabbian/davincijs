@@ -58,8 +58,8 @@ Vue.component('app-pdfviewer', {
 Vue.component('app-card-comunicato', {
   props: ['name', 'url', 'index'],
   template: `
-  <ons-card>
-    <ons-row>
+  <ons-card tappable>
+    <ons-row tappable>
       <ons-col width="30px" style="text-align: center; font-size: 90%">
       {{ number }}    <br>
       <ons-icon 
@@ -221,9 +221,11 @@ Vue.component('app-page-impostazioni', {
          <ons-icon icon="md-menu"></ons-icon>
        </ons-toolbar-button>
      </template>
-     <p style="text-align: center; opacity: 0.6; padding-top: 20px;">
-       This is impostazioni!
-     </p>
+    <ons-list>
+      <ons-list-header>Generali</ons-list-header>
+      <ons-list-item tappable v-on:click="">Sezione all'avvio</ons-list-item>
+      <ons-list-header>Informazioni</ons-list-header>
+    </ons-list>
    </app-page>`
 })
 
