@@ -37,6 +37,20 @@ app.actions = {
         if(done) done();
       });
   },
-  
-  
+
+  refreshComunicatiGenitori: (done) => {
+    app.davinciApi.getComunicatiGenitori()
+      .then(function (result) {
+        app.data.comunicatiGenitori = result.data;
+        if(done) done();
+      });
+  },
+
+  refreshComunicatiDocenti: (done) => {
+    app.davinciApi.getComunicatiDocenti()
+      .then(function (result) {
+        app.data.comunicatiDocenti = result.data;
+        if(done) done();
+      });
+  },
 }

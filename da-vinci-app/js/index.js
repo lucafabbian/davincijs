@@ -1,5 +1,7 @@
 
 app.data.comunicatiStudenti = [];
+app.data.comunicatiGenitori = [];
+app.data.comunicatiDocenti = [];
 app.data.comunicatiLetti = [];
 app.data.comunicatiPreferiti = [];
 
@@ -18,3 +20,5 @@ var vm = new Vue({
 console.log("Vue")
 
 app.actions.refreshComunicatiStudenti()
+app.actions.refreshComunicatiGenitori()
+app.actions.refreshComunicatiDocenti()
