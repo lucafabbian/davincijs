@@ -98,8 +98,8 @@ Vue.component('app-page-comunicati-studenti', {
         :index="index" 
         :name="comunicato.nome" 
         :url="comunicato.url"
-        :styleObject="index in $root.comunicatiLetti ? {fontWeight: 500} : {fontWeight: 800}"
-        v-on:openPdf="pdfViewerUrl = $event; scrollEnabled= false; isPdfViewer = true; $root.comunicatiLetti.push(index)"
+        :styleObject="$root.comunicatiLetti.includes(comunicato) ? {fontWeight: 500} : {fontWeight: 800}"
+        v-on:openPdf="pdfViewerUrl = $event; scrollEnabled= false; isPdfViewer = true; $root.comunicatiLetti.push(comunicato)"
        >
        </app-card-comunicato>
        </span>
