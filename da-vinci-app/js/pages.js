@@ -4,9 +4,7 @@ Vue.component('app-page-home', {
    template: `
     <app-page title="Home">
       <template slot="actions">
-        <ons-toolbar-button onclick="alert('ciao')">
-          <ons-icon icon="md-menu"></ons-icon>
-        </ons-toolbar-button>
+        <app-nav-action icon="md-menu" v-on:action="alert('ciao')"></app-nav-action>
       </template>
 
       <p style="text-align: center; opacity: 0.6; padding-top: 20px;">
@@ -31,15 +29,9 @@ Vue.component('app-page-agenda', {
   template: `
    <app-page :title="monthName">
      <template slot="actions">
-     <ons-toolbar-button onclick="alert('ciao')">
-       <ons-icon icon="md-chevron-left"></ons-icon>
-     </ons-toolbar-button>
-     <ons-toolbar-button v-on:click="addWeek">
-       <ons-icon icon="md-chevron-right"></ons-icon>
-     </ons-toolbar-button>
-       <ons-toolbar-button onclick="removeWeek">
-         <ons-icon icon="md-calendar"></ons-icon>
-       </ons-toolbar-button>
+       <app-nav-action icon="md-chevron-left"  v-on:action="removeWeek"></app-nav-action>
+       <app-nav-action icon="md-chevron-right" v-on:action="addWeek"></app-nav-action>
+       <app-nav-action icon="md-calendar" v-on:action="alert('today')"></app-nav-action>
      </template>
      <transition name="fade">
      <div>
@@ -108,37 +100,35 @@ Vue.component('app-card-comunicato', {
   <ons-card tappable>
     <ons-row tappable>
       <ons-col width="30px" style="text-align: center; font-size: 90%">
-      {{ number }} <br>
-      <ons-icon 
-       :style="'color: ' + (isPreferred ? '#daa900' : '#d6d6d6')"
-       :icon="isPreferred ? 'md-star' : 'md-star-border'" 
-       size="25px"
-       v-on:click="
-       if(!isPreferred){
-          $root.comunicatiPreferiti.push(urlName);
-        }else{
-          $root.comunicatiPreferiti.splice($root.comunicatiPreferiti.indexOf(urlName), 1); 
-        }" 
-      ></ons-icon>
+        {{ number }} <br>
+        <ons-icon :style="prefColor" :icon="prefIcon" size="25px" v-on:click="togglePref"></ons-icon>
       </ons-col>
       <ons-col width="10px"></ons-col>
-      <ons-col v-on:click="openPdf" :style=" 'fontWeight: ' + (isRead ? '400' : '600')"> {{ title }}</ons-col>
+      <ons-col v-on:click="openPdf" :style="readStyle"> {{ title }}</ons-col>
     </ons-row>
-  </ons-card>
- `,
+  </ons-card> `,
   computed: {
-     number : function(){ return (this.name.match(/^[0-9]*/) || ["0"])[0] || "?"  },
-     title  : function(){ return (this.name.substring(this.number.length + 1).replace(".pdf", "").replace(/\_/g," ")) },
-     urlName: function(){ return this.url.substring(this.url.lastIndexOf('/')) },
-     isPreferred    : function(){ return this.$root.comunicatiPreferiti.includes(this.urlName) },
-     isRead         : function(){ return this.$root.comunicatiLetti    .includes(this.urlName) },
-   },
-   methods: {
-     openPdf: function(){ 
-       if(!this.$root.comunicatiLetti.includes(this.url)) this.$root.comunicatiLetti.push(this.urlName); 
-       this.$emit('openPdf', this.url)
-     }
-   }
+    // Parti di cui è composto il nome del comunicato
+    number : function(){ return (this.name.match(/^[0-9]*/) || ["0"])[0] || "?"  },
+    title  : function(){ return (this.name.substring(this.number.length + 1).replace(".pdf", "").replace(/\_/g," ")) },
+    urlName: function(){ return this.url.substring(this.url.lastIndexOf('/')) },    
+    // Proprietà del comunicato (se è fra i preferiti/se è stato letto) e relativi stili
+    isPref    : function(){ return this.$root.comunicatiPreferiti.includes(this.urlName) },
+    prefColor : function(){ return 'color: ' + (this.isPref ? '#daa900' : '#d6d6d6')},
+    prefIcon  : function(){ return this.isPref ? 'md-star' : 'md-star-border'},
+    isRead    : function(){ return this.$root.comunicatiLetti    .includes(this.urlName) },
+    readStyle : function(){ return 'fontWeight: ' + (this.isRead ? '400' : '600')}
+  },
+  methods: {
+    openPdf: function(){  // Chiede alla pagina madre di aprire un pdf su un url
+      if(!this.isRead) this.$root.comunicatiLetti.push(this.urlName)
+      this.$emit('openPdf', this.url)
+    },
+    togglePref: function(){ // Cambia stato da preferito a non preferito (e viceversa)
+      var pref = this.$root.comunicatiPreferiti
+      this.isPref ? pref.splice(pref.indexOf(this.urlName), 1) : pref.push(this.urlName)
+    }
+  }
 })
 
 Vue.component('app-page-comunicati', {
@@ -147,16 +137,11 @@ Vue.component('app-page-comunicati', {
   template: `
    <app-page :title="title" :scrollable="scrollEnabled">
      <template slot="actions">
-     <span v-if="isPdfViewer">
-       <ons-toolbar-button v-on:click="alert('ciao')">
-         <ons-icon icon="md-share"></ons-icon>
-       </ons-toolbar-button>
-       <ons-toolbar-button v-on:click="isPdfViewer = false; scrollEnabled = true">
-         <ons-icon icon="md-close"></ons-icon>
-       </ons-toolbar-button>
-     </span>
-     </template>
-      
+       <span v-if="isPdfViewer">
+         <app-nav-action icon="md-share" v-on:action="alert('ciao')"></app-nav-action>
+         <app-nav-action icon="md-close" v-on:action="togglePdf"></app-nav-action>
+       </span>
+     </template>      
      <app-pdfviewer v-if="isPdfViewer" :url="pdfViewerUrl"></app-pdfviewer>
      <div v-show="!isPdfViewer">
        <ons-pull-hook onPull="refreshComunicatiStudenti()"> Ricarico...  </ons-pull-hook>
@@ -164,15 +149,15 @@ Vue.component('app-page-comunicati', {
           <ons-icon icon="md-spinner" size="28px" spin></ons-icon>
        </span>
        <span v-else>
-       <app-card-comunicato v-for="(comunicato, index) in comunicati" 
-        :index="index" :name="comunicato.nome" :url="comunicato.url"
-        v-on:openPdf="pdfViewerUrl = $event; scrollEnabled= false; isPdfViewer = true;"
-       >
-       </app-card-comunicato>
+         <app-card-comunicato v-for="(comunicato, index) in comunicati" 
+          :index="index" :name="comunicato.nome" :url="comunicato.url"
+          v-on:openPdf="pdfViewerUrl = $event; togglePdf()" > </app-card-comunicato>
        </span>
      </div>
-   </app-page>`
-  
+   </app-page>`,
+   methods: {
+     togglePdf: function(){ scrollEnabled=  !(this.isPdfViewer = !this.isPdfViewer)}
+   }
 })
 
 // Pagine dei comunicati (sono uguali tranne per il titolo e l'elenco dei comunicati)
@@ -180,22 +165,17 @@ var comunicati = [
   {id: 'studenti', title: 'Comunicati studenti', obj:'comunicatiStudenti'},
   {id: 'genitori', title: 'Comunicati genitori', obj:'comunicatiGenitori'},
   {id: 'docenti' , title: 'Comunicati docenti' , obj:'comunicatiDocenti' }
-];
-
-comunicati.forEach( function(elem){
-  Vue.component('app-page-comunicati-' + elem.id, {
-    template: `<app-page-comunicati title="${elem.title}" :comunicati="$root.${elem.obj}"></app-page-comunicati>`,  
-  })
-})
+]
+comunicati.forEach( (elem) => Vue.component('app-page-comunicati-' + elem.id, {
+  template: `<app-page-comunicati title="${elem.title}" :comunicati="$root.${elem.obj}"></app-page-comunicati>`,  
+}))
 
 // Impostazioni
 Vue.component('app-page-impostazioni', {
   template: `
    <app-page title="Impostazioni">
      <template slot="actions">
-       <ons-toolbar-button onclick="alert('ciao')">
-         <ons-icon icon="md-menu"></ons-icon>
-       </ons-toolbar-button>
+       <app-nav-action icon="md-menu" v-on:action="alert('ciao')"></app-nav-action>
      </template>
     <ons-list>
       <ons-list-header>Generali</ons-list-header>

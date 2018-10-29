@@ -24,6 +24,14 @@ Vue.component('app-page', {
   </div>  `
 })
 
+//Page action icons
+Vue.component('app-nav-action', {
+  props: ['icon'],
+  template: `<ons-toolbar-button v-on:click="$emit('action')">
+    <ons-icon :icon="icon"></ons-icon>
+  </ons-toolbar-button>`
+})
+
 
 // Side menu
 app.data.menu ={
