@@ -1,24 +1,20 @@
-// Page layout + navbar
-Vue.component('app-page', {
+// Navbar
+Vue.component('app-navbar', {
   props: ['title'],
-  template: `
-  <div>  
-    <ons-toolbar class="toolbar">
-      <div class="left">
-        <ons-toolbar-button onclick="document.getElementById('menu').open()">
-          <ons-icon icon="md-menu"></ons-icon>
-        </ons-toolbar-button>
-      </div>
-      <div class="center"> {{ title }} </div>
-      <div class="right">
-        <slot name="actions"></slot>
-      </div>
-    </ons-toolbar>
-    <div class="page__background"></div>
-    <div class="page__content">
-      <slot></slot>
+  template: `<div>
+  <ons-toolbar>
+    <div class="left">
+      <ons-toolbar-button onclick="document.getElementById('menu').open()">
+        <ons-icon icon="md-menu"></ons-icon>
+      </ons-toolbar-button>
     </div>
-  </div>  `
+    <div class="center"> {{ title }} </div>
+    <div class="right">
+     <slot></slot>
+    </div>
+  </ons-toolbar>
+  <div style="top: 44px; display: block; padding-top:44px"></div>
+  </div>`
 })
 
 
@@ -35,9 +31,9 @@ app.data.menu ={
     }, {
       name: "comunicati",
       elements:[
-        {name: "Studenti",  icon:"md-graduation-cap", page:"app-page-comunicati-studenti"},      
-        {name: "Genitori",  icon:"md-accounts",       page:"app-page-comunicati-genitori"},      
-        {name: "Docenti",   icon:"md-case",           page:"app-page-comunicati-docenti"}, 
+        {name: "Studenti",  icon:"md-graduation-cap"},      
+        {name: "Genitori",  icon:"md-accounts"},      
+        {name: "Docenti",   icon:"md-case"}, 
         {name: "Salvati",   icon:"md-download"},                 
       ]
     }, {
