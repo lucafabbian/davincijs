@@ -1,5 +1,5 @@
 
-window.app.data.page = 'app-page-impostazioni' // Set default page
+window.app.data.page = 'app-page-agenda' // Set default page
 
 // Home page
 Vue.component('app-page-home', {
@@ -21,26 +21,55 @@ Vue.component('app-page-home', {
 
 // Agenda
 Vue.component('app-page-agenda', {
+  data: function(){
+    var date = new Date()
+    return {
+      month: date.getMonth(),
+      date:  date.getDate(),
+      day:   date.getDay(),
+      year:  date.getFullYear(),
+    }
+  },
   template: `
-   <app-page title="Agenda">
+   <app-page :title="monthName">
      <template slot="actions">
+     <ons-toolbar-button onclick="alert('ciao')">
+       <ons-icon icon="md-chevron-left"></ons-icon>
+     </ons-toolbar-button>
+     <ons-toolbar-button onclick="alert('ciao')">
+       <ons-icon icon="md-chevron-right"></ons-icon>
+     </ons-toolbar-button>
        <ons-toolbar-button onclick="alert('ciao')">
-         <ons-icon icon="md-menu"></ons-icon>
+         <ons-icon icon="md-calendar"></ons-icon>
        </ons-toolbar-button>
      </template>
-     <ons-row v-for="week in days">
-       <ons-col style="text-align: center; line-height: 400%" v-for="day in week"> {{ day }} </ons-col>
+     <ons-row>
+       <ons-col 
+         style="text-align: center; line-height: 320%" 
+         v-for="day in  ['Lun', 'Mar', 'Mer', 'Gio', 'Ven', 'Sab', 'Dom']"
+       > {{ day }} </ons-col>
+     </ons-row>
+     <ons-row>
+       <ons-col 
+         style="text-align: center; line-height: 320%" 
+         v-for="day in week"
+       > {{ day }} </ons-col>
      </ons-row>
    </app-page>`,
    computed: {
-     days: function(){
-       return [
-         ['01', '02', '03', '04', '05', '06', '07'],
-         ['01', '02', '03', '04', '05', '06', '07'],
-         ['01', '02', '03', '04', '05', '06', '07'],
-         ['01', '02', '03', '04', '05', '06', '07'],
-         ['01', '02', '03', '04', '05', '06', '07'],
-       ]
+     monthName: function(){
+       return [ "Gennaio", "Febbraio", "Marzo", "Aprile", "Maggio", "Giugno",
+       "Luglio", "Agosto", "Settembre", "Ottobre", "Novembre", "Dicembre" ][this.month]
+     },
+     week: function(){
+       var date = new Date(this.year, this.month, this.date)
+       date.setDate(date.getDate() - this.day + 1)
+       var weekDates = []
+       for(var i = 0; i < 7; i++){
+         weekDates.push((date.getDate() < 10 ? '0' : '') + date.getDate())
+         date.setDate(date.getDate() + 1)
+       }
+       return weekDates
      }
    }
 })
