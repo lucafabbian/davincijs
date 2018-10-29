@@ -5,10 +5,8 @@ app.data.comunicatiDocenti   = JSON.parse(localStorage.comunicatiDocenti   || '[
 app.data.comunicatiLetti     = JSON.parse(localStorage.comunicatiLetti     || '[]')
 app.data.comunicatiPreferiti = JSON.parse(localStorage.comunicatiPreferiti || '[]')
 app.data.defaultPage         = (localStorage.defaultPage||'app-page-comunicati-studenti')
-<<<<<<< HEAD
-app.data.page = defaultPage
-=======
->>>>>>> 30a5b376488375e9f12c4800c911e018a48a8ca6
+
+app.data.page = app.data.defaultPage // Set default page
 
 
 
@@ -33,7 +31,6 @@ var vm = new Vue({
  })
 console.log("Vue")
 
-window.app.data.page = app.data.defaultPage // Set default page
 
 app.actions.refreshComunicatiStudenti()
 app.actions.refreshComunicatiGenitori()
