@@ -49,8 +49,8 @@ Vue.component('app-card-comunicato', {
   template: `
   <ons-card>
     <ons-row>
-      <ons-col width="30px" style="text-align: center">
-      <b>{{ number }}</b>  <br>
+      <ons-col width="30px" style="text-align: center; opacity: 0.9; font-size: 90%">
+      {{ number }}    <br>
       <ons-icon 
        style="color: #daa900;"
        :icon="$root.comunicatiPreferiti.includes(url) ? 'md-star' : 'md-star-border'" 
