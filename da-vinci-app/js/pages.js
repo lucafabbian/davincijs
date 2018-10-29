@@ -1,5 +1,5 @@
 
-window.app.data.page = 'app-page-comunicati-studenti' // Set default page
+window.app.data.page = 'app-page-agenda' // Set default page
 
 // Home page
 Vue.component('app-page-home', {
@@ -28,10 +28,21 @@ Vue.component('app-page-agenda', {
          <ons-icon icon="md-menu"></ons-icon>
        </ons-toolbar-button>
      </template>
-     <p style="text-align: center; opacity: 0.6; padding-top: 20px;">
-       This is agenda!
-     </p>
-   </app-page>`
+     <ons-row v-for="week in days">
+       <ons-col style="text-align: center; line-height: 400%" v-for="day in week"> {{ day }} </ons-col>
+     </ons-row>
+   </app-page>`,
+   computed: {
+     days: function(){
+       return [
+         ['01', '02', '03', '04', '05', '06', '07'],
+         ['01', '02', '03', '04', '05', '06', '07'],
+         ['01', '02', '03', '04', '05', '06', '07'],
+         ['01', '02', '03', '04', '05', '06', '07'],
+         ['01', '02', '03', '04', '05', '06', '07'],
+       ]
+     }
+   }
 })
 
 
