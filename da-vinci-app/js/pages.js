@@ -17,47 +17,30 @@ Vue.component('app-page-home', {
 
 // Agenda
 Vue.component('app-page-agenda', {
-  data: function(){
-    var dateObj = new Date()
-    return {
-      month: dateObj.getMonth(),
-      date:  dateObj.getDate(),
-      day:   dateObj.getDay(),
-      year:  dateObj.getFullYear(),
-    }
-  },
+  data: function(){ return { dateObj : new Date().toString() } },
   template: `
    <app-page :title="monthName">
      <template slot="actions">
-       <app-nav-action icon="md-chevron-left"  v-on:action="removeWeek"></app-nav-action>
-       <app-nav-action icon="md-chevron-right" v-on:action="addWeek"></app-nav-action>
+       <app-nav-action icon="md-chevron-left"  v-on:action="changeDate(date - 7)"></app-nav-action>
+       <app-nav-action icon="md-chevron-right" v-on:action="changeDate(date + 7)"></app-nav-action>
        <app-nav-action icon="md-calendar" v-on:action="alert('today')"></app-nav-action>
      </template>
-     <transition name="fade">
-     <div>
-     <ons-row>
-       <ons-col 
-         style="text-align: center; line-height: 320%" 
-         v-for="day in  ['Lun', 'Mar', 'Mer', 'Gio', 'Ven', 'Sab', 'Dom']"
-       > {{ day }} </ons-col>
+     <ons-row style="background-color:white;" v-for="row in [dayNames, week]">
+       <ons-col style="text-align: center; line-height: 320%" v-for="day in row"> {{ day }} </ons-col>
      </ons-row>
-     <ons-row>
-       <ons-col 
-         style="text-align: center; line-height: 320%" 
-         v-for="day in week"
-       > {{ day }} </ons-col>
-     </ons-row>
-     </div>
-     </transition>
    </app-page>`,
    computed: {
-     monthName: function(){
+     month: function(){ return new Date(this.dateObj).getMonth()},
+     date:  function(){ return new Date(this.dateObj).getDate()},
+     day:   function(){ return new Date(this.dateObj).getDay()},
+     year:  function(){ return new Date(this.dateObj).getFullYear()},
+     dayNames: function(){ return ['Lun', 'Mar', 'Mer', 'Gio', 'Ven', 'Sab', 'Dom']},
+     monthName: function(){ 
        return [ "Gennaio", "Febbraio", "Marzo", "Aprile", "Maggio", "Giugno",
        "Luglio", "Agosto", "Settembre", "Ottobre", "Novembre", "Dicembre" ][this.month]
      },
      week: function(){
-       var date = new Date(this.year, this.month, this.date)
-       date.setDate(date.getDate() - this.day + 1)
+       var date = new Date(this.dateObj); date.setDate(date.getDate() - this.day + 1)
        var weekDates = []
        for(var i = 0; i < 7; i++){
          weekDates.push((date.getDate() < 10 ? '0' : '') + date.getDate())
@@ -67,22 +50,10 @@ Vue.component('app-page-agenda', {
      },
    },
    methods: {
-     updateDate: function(dateObj){
-       this.month = dateObj.getMonth();
-       this.date =  dateObj.getDate();
-       this.day =   dateObj.getDay();
-       this.year =  dateObj.getFullYear();       
+     changeDate: function(date){
+       var dateObj = new Date(this.dateObj); dateObj.setDate(date)
+       this.dateObj = dateObj.toString()
      },
-     addWeek: function(){
-       var dateObj = new Date(this.year, this.month, this.date)
-       dateObj.setDate(this.date + 7)
-       this.updateDate(dateObj)
-     },
-     removeWeek: function(){
-       var dateObj = new Date(this.year, this.month, this.date)
-       dateObj.setDate(this.date - 7)
-       this.updateDate(dateObj)
-     }
    }
 })
 
