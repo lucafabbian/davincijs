@@ -179,4 +179,3 @@ Vue.component('app-page-impostazioni', {
     </ons-list>
    </app-page>`
 })
-
