@@ -8,6 +8,9 @@ app.davinciApi = {
   
   // Base url
   apiUrl:  '/api/', //"http://www.liceodavinci.tv/api/",
+  getComunicatiUrl: function(){
+    
+  },
   
   // Check if api is online
   isOnline: () => axios.get(app.davinciApi.apiUrl+"teapot")

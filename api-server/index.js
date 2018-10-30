@@ -7,8 +7,8 @@ http://localhost:3000/api -> reindirizza verso http://www.liceodavinci.tv/api/
 
 
 // Da Vinci api (questi metodi consentono di ottenere i dati dal sito del liceo)
-var axios = require('axios');
-var app = {}
+const axios = require('axios');
+const app = {}
 app.davinciApi = {
   
   // Base url
@@ -63,6 +63,22 @@ expr.post('/api/agenda', function (req, res) {              // Agenda
   ).catch((err) => console.log('error on getting agenda'))
 })
 
+
+const request = require('request')
+const fs = require('fs')
+expr.get('/comunicati/*', function(req, res) {
+    console.log("Proxying stuff");
+    console.log("Ricevuta richiesta per: " + req.originalUrl)
+    request.get('http://www.liceodavinci.tv/sitoLiceo/images' + req.originalUrl)
+  .on('response', function(response) {
+    console.log(response.statusCode) 
+    console.log(response.headers['content-type'])
+  })
+  .on('end', function(){
+     // store pdf into DB here.
+     fs.createReadStream('pdf-sample.pdf').pipe(res); // send the pdf to client
+  }).pipe(fs.createWriteStream('pdf-sample.pdf'))
+})
 
 // Si ferma per ascoltare le richieste in arrivo
 expr.listen(port, () => console.log(`Per vedere l'app apri il browser su:\n    http://localhost:${port}`))
