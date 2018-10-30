@@ -40,13 +40,11 @@ Vue.component('app-page-agenda', {
        "Luglio", "Agosto", "Settembre", "Ottobre", "Novembre", "Dicembre" ][this.month]
      },
      week: function(){
-       var date = new Date(this.dateObj); date.setDate(date.getDate() - this.day + 1)
-       var weekDates = []
-       for(var i = 0; i < 7; i++){
-         weekDates.push((date.getDate() < 10 ? '0' : '') + date.getDate())
+       var date = new Date(this.dateObj); date.setDate(date.getDate() - this.day)
+       return Array.from([1, 2, 3, 4, 5, 6, 7], () => {
          date.setDate(date.getDate() + 1)
-       }
-       return weekDates
+         return ((date.getDate() < 10 ? '0' : '') + date.getDate())
+       })
      },
    },
    methods: {
@@ -62,7 +60,7 @@ Vue.component('app-page-agenda', {
 Vue.component('app-pdfviewer', {
   props: ['url'],
   data: () => {return { baseUrl: './res/pdfjs/web/viewer.html?file='}},//'http://docs.google.com/viewer?embedded=true&url='}}, //'./res/pdfjs/web/viewer.html?file='} },
-  template: `<iframe style="width: 100%; height:100%" :src="baseUrl + app.davinciApi.getComunicatiUrl(url)"></iframe>`,  
+  template: `<iframe style="width: 100%; height:100%; display: block;" :src="baseUrl + app.davinciApi.getComunicatiUrl(url)"></iframe>`,  
 })
 
 // Comunicati
@@ -124,7 +122,7 @@ Vue.component('app-page-comunicati', {
          <app-nav-action icon="md-close" v-on:action="togglePdf"></app-nav-action>
        </span>
      </template>      
-     <app-pdfviewer v-if="isPdfViewer" :url="pdfViewerUrl"></app-pdfviewer>
+     <app-pdfviewer v-show="isPdfViewer" :url="pdfViewerUrl"></app-pdfviewer>
      <div v-show="!isPdfViewer">
        <span v-if="comunicati.length === 0">
           <ons-icon icon="md-spinner" size="28px" spin></ons-icon>
