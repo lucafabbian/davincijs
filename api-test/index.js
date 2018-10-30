@@ -1,7 +1,14 @@
+/** Node davincijs testserver
+Piccolo server che consente di testare l'app senza incorrere in problemi di 
+cross origin. 
+http://localhost:3000     -> l'App, servita in modo statico
+http://localhost:3000/api -> reindirizza verso http://www.liceodavinci.tv/api/
+*/
+
+
+// Da Vinci api (questi metodi consentono di ottenere i dati dal sito del liceo)
 var axios = require('axios');
-
 var app = {}
-
 app.davinciApi = {
   
   // Base url
@@ -25,4 +32,37 @@ app.davinciApi = {
 
 }
 
-app.davinciApi.getAgenda({}).then( (data) => console.log('agenda', data)).catch( (err) => console.log("error",err))
+
+// Server
+const express = require('express')
+const expr = express()  // Main server
+const port = 3000       // Porta in cui viene servito
+
+// App (come sito statico)
+expr.use('/', express.static('../da-vinci-app')) 
+expr.use(express.json()) 
+
+// Reindirizzamenti
+expr.get('/api/comunicati/studenti*', function (req, res) { // Comunicati studenti
+  console.log("Ricevuta richiesta per: " + req.originalUrl)
+  app.davinciApi.getComunicatiStudenti().then( (data) => res.send(data.data))
+})
+expr.get('/api/comunicati/genitori*', function (req, res) { // Comunicati genitori
+  console.log("Ricevuta richiesta per: " + req.originalUrl)
+  app.davinciApi.getComunicatiGenitori().then( (data) => res.send(data.data))
+})
+expr.get('/api/comunicati/docenti*', function (req, res) {  // Comunicati docenti
+  console.log("Ricevuta richiesta per: " + req.originalUrl)
+  app.davinciApi.getComunicatiDocenti().then( (data) => res.send(data.data))
+})
+expr.post('/api/agenda', function (req, res) {              // Agenda
+  console.log("Ricevuta richiesta per: " + req.originalUrl)
+  console.log('con parametri ', req.body);
+  app.davinciApi.getAgenda(req.body).then( 
+    (data) => res.send(data.data)
+  ).catch((err) => console.log('error on getting agenda'))
+})
+
+
+// Si ferma per ascoltare le richieste in arrivo
+expr.listen(port, () => console.log(`Per vedere l'app apri il browser su:\n    http://localhost:${port}`))

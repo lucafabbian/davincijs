@@ -7,7 +7,7 @@ NOTA: il browser deve avere abilitato il cross-origin */
 app.davinciApi = {
   
   // Base url
-  apiUrl: "http://www.liceodavinci.tv/api/",
+  apiUrl:  '/api/', //"http://www.liceodavinci.tv/api/",
   
   // Check if api is online
   isOnline: () => axios.get(app.davinciApi.apiUrl+"teapot")
@@ -27,7 +27,10 @@ app.davinciApi = {
 
 }
 
-app.davinciApi.getAgenda().then( (data) => console.log('agenda', data)).catch( (err) => console.log("error",err))
+app.davinciApi.getAgenda({
+  prima: 1543618800,
+  dopo:  1538344800
+}).then( (data) => console.log('agenda', data)).catch( (err) => console.log("error",err))
 
 /* In app.actions sono contenuti i metodi per aggiornare i dati in base 
 alla risposta di app.davinciApi */
