@@ -124,7 +124,7 @@ Vue.component('app-page-comunicati', {
          <app-nav-action icon="md-close" v-on:action="togglePdf"></app-nav-action>
        </span>
      </template>      
-     <app-pdfviewer v-if="isPdfViewer" :url="pdfViewerUrl"></app-pdfviewer>
+     <app-pdfviewer v-show="isPdfViewer" :url="pdfViewerUrl"></app-pdfviewer>
      <div v-show="!isPdfViewer">
        <span v-if="comunicati.length === 0">
           <ons-icon icon="md-spinner" size="28px" spin></ons-icon>
