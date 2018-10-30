@@ -7,8 +7,9 @@ NOTA: il browser deve avere abilitato il cross-origin */
 app.davinciApi = {
   
   // Base url
-  apiUrl:  '/api/', //"http://www.liceodavinci.tv/api/",
+  apiUrl:  (app.isTest ? '/api/' : 'http://www.liceodavinci.tv/api/'), //"http://www.liceodavinci.tv/api/",
   getComunicatiUrl: function(url){
+    if(!app.isTest) return url
     return url.replace('http://www.liceodavinci.tv/sitoLiceo/images', '')
   },
   
