@@ -61,7 +61,8 @@ Vue.component('app-page-agenda', {
 // Pdf reader
 Vue.component('app-pdfviewer', {
   props: ['url'],
-  template: `<iframe style="width: 100%; height:100%" :src="'./res/pdfjs/web/viewer.html?file=' + url"></iframe>`,  
+  data: () => {return { baseUrl: './res/pdfjs/web/viewer.html?file='}},//'http://docs.google.com/viewer?embedded=true&url='}}, //'./res/pdfjs/web/viewer.html?file='} },
+  template: `<iframe style="width: 100%; height:100%" :src="baseUrl + url"></iframe>`,  
 })
 
 // Comunicati
@@ -76,6 +77,16 @@ Vue.component('app-card-comunicato', {
       </ons-col>
       <ons-col width="10px"></ons-col>
       <ons-col v-on:click="openPdf" :style="readStyle"> {{ title }}</ons-col>
+      <ons-col width="40px" style="text-align: center">
+        <a :href="url" :download="number + '-' + title + '.pdf'">
+          <ons-icon icon="md-download" size="28px"></ons-icon>
+        </a>
+      </ons-col>
+      <ons-col width="40px" style="text-align: center">
+        <a :href="'https://wa.me/?text=' + url">
+          <ons-icon icon="md-share" size="28px"></ons-icon>
+        </a>
+      </ons-col>
     </ons-row>
   </ons-card> `,
   computed: {
@@ -115,7 +126,6 @@ Vue.component('app-page-comunicati', {
      </template>      
      <app-pdfviewer v-if="isPdfViewer" :url="pdfViewerUrl"></app-pdfviewer>
      <div v-show="!isPdfViewer">
-       <ons-pull-hook onPull="refreshComunicatiStudenti()"> Ricarico...  </ons-pull-hook>
        <span v-if="comunicati.length === 0">
           <ons-icon icon="md-spinner" size="28px" spin></ons-icon>
        </span>
@@ -127,7 +137,7 @@ Vue.component('app-page-comunicati', {
      </div>
    </app-page>`,
    methods: {
-     togglePdf: function(){ scrollEnabled=  !(this.isPdfViewer = !this.isPdfViewer)}
+     togglePdf: function(){ this.scrollEnabled=  !(this.isPdfViewer = !this.isPdfViewer)}
    }
 })
 

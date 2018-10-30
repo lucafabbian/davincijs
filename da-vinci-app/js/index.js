@@ -6,7 +6,7 @@ app.data.comunicatiLetti     = JSON.parse(localStorage.comunicatiLetti     || '[
 app.data.comunicatiPreferiti = JSON.parse(localStorage.comunicatiPreferiti || '[]')
 app.data.defaultPage         = (localStorage.defaultPage||'app-page-comunicati-studenti')
 
-app.data.page = app.data.defaultPage // Set default page
+app.data.page = localStorage.page || 'app-page-home' // Set default page
 
 
 
@@ -25,7 +25,7 @@ var vm = new Vue({
     comunicatiDocenti  () { localStorage.comunicatiDocenti   = JSON.stringify(this.comunicatiDocenti  )  },
     comunicatiLetti    () { localStorage.comunicatiLetti     = JSON.stringify(this.comunicatiLetti    )  },
     comunicatiPreferiti() { localStorage.comunicatiPreferiti = JSON.stringify(this.comunicatiPreferiti)  },
-    defaultPage        () { localStorage.defaultPage         = this.defaultPage                          },
+    page               () { localStorage.page                = this.page                          },
 
   },
  })

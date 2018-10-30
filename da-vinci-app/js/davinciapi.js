@@ -38,7 +38,7 @@ app.actions = {
   refreshComunicatiStudenti: (done) => {
     app.davinciApi.getComunicatiStudenti()
       .then(function (result) {
-        app.data.comunicatiStudenti = result.data;
+        app.data.comunicatiStudenti = result.data.slice(0, 20)
         if(done) done();
       });
   },
@@ -46,7 +46,7 @@ app.actions = {
   refreshComunicatiGenitori: (done) => {
     app.davinciApi.getComunicatiGenitori()
       .then(function (result) {
-        app.data.comunicatiGenitori = result.data;
+        app.data.comunicatiGenitori = result.data.slice(0, 20)
         if(done) done();
       });
   },
@@ -54,7 +54,7 @@ app.actions = {
   refreshComunicatiDocenti: (done) => {
     app.davinciApi.getComunicatiDocenti()
       .then(function (result) {
-        app.data.comunicatiDocenti = result.data;
+        app.data.comunicatiDocenti = result.data.slice(0, 20)
         if(done) done();
       });
   },
