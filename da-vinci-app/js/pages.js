@@ -40,13 +40,11 @@ Vue.component('app-page-agenda', {
        "Luglio", "Agosto", "Settembre", "Ottobre", "Novembre", "Dicembre" ][this.month]
      },
      week: function(){
-       var date = new Date(this.dateObj); date.setDate(date.getDate() - this.day + 1)
-       var weekDates = []
-       for(var i = 0; i < 7; i++){
-         weekDates.push((date.getDate() < 10 ? '0' : '') + date.getDate())
+       var date = new Date(this.dateObj); date.setDate(date.getDate() - this.day)
+       return Array.from([1, 2, 3, 4, 5, 6, 7], () => {
          date.setDate(date.getDate() + 1)
-       }
-       return weekDates
+         return ((date.getDate() < 10 ? '0' : '') + date.getDate())
+       })
      },
    },
    methods: {
