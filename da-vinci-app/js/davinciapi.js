@@ -8,8 +8,8 @@ app.davinciApi = {
   
   // Base url
   apiUrl:  '/api/', //"http://www.liceodavinci.tv/api/",
-  getComunicatiUrl: function(){
-    
+  getComunicatiUrl: function(url){
+    return url.replace('http://www.liceodavinci.tv/sitoLiceo/images', '')
   },
   
   // Check if api is online
