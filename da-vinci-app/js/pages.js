@@ -60,7 +60,7 @@ Vue.component('app-page-agenda', {
 Vue.component('app-pdfviewer', {
   props: ['url'],
   data: () => {return { baseUrl: './res/pdfjs/web/viewer.html?file='}},//'http://docs.google.com/viewer?embedded=true&url='}}, //'./res/pdfjs/web/viewer.html?file='} },
-  template: `<iframe style="width: 100%; height:100%" :src="baseUrl + app.davinciApi.getComunicatiUrl(url)"></iframe>`,  
+  template: `<iframe style="width: 100%; height:100%; display: block;" :src="baseUrl + app.davinciApi.getComunicatiUrl(url)"></iframe>`,  
 })
 
 // Comunicati
