@@ -1,9 +1,6 @@
 // Page layout + navbar
 Vue.component('app-page', {
-  props: {
-    title: 'String', 
-    scrollable: { type: 'Boolean', default: true },
-  },
+  props: {  title: 'String', scrollable: { type: 'Boolean', default: true },  },
   template: `
   <div>  
     <ons-toolbar class="toolbar">
@@ -33,31 +30,6 @@ Vue.component('app-nav-action', {
 })
 
 
-// Side menu
-app.data.menu ={
-  image: 'https://monaca.io/img/logos/download_image_onsenui_01.png', 
-  categories: [ {
-      name: "",
-      elements:[
-        {name: "Home",   icon:"md-home",     page:"app-page-home"},    
-        {name: "Agenda", icon:"md-calendar", page:"app-page-agenda"},    
-        {name: "Orari",  icon:"md-time"},      
-      ]
-    }, {
-      name: "comunicati",
-      elements:[
-        {name: "Studenti",  icon:"md-graduation-cap", page:"app-page-comunicati-studenti"},      
-        {name: "Genitori",  icon:"md-accounts",       page:"app-page-comunicati-genitori"},      
-        {name: "Docenti",   icon:"md-case",           page:"app-page-comunicati-docenti"}, 
-        {name: "Preferiti",   icon:"md-star"},                 
-      ]
-    }, {
-      name: "utilità",
-      elements:[
-        {name: "Impostazioni", icon:"md-settings", page:"app-page-impostazioni"}
-      ]
-    }, ],
-}
 
 Vue.component('app-menu', {
   template: `<ons-page>
@@ -80,12 +52,8 @@ Vue.component('app-menu', {
   </ons-page>`,
   methods: {
     changePage: function (page) {
-      this.$root.page = page;  
-      document.getElementById('menu').close();
+      this.$root.page = page
+      document.getElementById('menu').close()
     }
   }
 }) 
-
-
-
-

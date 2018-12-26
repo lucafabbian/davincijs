@@ -71,8 +71,8 @@ Vue.component('app-page-agenda', {
 // Pdf reader
 Vue.component('app-pdfviewer', {
   props: ['url'],
-  data: () => {return { baseUrl: './res/pdfjs/web/viewer.html?file='}},//'http://docs.google.com/viewer?embedded=true&url='}}, //'./res/pdfjs/web/viewer.html?file='} },
-  template: `<iframe style="width: 100%; height:100%; display: block;" :src="baseUrl + app.davinciApi.getComunicatiUrl(url)"></iframe>`,  
+  data: () => {return { baseUrl: './res/pdfjs/web/viewer.html?file='}},
+  template: `<iframe style="width: 100%; height:100%; display: block;" :src="baseUrl + davinciApi.urlComunicato(url)"></iframe>`,  
 })
 
 // Comunicati
@@ -158,7 +158,7 @@ var comunicati = [
   {id: 'docenti' , title: 'Comunicati docenti' , obj:'comunicatiDocenti' }
 ]
 comunicati.forEach( (elem) => Vue.component('app-page-comunicati-' + elem.id, {
-  template: `<app-page-comunicati title="${elem.title}" :comunicati="$root.${elem.obj}"></app-page-comunicati>`,  
+  template: `<app-page-comunicati title="${elem.title}" :comunicati="$root.davinciApi.${elem.obj}"></app-page-comunicati>`,  
 }))
 
 // Impostazioni

@@ -81,4 +81,4 @@ expr.get('/comunicati/*', function(req, res) {
 })
 
 // Si ferma per ascoltare le richieste in arrivo
-expr.listen(port, () => console.log(`Per vedere l'app apri il browser su:\n    http://localhost:${port}`))
+expr.listen(port, () => console.log(`Per vedere l'app apri il browser su:\n    http://localhost:${port}/#davinciapi=testlocal`))

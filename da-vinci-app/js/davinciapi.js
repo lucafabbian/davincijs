@@ -3,69 +3,61 @@ In questo file sono contenuti tutti i metodi necessari per comunicare con il
 server del liceo. 
 NOTA: il browser deve avere abilitato il cross-origin */
 
-/* In app.davinciApi sono contenute le chiamate al server */
-app.davinciApi = {
-  
-  // Base url
-  apiUrl:  (app.isTest ? '/api/' : 'http://www.liceodavinci.tv/api/'), //"http://www.liceodavinci.tv/api/",
-  getComunicatiUrl: function(url){
-    if(!app.isTest) return url
-    return url.replace('http://www.liceodavinci.tv/sitoLiceo/images', '')
-  },
-  
-  // Check if api is online
-  isOnline: () => axios.get(app.davinciApi.apiUrl+"teapot")
-    .catch(function (error) { return error.response.status === 418; }),
 
-  // Generic requests
-  getAgenda: (filter) => axios.post(app.davinciApi.apiUrl + "agenda", filter),
-  getClassi: ()       => axios.get(app.davinciApi.apiUrl + "classi"),
-  getOrarioClasse: (classe) => axios.get(app.davinciApi.apiUrl+"orario/"+classe),
-  getDocenti: () => axios.get(app.davinciApi.apiUrl+"docenti"),
-  getOrarioDocente: (docente) => axios.post(app.davinciApi.apiUrl+"orario/docente", docente),
+window.davinciApi = new function(){
+  // Controlla se e' attivata la test mode (bisogna appendere davinciapi=testlocal all'url)
+  const isTest = window.location.hash.includes('davinciapi=testlocal')
+  
+  // Crea l'oggetto con cui fare le richieste all'api
+  const api = axios.create({ baseURL: (isTest ? '/api/' : 'http://www.liceodavinci.tv/api') })
+  
+  // Qui verranno cachate le richieste ottenute (e salvate in localStorage)
+  this.data = {
+    comunicatiStudenti: JSON.parse(localStorage.comunicatiStudenti  || '[]'),
+    comunicatiGenitori: JSON.parse(localStorage.comunicatiGenitori  || '[]'),
+    comunicatiDocenti : JSON.parse(localStorage.comunicatiDocenti   || '[]'),
+  }
+  
+  console.log(localStorage.comunicatiStudenti)
+  
+  // Restituisce l'url dei comunicati (viene modificato se siamo in test mode)
+  this.urlComunicato = (url) => (isTest ? url.replace('http://www.liceodavinci.tv/sitoLiceo/images', '') : url)
+  
+  // Controlla se l'api e' online
+  this.isOnline = () => api.get('teapot').catch( (err) => err.response.status === 418 )
+
+  // Richieste generiche
+  const agenda       = (filter)  => api.post('agenda', filter  )
+  const classi       = ()        => api.get ('classi')
+  const orarioClasse = (classe)  => api.get ('orario/' + classe)
+  const docenti      = ()        => api.get ('docenti')
+  const orarioDocente= (docente) => api.post('orario/docente', docente)
   
   // Comunicati
-  getComunicatiStudenti: (last_n = '') => axios.get(app.davinciApi.apiUrl+"comunicati/studenti/" + last_n ),
-  getComunicatiGenitori: (last_n = '') => axios.get(app.davinciApi.apiUrl+"comunicati/genitori/" + last_n ),
-  getComunicatiDocenti : (last_n = '') => axios.get(app.davinciApi.apiUrl+"comunicati/docenti/"  + last_n ),
-
-}
-
-/* In app.actions sono contenuti i metodi per aggiornare i dati in base 
-alla risposta di app.davinciApi */
-app.actions = {
-  refreshComunicatiStudenti: (done) => {
-    app.davinciApi.getComunicatiStudenti()
-      .then(function (result) {
-        app.data.comunicatiStudenti = result.data.slice(0, 20)
-        if(done) done();
-      });
-  },
-
-  refreshComunicatiGenitori: (done) => {
-    app.davinciApi.getComunicatiGenitori()
-      .then(function (result) {
-        app.data.comunicatiGenitori = result.data.slice(0, 20)
-        if(done) done();
-      });
-  },
-
-  refreshComunicatiDocenti: (done) => {
-    app.davinciApi.getComunicatiDocenti()
-      .then(function (result) {
-        app.data.comunicatiDocenti = result.data.slice(0, 20)
-        if(done) done();
-      });
-  },
+  const comunicati = (obj, url, last = '') => new Promise( (resolve, reject) => {
+    api.get(url + last).then( (result) => resolve(localStorage[obj] = this.data[obj] = result.data) )
+  })
   
+  this.comunicatiStudenti = (last) => comunicati('comunicatiStudenti', '/comunicati/studenti/', last)
+  this.comunicatiGenitori = (last) => comunicati('comunicatiGenitori', '/comunicati/genitori/', last)
+  this.comunicatiDocenti  = (last) => comunicati('comunicatiDocenti' , '/comunicati/docenti/' , last)
+  
+  this.refresh = () => {
+    this.comunicatiStudenti()
+    this.comunicatiGenitori()
+    this.comunicatiDocenti()
+  }
+  
+}()
+
+/*
+app.actions = {
   refreshAgenda: (done) => {
-    console.log(new Date().getTime())
-        console.log(new Date(1543618800000))
+    console.log(new Date(1543618800000))
     console.log(new Date(1538344800000))
     app.davinciApi.getAgenda({
       prima: 1543618800,
       dopo:  1538344800
     }).then( (data) => console.log('agenda', data)).catch( (err) => console.log("error",err))
-
   }
-}
+} */
