@@ -1,1 +1,1 @@
-app.isTest = false
+app.isTest = true
