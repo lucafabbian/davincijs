@@ -8,7 +8,7 @@ var vm = new Vue({
     comunicatiLetti     : JSON.parse(localStorage.comunicatiLetti     || '[]'),
     comunicatiPreferiti : JSON.parse(localStorage.comunicatiPreferiti || '[]'),
     menu: {
-      image: 'https://monaca.io/img/logos/download_image_onsenui_01.png', 
+      image: 'res/img/logo-toolbar.svg', 
       categories: [ {
           name: "",
           elements:[

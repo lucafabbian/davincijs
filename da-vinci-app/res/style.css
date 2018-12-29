@@ -1,8 +1,6 @@
 @import url("onsen/css/onsenui.min.css");
 @import url("onsen/css/onsen-css-components.min.css");
 
-
-
 .fade-enter-active, .fade-leave-active {
   transition: opacity .5s;
 }
@@ -18,4 +16,3 @@ iframe {
   margin: 0;
   border: 0;
 }
-

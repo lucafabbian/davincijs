@@ -89,12 +89,12 @@ Vue.component('app-card-comunicato', {
       <ons-col v-on:click="openPdf" :style="readStyle"> {{ title }}</ons-col>
       <ons-col width="40px" style="text-align: center">
         <a :href="url" :download="number + '-' + title + '.pdf'">
-          <ons-icon icon="md-download" size="28px"></ons-icon>
+          <ons-icon style="color: #4c5256" icon="md-download" size="28px"></ons-icon>
         </a>
       </ons-col>
       <ons-col width="40px" style="text-align: center">
         <a :href="'https://wa.me/?text=' + url">
-          <ons-icon icon="md-share" size="28px"></ons-icon>
+          <ons-icon style="color: #4c5256" icon="md-share" size="28px"></ons-icon>
         </a>
       </ons-col>
     </ons-row>
@@ -106,7 +106,7 @@ Vue.component('app-card-comunicato', {
     urlName: function(){ return this.url.substring(this.url.lastIndexOf('/')) },    
     // Proprietà del comunicato (se è fra i preferiti/se è stato letto) e relativi stili
     isPref    : function(){ return this.$root.comunicatiPreferiti.includes(this.urlName) },
-    prefColor : function(){ return 'color: ' + (this.isPref ? '#daa900' : '#d6d6d6')},
+    prefColor : function(){ return 'color: ' + (this.isPref ? '#daa900' : '#4c5256')},
     prefIcon  : function(){ return this.isPref ? 'md-star' : 'md-star-border'},
     isRead    : function(){ return this.$root.comunicatiLetti    .includes(this.urlName) },
     readStyle : function(){ return 'fontWeight: ' + (this.isRead ? '400' : '600')}
