@@ -4,7 +4,7 @@ server del liceo.
 NOTA: il browser deve avere abilitato il cross-origin */
 
 
-window.davinciApi = new function(){
+export default new function(){
   // Controlla se e' attivata la test mode (bisogna appendere davinciapi=testlocal all'url)
   const isTest = window.location.hash.includes('davinciapi=testlocal')
   
