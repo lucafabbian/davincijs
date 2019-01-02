@@ -35,7 +35,7 @@ window.davinciApi = new function(){
   
   // Comunicati
   const comunicati = (obj, url, last = '') => new Promise( (resolve, reject) => {
-    api.get(url + last).then( (result) => resolve(localStorage[obj] = this.data[obj] = result.data) )
+    api.get(url + last).then( (result) => resolve(localStorage[obj] = this.data[obj] = result.data.forEach((v) => {delete v.tipo; delete v.data})) )
   })
   
   this.comunicatiStudenti = (last) => comunicati('comunicatiStudenti', '/comunicati/studenti/', last)

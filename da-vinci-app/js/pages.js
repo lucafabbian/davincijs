@@ -77,7 +77,7 @@ Vue.component('app-pdfviewer', {
 
 // Comunicati
 Vue.component('app-card-comunicato', {
-  props: ['name', 'url', 'index'],
+  props: ['comunicato'],
   template: `
   <ons-card tappable>
     <ons-row tappable>
@@ -88,12 +88,12 @@ Vue.component('app-card-comunicato', {
       <ons-col width="10px"></ons-col>
       <ons-col v-on:click="openPdf" :style="readStyle"> {{ title }}</ons-col>
       <ons-col width="40px" style="text-align: center">
-        <a :href="url" :download="number + '-' + title + '.pdf'">
+        <a :href="comunicato.url" :download="number + '-' + title + '.pdf'">
           <ons-icon style="color: #4c5256" icon="md-download" size="28px"></ons-icon>
         </a>
       </ons-col>
       <ons-col width="40px" style="text-align: center">
-        <a :href="'https://wa.me/?text=' + url">
+        <a :href="'https://wa.me/?text=' + comunicato.url">
           <ons-icon style="color: #4c5256" icon="md-share" size="28px"></ons-icon>
         </a>
       </ons-col>
@@ -101,24 +101,24 @@ Vue.component('app-card-comunicato', {
   </ons-card> `,
   computed: {
     // Parti di cui è composto il nome del comunicato
-    number : function(){ return (this.name.match(/^[0-9]*/) || ["0"])[0] || "?"  },
-    title  : function(){ return (this.name.substring(this.number.length + 1).replace(".pdf", "").replace(/\_/g," ")) },
-    urlName: function(){ return this.url.substring(this.url.lastIndexOf('/')) },    
+    number : function(){ return (this.comunicato.nome.match(/^[0-9]*/) || ["0"])[0] || "?"  },
+    title  : function(){ return (this.comunicato.nome.substring(this.number.length + 1).replace(".pdf", "").replace(/\_/g," ")) },
+    urlName: function(){ return this.comunicato.url.substring(this.url.lastIndexOf('/')) },    
     // Proprietà del comunicato (se è fra i preferiti/se è stato letto) e relativi stili
-    isPref    : function(){ return this.$root.comunicatiPreferiti.includes(this.urlName) },
+    isPref    : function(){ return this.$root.comunicatiPreferiti.includes(this.comunicato) },
     prefColor : function(){ return 'color: ' + (this.isPref ? '#daa900' : '#4c5256')},
     prefIcon  : function(){ return this.isPref ? 'md-star' : 'md-star-border'},
-    isRead    : function(){ return this.$root.comunicatiLetti    .includes(this.urlName) },
+    isRead    : function(){ return this.$root.comunicatiLetti    .includes(this.comunicato) },
     readStyle : function(){ return 'fontWeight: ' + (this.isRead ? '400' : '600')}
   },
   methods: {
     openPdf: function(){  // Chiede alla pagina madre di aprire un pdf su un url
-      if(!this.isRead) this.$root.comunicatiLetti.push(this.urlName)
+      if(!this.isRead) this.$root.comunicatiLetti.push(this.comunicato)
       this.$emit('openPdf', this.url)
     },
     togglePref: function(){ // Cambia stato da preferito a non preferito (e viceversa)
       var pref = this.$root.comunicatiPreferiti
-      this.isPref ? pref.splice(pref.indexOf(this.urlName), 1) : pref.push(this.urlName)
+      this.isPref ? pref.splice(pref.indexOf(this.comunicato), 1) : pref.push(this.comunicato)
     }
   }
 })
@@ -141,7 +141,7 @@ Vue.component('app-page-comunicati', {
        </span>
        <span v-else>
          <app-card-comunicato v-for="(comunicato, index) in comunicati" 
-          :index="index" :name="comunicato.nome" :url="comunicato.url"
+          :comunicato="comunicato"
           v-on:openPdf="pdfViewerUrl = $event; togglePdf()" > </app-card-comunicato>
        </span>
      </div>
@@ -155,11 +155,16 @@ Vue.component('app-page-comunicati', {
 var comunicati = [
   {id: 'studenti', title: 'Comunicati studenti', obj:'comunicatiStudenti'},
   {id: 'genitori', title: 'Comunicati genitori', obj:'comunicatiGenitori'},
-  {id: 'docenti' , title: 'Comunicati docenti' , obj:'comunicatiDocenti' }
+  {id: 'docenti' , title: 'Comunicati docenti' , obj:'comunicatiDocenti' },
 ]
 comunicati.forEach( (elem) => Vue.component('app-page-comunicati-' + elem.id, {
   template: `<app-page-comunicati title="${elem.title}" :comunicati="$root.davinciApi.${elem.obj}"></app-page-comunicati>`,  
 }))
+
+// Pagina comunicati preferiti
+Vue.component('app-page-comunicati-preferiti', {
+  template: `<app-page-comunicati title="Comunicati preferiti" :comunicati="$root.comunicatiPreferiti"></app-page-comunicati>`,
+})
 
 // Impostazioni
 Vue.component('app-page-impostazioni', {
