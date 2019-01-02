@@ -40,7 +40,7 @@ export default { install: function (Vue, options) {
     {id: 'docenti' , title: 'Comunicati docenti' , obj:'comunicatiDocenti' },
   ]
   comunicati.forEach( (elem) => Vue.component('app-page-comunicati-' + elem.id, {
-    template: `<app-page-comunicati title="${elem.title}" :comunicati="$root.davinciApi.${elem.obj}"></app-page-comunicati>`,  
+    template: `<app-page-comunicati title="${elem.title}" :comunicati="$davinciApi.data.${elem.obj}"></app-page-comunicati>`,  
   }))
 
   // Pagina comunicati preferiti

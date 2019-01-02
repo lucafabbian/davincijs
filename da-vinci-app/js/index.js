@@ -1,12 +1,12 @@
-import davinciApi from './davinciapi.js'
-import appComponents from './components/components.js'
+import VueDaVinciApi from './davinciapi/vue-da-vinci-api.js'
+import AppComponents from './components/components.js'
 
-Vue.use(appComponents)
+Vue.use(VueDaVinciApi)
+Vue.use(AppComponents)
 
-var vm = new Vue({  
+new Vue({  
   el: '#app', 
   data: {
-    davinciApi : davinciApi.data,
     page: (localStorage.page || 'app-page-home'),
     comunicatiLetti     : JSON.parse(localStorage.comunicatiLetti     || '[]'),
     comunicatiPreferiti : JSON.parse(localStorage.comunicatiPreferiti || '[]'),
@@ -33,7 +33,7 @@ var vm = new Vue({
             {name: "Impostazioni", icon:"md-settings", page:"app-page-impostazioni"}
           ]
         }, ],
-    } 
+    }
     
   },
   watch: {
@@ -44,6 +44,5 @@ var vm = new Vue({
   },
 })
 
-davinciApi.refresh()
-
+Vue.prototype.$davinciApi.refresh()
 
