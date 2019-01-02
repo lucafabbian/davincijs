@@ -1,9 +1,12 @@
+import davinciApi from './davinciapi.js'
+import appComponents from './components/components.js'
 
+Vue.use(appComponents)
 
 var vm = new Vue({  
   el: '#app', 
   data: {
-    davinciApi : window.davinciApi.data,
+    davinciApi : davinciApi.data,
     page: (localStorage.page || 'app-page-home'),
     comunicatiLetti     : JSON.parse(localStorage.comunicatiLetti     || '[]'),
     comunicatiPreferiti : JSON.parse(localStorage.comunicatiPreferiti || '[]'),
