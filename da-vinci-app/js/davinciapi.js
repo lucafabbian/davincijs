@@ -9,13 +9,14 @@ window.davinciApi = new function(){
   const isTest = window.location.hash.includes('davinciapi=testlocal')
   
   // Crea l'oggetto con cui fare le richieste all'api
-  const api = axios.create({ baseURL: (isTest ? '/api/' : 'http://www.liceodavinci.tv/api') })
+  const api = axios.create({ baseURL: (isTest ? '/' : 'http://www.liceodavinci.tv/') })
   
   // Qui verranno cachate le richieste ottenute (e salvate in localStorage)
   this.data = {
     comunicatiStudenti: JSON.parse(localStorage.comunicatiStudenti  || '[]'),
     comunicatiGenitori: JSON.parse(localStorage.comunicatiGenitori  || '[]'),
     comunicatiDocenti : JSON.parse(localStorage.comunicatiDocenti   || '[]'),
+    immaginiSlideshow : JSON.parse(localStorage.immaginiSlideshow   || '[]'),
   }
   
   console.log(localStorage.comunicatiStudenti)
@@ -27,25 +28,33 @@ window.davinciApi = new function(){
   this.isOnline = () => api.get('teapot').catch( (err) => err.response.status === 418 )
 
   // Richieste generiche
-  const agenda       = (filter)  => api.post('agenda', filter  )
-  const classi       = ()        => api.get ('classi')
-  const orarioClasse = (classe)  => api.get ('orario/' + classe)
-  const docenti      = ()        => api.get ('docenti')
-  const orarioDocente= (docente) => api.post('orario/docente', docente)
+  const agenda       = (filter)  => api.post('api/agenda', filter  )
+  const classi       = ()        => api.get ('api/classi')
+  const orarioClasse = (classe)  => api.get ('api/orario/' + classe)
+  const docenti      = ()        => api.get ('api/docenti')
+  const orarioDocente= (docente) => api.post('api/orario/docente', docente)
   
   // Comunicati
   const comunicati = (obj, url, last = '') => new Promise( (resolve, reject) => {
-    api.get(url + last).then( (result) => resolve(localStorage[obj] = this.data[obj] = result.data.forEach((v) => {delete v.tipo; delete v.data})) )
+    api.get(url + last).then( (result) => resolve(localStorage[obj] = this.data[obj] = result.data))
   })
   
-  this.comunicatiStudenti = (last) => comunicati('comunicatiStudenti', '/comunicati/studenti/', last)
-  this.comunicatiGenitori = (last) => comunicati('comunicatiGenitori', '/comunicati/genitori/', last)
-  this.comunicatiDocenti  = (last) => comunicati('comunicatiDocenti' , '/comunicati/docenti/' , last)
+  this.comunicatiStudenti = (last) => comunicati('comunicatiStudenti', 'api/comunicati/studenti/', last)
+  this.comunicatiGenitori = (last) => comunicati('comunicatiGenitori', 'api/comunicati/genitori/', last)
+  this.comunicatiDocenti  = (last) => comunicati('comunicatiDocenti' , 'api/comunicati/docenti/' , last)
+  this.immaginiSlideshow  = () => new Promise ( (resolve, reject) => {
+    var el = document.createElement('html');
+
+    api.get("sitoLiceo/index.php").then((response) => {
+      el.innerHTML = response.data; resolve(console.log(el.getElementsByTagName('ul')))
+    });
+  })
   
   this.refresh = () => {
     this.comunicatiStudenti()
     this.comunicatiGenitori()
     this.comunicatiDocenti()
+    this.immaginiSlideshow()
   }
   
 }()
