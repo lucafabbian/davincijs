@@ -31,7 +31,7 @@ Vue.component('app-page-agenda', {
      </ons-row>
      <ons-row style="background-color:white;" v-for="row in week">
        <ons-col 
-         :style="'text-align: center; line-height: 200%; color: ' + (day.isInMonth ? 'black' : 'red')" 
+         :style="'text-align: center; line-height: 200%; color: ' + (day.isInMonth ? 'black' : 'grey')" 
          v-for="day in row"> {{ day.number }} </ons-col>
      </ons-row>
    </app-page>`,
