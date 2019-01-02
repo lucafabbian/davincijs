@@ -21,7 +21,7 @@
         <ons-splitter-content id="content">
           <ons-page class="page">
               <keep-alive>
-                <component v-bind:is="page"></component>
+                <component :is="page.page" v-bind="page.data"></component>
               </keep-alive>
           </ons-page>
         </ons-splitter-content>
