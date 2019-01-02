@@ -62,7 +62,18 @@ expr.post('/api/agenda', function (req, res) {              // Agenda
     (data) => res.send(data.data)
   ).catch((err) => console.log('error on getting agenda'))
 })
-
+// Reindirizzamento generico al sito della scuola
+expr.get('/*', function (req, res) {
+  console.log("Ricevuta richiesta per: " + req.originalUrl)
+  axios.get("http://www.liceodavinci.tv" + req.originalUrl).then( (data) => res.send(data.data))
+})
+expr.post('/*', function (req, res) {              // Agenda
+  console.log("Ricevuta richiesta per: " + req.originalUrl)
+  console.log('con parametri ', req.body);
+  app.axios.post("http://www.liceodavinci.tv" + req.originalUrl, req.body).then( 
+    (data) => res.send(data.data)
+  )
+})
 
 const request = require('request')
 const fs = require('fs')
