@@ -27,7 +27,7 @@ export default {
     title  : function(){ return (this.comunicato.nome.substring(this.number.length + 1).replace(".pdf", "").replace(/\_/g," ")) },
     urlName: function(){ return this.comunicato.url.substring(this.url.lastIndexOf('/')) },    
     // Proprietà del comunicato (se è fra i preferiti/se è stato letto) e relativi stili
-    isPref    : function(){ return this.$root.comunicatiPreferiti.includes(this.comunicato) },
+    isPref    : function(){ return this.comunicato.isPref },
     prefColor : function(){ return 'color: ' + (this.isPref ? '#daa900' : '#4c5256')},
     prefIcon  : function(){ return this.isPref ? 'md-star' : 'md-star-border'},
     isRead    : function(){ return this.$root.comunicatiLetti    .includes(this.comunicato) },

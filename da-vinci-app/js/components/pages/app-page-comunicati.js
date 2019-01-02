@@ -15,7 +15,7 @@ export default {
           <ons-icon icon="md-spinner" size="28px" spin></ons-icon>
        </span>
        <span v-else>
-         <app-card-comunicato v-for="(comunicato, index) in comunicati" 
+         <app-card-comunicato v-for="(comunicato, index) in $davinciApi.data[comunicati]" 
           :comunicato="comunicato"
           v-on:openPdf="pdfViewerUrl = $event; togglePdf()" > </app-card-comunicato>
        </span>
