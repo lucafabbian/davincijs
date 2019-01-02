@@ -114,7 +114,7 @@ Vue.component('app-card-comunicato', {
   methods: {
     openPdf: function(){  // Chiede alla pagina madre di aprire un pdf su un url
       if(!this.isRead) this.$root.comunicatiLetti.push(this.comunicato)
-      this.$emit('openPdf', this.url)
+      this.$emit('openPdf', this.comunicato.url)
     },
     togglePref: function(){ // Cambia stato da preferito a non preferito (e viceversa)
       var pref = this.$root.comunicatiPreferiti
