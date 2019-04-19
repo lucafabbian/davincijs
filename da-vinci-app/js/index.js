@@ -3,11 +3,12 @@ import AppComponents from './components/components.js'
 
 Vue.use(VueDaVinciApi)
 Vue.use(AppComponents)
+Vue.config.devtools = true
 
 window.vm = new Vue({  
   el: '#app', 
   data: {
-    page: (JSON.parse(localStorage.page || '{name: "Home", icon:"md-home", page:"app-page-home"}' )),
+    page: (localStorage.page || '{name: "Home", icon:"md-home", page:"app-page-home"}'),
     comunicatiLetti     : JSON.parse(localStorage.comunicatiLetti     || '[]'),
     comunicatiPreferiti : JSON.parse(localStorage.comunicatiPreferiti || '[]'),
     
@@ -20,7 +21,7 @@ window.vm = new Vue({
   },
 })
 
-console.log(vm.comunicatiLetti)
+//console.log(vm.comunicatiLetti)
 
 Vue.prototype.$davinciApi.refresh()
-
+console.log(Vue.prototype.$davinciApi.data)

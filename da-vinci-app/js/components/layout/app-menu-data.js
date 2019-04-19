@@ -12,9 +12,9 @@ export default {
     }, {
       name: "comunicati",
       elements:[
-        {name: "Studenti",  icon:"md-graduation-cap", page:"app-page-comunicati", data: { title: 'Comunicati studenti', comunicati:'comunicatiStudenti' } },      
-        {name: "Genitori",  icon:"md-accounts",       page:"app-page-comunicati", data: { title: 'Comunicati genitori', comunicati:'comunicatiGenitori' } },      
-        {name: "Docenti",   icon:"md-case",           page:"app-page-comunicati", data: { title: 'Comunicati docenti' , comunicati:'comunicatiDocenti'  } }, 
+        {name: "Studenti",  icon:"md-graduation-cap", page:"app-page-comunicati", data: { title: 'Comunicati studenti', comunicati:0 } },      
+        {name: "Genitori",  icon:"md-accounts",       page:"app-page-comunicati", data: { title: 'Comunicati genitori', comunicati:1 } },      
+        {name: "Docenti",   icon:"md-case",           page:"app-page-comunicati", data: { title: 'Comunicati docenti' , comunicati:2 } }, 
         {name: "Preferiti",   icon:"md-star",         page:"app-page-comunicati-preferiti"},                 
       ]
     }, {

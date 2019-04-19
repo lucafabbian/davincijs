@@ -28,7 +28,7 @@ export default {
     urlName: function(){ return this.comunicato.url.substring(this.url.lastIndexOf('/')) },    
     // Proprietà del comunicato (se è fra i preferiti/se è stato letto) e relativi stili
     isPref    : function(){ return this.comunicato.isPref },
-    prefColor : function(){ return 'color: ' + (this.isPref ? '#daa900' : '#4c5256')},
+    prefColor : function(){ return 'color: ' + (this.comunicato.isPref ? '#daa900' : '#4c5256')},
     prefIcon  : function(){ return this.isPref ? 'md-star' : 'md-star-border'},
     isRead    : function(){ return this.$root.comunicatiLetti    .includes(this.comunicato) },
     readStyle : function(){ return 'fontWeight: ' + (this.isRead ? '400' : '600')}
@@ -39,8 +39,7 @@ export default {
       this.$emit('openPdf', this.comunicato.url)
     },
     togglePref: function(){ // Cambia stato da preferito a non preferito (e viceversa)
-      var pref = this.$root.comunicatiPreferiti
-      this.isPref ? pref.splice(pref.indexOf(this.comunicato), 1) : pref.push(this.comunicato)
+      this.comunicato.isPref = !this.comunicato.isPref 
     }
   }
 }
