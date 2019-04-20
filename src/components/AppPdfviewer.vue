@@ -7,6 +7,6 @@
 <script>
 export default {
   props: ['url'],
-  data: () => ({ baseUrl: './pdfviewer/web/viewer.html?file='}),
+  data: () => ({ baseUrl: './static/pdfviewer/web/viewer.html?file='}),
 }
 </script>

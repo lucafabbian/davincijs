@@ -15,14 +15,21 @@ const production = !process.env.ROLLUP_WATCH
 
 export default {
     input: 'src/index.js',
+    /*resolveId(id) {
+      if (id.startsWith('./static')) {
+        console.log(id)
+        return {id: id, external: true};
+      }
+      return null;
+    }, */
     output:  { file: 'dist/index.js', format: 'iife', sourcemap: 'inline' },
     watch:   { clearScreen: true },
     plugins: [
       resolve({jsnext: true, preferBuiltins: true, browser: true }),
       commonjs(),
-      vue({css: false}),
+      vue({css: false, template: {transformAssetUrls: false,} }),
       postcss({extract: true, minimize: production, plugins: [
-        postcssImport({/*filter: (name) => !name.startsWith('../onsenui'),*/ }),
+        postcssImport({ filter: (name) => !name.startsWith('./static') }),
         postcssUrl   ({ url: 'inline'}),
       ] }),
       replace({
@@ -30,7 +37,12 @@ export default {
         'process.env.VUE_ENV': JSON.stringify('browser'),
       }),
       production && terser(),       // Minify only on production
-      !production && serve('dist'), // Open browser on watch
+      !production && serve({         // Open browser on watch
+        open: true,
+        contentBase: 'dist',
+        host: '0.0.0.0',
+        port: 10001,
+      }),
       !production && livereload(),  // Livereload on watch
     ],
 }

@@ -1,7 +1,7 @@
 <template>
   <v-ons-page>
-    <div class="profile-pic">
-      <img :src="image" style="display: block; max-width: 100%;">
+    <div class="app-menu-profile-pic">
+      <img src="./static/img/logo-toolbar.svg">
     </div>
     <v-ons-list>
       <span v-for="category in categories">
@@ -18,10 +18,15 @@
     </v-ons-list>
   </v-ons-page>
 </template>
+<style>
+  .app-menu-profile-pic > img {
+    display: block;
+    width: 100%;
+  }
+</style>
 <script>
 
 const data = {
-  image: 'res/img/logo-toolbar.svg',
   categories: [ {
       name: "",
       elements:[
