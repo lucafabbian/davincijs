@@ -1,0 +1,49 @@
+{
+  "name": "davincijs",
+  "version": "1.0.0",
+  "description": "Liceo Da Vinci unofficial javascript client",
+  "main": "index.js",
+  "directories": {
+    "doc": "docs"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "rollup -c",
+    "watch": "rollup -w -c"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/lucafabbian/davincijs.git"
+  },
+  "keywords": [
+    "davinci",
+    "client"
+  ],
+  "author": "Luca Fabbian, Antonio Napolitano",
+  "license": "GPL-3.0-or-later",
+  "bugs": {
+    "url": "https://github.com/lucafabbian/davincijs/issues"
+  },
+  "homepage": "https://github.com/lucafabbian/davincijs#readme",
+  "dependencies": {
+    "axios": "^0.18.0",
+    "onsenui": "^2.10.8",
+    "vue": "^2.6.10"
+  },
+  "devDependencies": {
+    "eslint": "^5.16.0",
+    "eslint-plugin-html": "^5.0.3",
+    "eslint-plugin-jsdoc": "^4.8.3",
+    "postcss-import": "^12.0.1",
+    "rollup": "^1.10.1",
+    "rollup-plugin-commonjs": "^9.3.4",
+    "rollup-plugin-livereload": "^1.0.0",
+    "rollup-plugin-node-resolve": "^4.2.3",
+    "rollup-plugin-postcss": "^2.0.3",
+    "rollup-plugin-replace": "^2.2.0",
+    "rollup-plugin-serve": "^1.0.1",
+    "rollup-plugin-terser": "^4.0.4",
+    "rollup-plugin-vue": "^5.0.0",
+    "vue-template-compiler": "^2.6.10"
+  }
+}
