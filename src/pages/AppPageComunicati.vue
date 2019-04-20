@@ -7,24 +7,21 @@
       </span>
     </template>
     <app-pdfviewer v-if="isPdfViewer" :url="pdfViewerUrl"></app-pdfviewer>
-    <div v-show="!isPdfViewer">
-      <span v-if="comunicati.length === 0">
-         <v-ons-icon icon="md-spinner" size="28px" spin></v-ons-icon>
-      </span>
-      <span v-else>
-        <!--
-        <v-ons-lazy-repeat
-        :render-item="comunicato"
-        :length="$davinciApi.data.reactiveWrapper[comunicati].length"
-        ></v-ons-lazy-repeat>
-      -->
+    <span v-if="comunicati.length === 0 && !isPdfViewer">
+       <v-ons-icon icon="md-spinner" size="28px" spin></v-ons-icon>
+    </span>
+    <v-ons-list>
+      <v-ons-lazy-repeat
+      :render-item="comunicato"
+      :length="$davinciApi.data.reactiveWrapper[comunicati].length"
+      :calculate-item-height="itemHeight"
+      ></v-ons-lazy-repeat>
+    </v-ons-list>
         <!--
         <app-card-comunicato v-for="(comunicato, index) in $davinciApi.data.reactiveWrapper[comunicati]"
          :comunicato="comunicato"
          v-on:openPdf="pdfViewerUrl = $event; togglePdf()" > </app-card-comunicato>
        -->
-      </span>
-    </div>
   </app-page>
 </template>
 <script>
@@ -40,14 +37,18 @@ export default {
       comunicato: index => new this.$vue({
         render: h => h(AppCardComunicato, {
           props: {
-            comunicato: this.$davinciApi.data.reactiveWrapper[this.comunicati][index]
+            comunicato: this.$davinciApi.data.reactiveWrapper[this.comunicati][index],
+            isRead: this.$root.comunicatiLetti.includes(
+              this.$davinciApi.data.reactiveWrapper[this.comunicati]
+            )
           }
         })
       })
     }
   },
   methods: {
-    togglePdf: function(){ this.scrollEnabled=  !(this.isPdfViewer = !this.isPdfViewer)}
+    togglePdf(){ this.scrollEnabled=  !(this.isPdfViewer = !this.isPdfViewer)},
+    itemHeight(){ return 80; },
   },
   components: {
     AppPdfviewer,

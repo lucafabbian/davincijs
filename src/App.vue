@@ -4,11 +4,9 @@
       <app-menu></app-menu>
     </v-ons-splitter-side>
     <v-ons-splitter-content id="content">
-      <v-ons-page class="page">
-          <keep-alive>
-            <component :is="$root.page.page" v-bind="$root.page.data"></component>
-          </keep-alive>
-      </v-ons-page>
+        <keep-alive>
+          <component :is="$root.page.page" v-bind="$root.page.data"></component>
+        </keep-alive>
     </v-ons-splitter-content>
   </v-ons-splitter>
 </template>

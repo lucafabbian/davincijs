@@ -11,12 +11,12 @@ import serve from 'rollup-plugin-serve'           // Start a browser
 import livereload from 'rollup-plugin-livereload' // Livereload
 
 /** Set development mode if is 'npm run watch' */
-const production = true; !process.env.ROLLUP_WATCH;
+const production = !process.env.ROLLUP_WATCH;
 
 
 export default {
     input: 'src/index.js',
-    output:  { file: 'dist/index.js', format: 'iife', [!production && 'sourcemap']: 'inline' },
+    output:  { file: 'dist/index.js', format: 'iife' },
     watch:   { clearScreen: true },
     plugins: [
       resolve({jsnext: true, preferBuiltins: true, browser: true }),

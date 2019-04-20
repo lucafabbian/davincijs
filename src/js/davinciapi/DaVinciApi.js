@@ -34,8 +34,15 @@ export default new function(){
     last = (last == undefined) ? '' : '/' + last; // aggiungi uno slash solo se last non è nullo
     // aggiungere sempre lo slash alla fine causa dei redirect inutili
     api.get(url + last).then( (result) => {
-      localStorage[obj] = JSON.stringify(result.data);
-      resolve(this.data[obj] = result.data);
+      console.log("result", result.data)
+      const comunicati = result.data.map( comunicato => ({
+        ...comunicato,
+        number: (comunicato.nome.match(/^[0-9]*/) || ["0"])[0] || "0" ,
+        title: comunicato.nome.substring(((comunicato.nome.match(/^[0-9]*/) || ["0"])[0] || "0").length + 1).replace(".pdf", "").replace(/\_/g," "),
+        urlName: comunicato.url.substring(comunicato.url.lastIndexOf('/')),
+      }))
+      localStorage[obj] = JSON.stringify(comunicati);
+      resolve(this.data[obj] = comunicati);
     })
   })
 

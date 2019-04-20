@@ -1,6 +1,6 @@
 <template>
-  <div>
-    <v-ons-toolbar class="toolbar">
+  <v-ons-page>
+    <v-ons-toolbar>
       <div class="left">
         <v-ons-toolbar-button onclick="document.getElementById('menu').open()">
           <v-ons-icon icon="md-menu"></v-ons-icon>
@@ -11,11 +11,8 @@
         <slot name="actions"></slot>
       </div>
     </v-ons-toolbar>
-    <div class="page__background"></div>
-    <div class="page__content" :style=" scrollable ? '' : 'overflow-y:hidden'">
-      <slot></slot>
-    </div>
-  </div>
+    <slot></slot>
+  </v-ons-page>
 </template>
 <script>
 export default {

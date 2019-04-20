@@ -1,41 +1,81 @@
-<template>
-  <v-ons-card tappable>
-    <v-ons-row tappable>
-      <v-ons-col width="30px" style="text-align: center; font-size: 90%">
-        {{ number }} <br>
-        <v-ons-icon :style="prefColor" :icon="prefIcon" size="25px" v-on:click="togglePref"></v-ons-icon>
-      </v-ons-col>
-      <v-ons-col width="10px"></v-ons-col>
-      <v-ons-col v-on:click="openPdf" :style="readStyle"> {{ title }}</v-ons-col>
-      <v-ons-col width="40px" style="text-align: center">
-        <a :href="comunicato.url" :download="number + '-' + title + '.pdf'">
-          <v-ons-icon style="color: #4c5256" icon="md-download" size="28px"></v-ons-icon>
-        </a>
-      </v-ons-col>
-      <v-ons-col width="40px" style="text-align: center">
-        <a :href="'https://wa.me/?text=' + comunicato.url">
-          <v-ons-icon style="color: #4c5256" icon="md-share" size="28px"></v-ons-icon>
-        </a>
-      </v-ons-col>
-    </v-ons-row>
-  </v-ons-card>
+<template functional>
+  <div class="app-comunicato">
+    <div>
+      {{ props.comunicato.number }} <br>
+      <div
+      :class="props.comunicato.isPref ? 'app-comunicato-preferito' : ''"
+      @click="$emit('togglepref')"
+      ></div>
+    </div>
+    <div
+    @click="$emit('openpdf')"
+    :style="'fontWeight: ' + (props.isRead ? '400' : '600')"
+    > {{ props.comunicato.title }}</div>
+      <a
+      :href="props.comunicato.url"
+      :download="props.comunicato.number + '-' + props.comunicato.title + '.pdf'"
+      class="zmdi-download"
+      ></a>
+      <a
+      :href="'https://wa.me/?text=' + props.comunicato.url"
+      class="zmdi-share"
+      ></a>
+  </div>
 </template>
+<style>
+  .app-comunicato {
+    -webkit-tap-highlight-color: red;
+    display: flex;
+    width: 100vw;
+    padding: 10px;
+    box-sizing: border-box;
+    vertical-align: middle;
+    border-bottom: 1px solid #cfcfcf;
+  }
+  .app-comunicato :first-child, .app-comunicato :nth-child(3), .app-comunicato :nth-child(4){
+    text-align: center;
+    flex: 0 0 50px;
+    width: 50px;
+    color: #4c5256;
+  }
+
+  .app-comunicato :first-child > div{
+    -webkit-tap-highlight-color: red;
+    font: normal normal normal 25px/1 'Material-Design-Iconic-Font';
+    display: inline-block;
+    line-height: inherit;
+    font-style: normal;
+    font-weight: 400;
+  }
+
+  .app-comunicato :first-child > div::before {
+    content: '\f27c';
+  }
+
+  .app-comunicato .app-comunicato-preferito {
+    color: #daa900;
+  }
+
+  .app-comunicato .app-comunicato-preferito::before {
+    content:'\f27d';
+  }
+
+  .app-comunicato :nth-child(2) {
+    flex:1;
+    text-overflow: ellipsis;
+  }
+
+  .app-comunicato > a.zmdi-download, .app-comunicato > a.zmdi-share{
+    text-decoration: none;
+    -webkit-tap-highlight-color: red;
+    font: normal normal normal 32px/1 'Material-Design-Iconic-Font';
+  }
+</style>
 <script>
 export default {
   name: 'AppCardComunicato',
-  props: ['comunicato'],
-  computed: {
-    // Parti di cui è composto il nome del comunicato
-    number (){ return (this.comunicato.nome.match(/^[0-9]*/) || ["0"])[0] || "?"  },
-    title  (){ return (this.comunicato.nome.substring(this.number.length + 1).replace(".pdf", "").replace(/\_/g," ")) },
-    urlName(){ return this.comunicato.url.substring(this.url.lastIndexOf('/')) },
-    // Proprietà del comunicato (se è fra i preferiti/se è stato letto) e relativi stili
-    isPref    (){ return this.comunicato.isPref },
-    prefColor (){ return 'color: ' + (this.comunicato.isPref ? '#daa900' : '#4c5256')},
-    prefIcon  (){ return this.isPref ? 'md-star' : 'md-star-border'},
-    isRead    (){ return this.$root.comunicatiLetti    .includes(this.comunicato) },
-    readStyle (){ return 'fontWeight: ' + (this.isRead ? '400' : '600')}
-  },
+  props: ['comunicato', 'isRead'],
+  /*
   methods: {
     openPdf (){  // Chiede alla pagina madre di aprire un pdf su un url
       if(!this.isRead) this.$root.comunicatiLetti.push(this.comunicato)
@@ -44,6 +84,6 @@ export default {
     togglePref (){ // Cambia stato da preferito a non preferito (e viceversa)
       this.comunicato.isPref = !this.comunicato.isPref
     }
-  }
+  }*/
 }
 </script>
