@@ -1,11 +1,12 @@
 /* Import rollup plugins */
 import { terser } from 'rollup-plugin-terser'     // Js minifier
 import resolve from 'rollup-plugin-node-resolve'  // Import from node_modules
-import replace from 'rollup-plugin-replace'       // Replace
+import replace from 'rollup-plugin-replace'       // Replace values inside code
 import commonjs from 'rollup-plugin-commonjs'     // Vue plugin dependency
 import vue from 'rollup-plugin-vue'               // Vue loader
 import postcss from 'rollup-plugin-postcss'       // Css loader and minifier
-import atImport from 'postcss-import'             // Css import resolver
+import postcssImport from 'postcss-import'        // Css import resolver
+import postcssUrl    from 'postcss-url'           // Css icons inliner
 import serve from 'rollup-plugin-serve'           // Start a browser
 import livereload from 'rollup-plugin-livereload' // Livereload
 
@@ -20,15 +21,16 @@ export default {
       resolve({jsnext: true, preferBuiltins: true, browser: true }),
       commonjs(),
       vue({css: false}),
-      postcss({extract: true, minimize: production, plugins: [atImport({
-        //filter: (name) => !name.startsWith('../onsenui'),
-      })] }),
+      postcss({extract: true, minimize: production, plugins: [
+        postcssImport({/*filter: (name) => !name.startsWith('../onsenui'),*/ }),
+        postcssUrl   ({ url: 'inline'}),
+      ] }),
       replace({
         'process.env.NODE_ENV': JSON.stringify('development'),
         'process.env.VUE_ENV': JSON.stringify('browser'),
       }),
-      production && terser(),
-      !production && serve('dist'),
-      !production && livereload(),
+      production && terser(),       // Minify only on production
+      !production && serve('dist'), // Open browser on watch
+      !production && livereload(),  // Livereload on watch
     ],
 }

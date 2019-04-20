@@ -12,9 +12,17 @@
          <v-ons-icon icon="md-spinner" size="28px" spin></v-ons-icon>
       </span>
       <span v-else>
+        <!--
+        <v-ons-lazy-repeat
+        :render-item="comunicato"
+        :length="$davinciApi.data.reactiveWrapper[comunicati].length"
+        ></v-ons-lazy-repeat>
+      -->
+        <!--
         <app-card-comunicato v-for="(comunicato, index) in $davinciApi.data.reactiveWrapper[comunicati]"
          :comunicato="comunicato"
          v-on:openPdf="pdfViewerUrl = $event; togglePdf()" > </app-card-comunicato>
+       -->
       </span>
     </div>
   </app-page>
@@ -24,12 +32,24 @@ import AppCardComunicato from '../components/AppCardComunicato.vue'
 import AppPdfviewer      from '../components/AppPdfviewer.vue'
 export default {
   props: ['title', 'comunicati'],
-  data: () =>({ scrollEnabled: true, isPdfViewer: false, pdfViewerUrl: "file.pdf"}),
+  data(){
+    return {
+      scrollEnabled: true,
+      isPdfViewer: false,
+      pdfViewerUrl: "file.pdf",
+      comunicato: index => new this.$vue({
+        render: h => h(AppCardComunicato, {
+          props: {
+            comunicato: this.$davinciApi.data.reactiveWrapper[this.comunicati][index]
+          }
+        })
+      })
+    }
+  },
   methods: {
     togglePdf: function(){ this.scrollEnabled=  !(this.isPdfViewer = !this.isPdfViewer)}
   },
   components: {
-    AppCardComunicato,
     AppPdfviewer,
   }
 }

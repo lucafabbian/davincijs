@@ -1,0 +1,9 @@
+html, body, .page__content {
+  overflow-x: hidden;
+}
+iframe {
+  overflow-y: hidden;
+  padding: 0;
+  margin: 0;
+  border: 0;
+}
