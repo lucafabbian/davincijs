@@ -1,13 +1,25 @@
+// External libs imports
 import Vue from 'vue/dist/vue.esm.browser.js'
+import VueOnsen from 'vue-onsenui'
+
+// App imports
 import App from './App.vue'
-import onsenui from 'onsenui'
+import VueDaVinciApi from './js/davinciapi/VueDaVinciApi.js'
+import store from './js/store/store.js'
+import BaseComponents from './components/BaseComponents.js'
 
-import VueDaVinciApi from './js/davinciapi/vue-da-vinci-api.js'
-import AppComponents from './js/components/components.js'
+// Css imports
+/* TODO: currently not working */
 
-Vue.use(VueDaVinciApi)
-Vue.use(AppComponents)
-Vue.config.devtools = true
+/** Install Vue plugins */
+;[VueOnsen, VueDaVinciApi, BaseComponents].forEach( plugin => Vue.use(plugin))
+
+/** Developer mode */
+if(process.env.NODE_ENV === 'development'){
+  Vue.prototype.$ons.platform.select('android') // Set android
+
+}
+
 
 new Vue({
   el: '#app',
@@ -25,4 +37,3 @@ new Vue({
 })
 
 Vue.prototype.$davinciApi.refresh()
-console.log(Vue.prototype.$davinciApi.data)

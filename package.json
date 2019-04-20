@@ -28,7 +28,9 @@
   "dependencies": {
     "axios": "^0.18.0",
     "onsenui": "^2.10.8",
-    "vue": "^2.6.10"
+    "vue": "^2.6.10",
+    "vue-onsenui": "^2.6.2",
+    "vue-stash": "^2.0.1-beta"
   },
   "devDependencies": {
     "eslint": "^5.16.0",
