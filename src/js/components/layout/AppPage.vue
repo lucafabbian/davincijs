@@ -20,8 +20,8 @@
 <script>
 export default {
   props: {
-    title: 'String',
-    scrollable: { type: 'Boolean', default: true },
+    title: String,
+    scrollable: { type: Boolean, default: true },
   },
 }
 

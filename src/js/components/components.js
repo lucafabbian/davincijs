@@ -1,14 +1,14 @@
 
 // Layout
 import AppPage      from './layout/AppPage.vue'
-import AppNavAction from './layout/app-nav-action.js'
-import AppMenu      from './layout/app-menu.js'
+import AppNavAction from './layout/AppNavAction.vue'
+import AppMenu      from './layout/AppMenu.vue'
 
 // Pages
-import AppPageHome         from './pages/app-page-home.js'
-import AppPageAgenda       from './pages/app-page-agenda.js'
-import AppPageComunicati   from './pages/app-page-comunicati.js'
-import AppPageImpostazioni from './pages/app-page-impostazioni.js'
+import AppPageHome         from './pages/AppPageHome.vue'
+import AppPageAgenda       from './pages/AppPageAgenda.vue'
+import AppPageComunicati   from './pages/AppPageComunicati.vue'
+import AppPageImpostazioni from './pages/AppPageImpostazioni.vue'
 
 // Helper components
 import AppPdfviewer      from './others/AppPdfviewer.vue'
