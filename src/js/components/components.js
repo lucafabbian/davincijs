@@ -1,6 +1,6 @@
 
 // Layout
-import AppPage      from './layout/app-page.js'
+import AppPage      from './layout/AppPage.vue'
 import AppNavAction from './layout/app-nav-action.js'
 import AppMenu      from './layout/app-menu.js'
 
