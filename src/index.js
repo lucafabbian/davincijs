@@ -1,7 +1,6 @@
 // External libs imports
 import Vue from 'vue/dist/vue.esm.browser.js'
 import VueOnsen from 'vue-onsenui'
-import 'onsenui/css/onsenui.css';
 
 // App imports
 import App from './App.vue'

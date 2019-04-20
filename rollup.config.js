@@ -10,19 +10,13 @@ import postcssUrl    from 'postcss-url'           // Css icons inliner
 import serve from 'rollup-plugin-serve'           // Start a browser
 import livereload from 'rollup-plugin-livereload' // Livereload
 
-const production = !process.env.ROLLUP_WATCH
+/** Set development mode if is 'npm run watch' */
+const production = true; //!process.env.ROLLUP_WATCH
 
 
 export default {
     input: 'src/index.js',
-    /*resolveId(id) {
-      if (id.startsWith('./static')) {
-        console.log(id)
-        return {id: id, external: true};
-      }
-      return null;
-    }, */
-    output:  { file: 'dist/index.js', format: 'iife', sourcemap: 'inline' },
+    output:  { file: 'dist/index.js', format: 'iife', [!production && 'sourcemap']: 'inline' },
     watch:   { clearScreen: true },
     plugins: [
       resolve({jsnext: true, preferBuiltins: true, browser: true }),
