@@ -4,11 +4,11 @@
       {{ props.comunicato.number }} <br>
       <div
       :class="props.comunicato.isPref ? 'app-comunicato-preferito' : ''"
-      @click="$emit('togglepref')"
+      @click="listeners.togglepref || (() => {})"
       ></div>
     </div>
     <div
-    @click="$emit('openpdf')"
+    @click="listeners.openpdf || (() => {})"
     :style="'fontWeight: ' + (props.isRead ? '400' : '600')"
     > {{ props.comunicato.title }}</div>
       <a
@@ -24,13 +24,16 @@
 </template>
 <style>
   .app-comunicato {
-    -webkit-tap-highlight-color: red;
     display: flex;
     width: 100vw;
-    padding: 10px;
+    padding: 15px;
     box-sizing: border-box;
     vertical-align: middle;
     border-bottom: 1px solid #cfcfcf;
+    padding-top: 20px;
+  }
+  .app-comunicato:active{
+    background-color: #eee;
   }
   .app-comunicato :first-child, .app-comunicato :nth-child(3), .app-comunicato :nth-child(4){
     text-align: center;
@@ -40,7 +43,6 @@
   }
 
   .app-comunicato :first-child > div{
-    -webkit-tap-highlight-color: red;
     font: normal normal normal 25px/1 'Material-Design-Iconic-Font';
     display: inline-block;
     line-height: inherit;
@@ -67,7 +69,6 @@
 
   .app-comunicato > a.zmdi-download, .app-comunicato > a.zmdi-share{
     text-decoration: none;
-    -webkit-tap-highlight-color: red;
     font: normal normal normal 32px/1 'Material-Design-Iconic-Font';
   }
 </style>

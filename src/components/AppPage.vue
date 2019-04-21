@@ -1,5 +1,5 @@
 <template>
-  <v-ons-page>
+  <v-ons-page :infiniteScroll="infiniteScroll">
     <v-ons-toolbar>
       <div class="left">
         <v-ons-toolbar-button onclick="document.getElementById('menu').open()">
@@ -20,6 +20,7 @@ export default {
   props: {
     title: String,
     scrollable: { type: Boolean, default: true },
+    infiniteScroll: Function,
   },
 }
 

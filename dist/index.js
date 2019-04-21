@@ -45881,6 +45881,7 @@
   //
   //
   //
+  //
 
   var script$2 = {
     name: 'AppCardComunicato',
@@ -45911,7 +45912,7 @@
           class: _vm.props.comunicato.isPref ? "app-comunicato-preferito" : "",
           on: {
             click: function($event) {
-              return _vm.$emit("togglepref")
+              _vm.listeners.togglepref || function() {};
             }
           }
         })
@@ -45923,7 +45924,7 @@
           style: "fontWeight: " + (_vm.props.isRead ? "400" : "600"),
           on: {
             click: function($event) {
-              return _vm.$emit("openpdf")
+              _vm.listeners.openpdf || function() {};
             }
           }
         },
@@ -46034,27 +46035,34 @@
     props: ['title', 'comunicati'],
     data(){
       return {
-        scrollEnabled: true,
+        comunicatiDaCaricare: 15,
         isPdfViewer: false,
         pdfViewerUrl: "file.pdf",
-        comunicato: index => new this.$vue({
-          render: h => h(AppCardComunicato, {
-            props: {
-              comunicato: this.$davinciApi.data.reactiveWrapper[this.comunicati][index],
-              isRead: this.$root.comunicatiLetti.includes(
-                this.$davinciApi.data.reactiveWrapper[this.comunicati]
-              )
-            }
-          })
-        })
+
+      }
+    },
+    computed: {
+      comunicatiCaricati(){
+        return this.$davinciApi.data.reactiveWrapper[this.comunicati].slice(
+          0,
+          this.comunicatiDaCaricare
+        )
       }
     },
     methods: {
-      togglePdf(){ this.scrollEnabled=  !(this.isPdfViewer = !this.isPdfViewer);},
+      togglePdf(){
+        console.log('toggling pdf');
+        this.scrollEnabled=  !(this.isPdfViewer = !this.isPdfViewer);
+      },
       itemHeight(){ return 80; },
+      infiniteScroll(done){
+        this.comunicatiDaCaricare+=7;
+        done();
+      }
     },
     components: {
       AppPdfviewer,
+      AppCardComunicato,
     }
   };
 
@@ -46068,7 +46076,13 @@
     var _c = _vm._self._c || _h;
     return _c(
       "app-page",
-      { attrs: { title: _vm.title, scrollable: _vm.scrollEnabled } },
+      {
+        attrs: {
+          title: _vm.title,
+          scrollable: "",
+          "infinite-scroll": _vm.infiniteScroll
+        }
+      },
       [
         _c("template", { slot: "actions" }, [
           _vm.isPdfViewer
@@ -46112,16 +46126,20 @@
         _vm._v(" "),
         _c(
           "v-ons-list",
-          [
-            _c("v-ons-lazy-repeat", {
+          _vm._l(_vm.comunicatiCaricati, function(comunicato, index) {
+            return _c("app-card-comunicato", {
               attrs: {
-                "render-item": _vm.comunicato,
-                length:
-                  _vm.$davinciApi.data.reactiveWrapper[_vm.comunicati].length,
-                "calculate-item-height": _vm.itemHeight
+                comunicato: comunicato,
+                isRead: _vm.$root.comunicatiLetti.includes(comunicato)
+              },
+              on: {
+                openpdf: function($event) {
+                  _vm.pdfViewerUrl = comunicato.url;
+                  _vm.togglePdf();
+                }
               }
             })
-          ],
+          }),
           1
         )
       ],
@@ -48016,6 +48034,7 @@
     props: {
       title: String,
       scrollable: { type: Boolean, default: true },
+      infiniteScroll: Function,
     },
   };
 
@@ -48029,6 +48048,7 @@
     var _c = _vm._self._c || _h;
     return _c(
       "v-ons-page",
+      { attrs: { infiniteScroll: _vm.infiniteScroll } },
       [
         _c("v-ons-toolbar", [
           _c(

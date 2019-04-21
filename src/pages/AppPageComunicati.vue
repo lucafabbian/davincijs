@@ -1,5 +1,9 @@
 <template>
-  <app-page :title="title" :scrollable="scrollEnabled">
+  <app-page
+  :title="title"
+  scrollable
+  :infinite-scroll="infiniteScroll"
+  >
     <template slot="actions">
       <span v-if="isPdfViewer">
         <app-nav-action icon="md-share" v-on:action="alert('ciao')"></app-nav-action>
@@ -11,17 +15,14 @@
        <v-ons-icon icon="md-spinner" size="28px" spin></v-ons-icon>
     </span>
     <v-ons-list>
-      <v-ons-lazy-repeat
-      :render-item="comunicato"
-      :length="$davinciApi.data.reactiveWrapper[comunicati].length"
-      :calculate-item-height="itemHeight"
-      ></v-ons-lazy-repeat>
+      <app-card-comunicato v-for="(comunicato, index) in comunicatiCaricati"
+       :comunicato="comunicato"
+       :isRead="$root.comunicatiLetti.includes(comunicato)"
+       @openpdf="
+       pdfViewerUrl = comunicato.url;
+       togglePdf()"
+       ></app-card-comunicato>
     </v-ons-list>
-        <!--
-        <app-card-comunicato v-for="(comunicato, index) in $davinciApi.data.reactiveWrapper[comunicati]"
-         :comunicato="comunicato"
-         v-on:openPdf="pdfViewerUrl = $event; togglePdf()" > </app-card-comunicato>
-       -->
   </app-page>
 </template>
 <script>
@@ -31,27 +32,34 @@ export default {
   props: ['title', 'comunicati'],
   data(){
     return {
-      scrollEnabled: true,
+      comunicatiDaCaricare: 15,
       isPdfViewer: false,
       pdfViewerUrl: "file.pdf",
-      comunicato: index => new this.$vue({
-        render: h => h(AppCardComunicato, {
-          props: {
-            comunicato: this.$davinciApi.data.reactiveWrapper[this.comunicati][index],
-            isRead: this.$root.comunicatiLetti.includes(
-              this.$davinciApi.data.reactiveWrapper[this.comunicati]
-            )
-          }
-        })
-      })
+
+    }
+  },
+  computed: {
+    comunicatiCaricati(){
+      return this.$davinciApi.data.reactiveWrapper[this.comunicati].slice(
+        0,
+        this.comunicatiDaCaricare
+      )
     }
   },
   methods: {
-    togglePdf(){ this.scrollEnabled=  !(this.isPdfViewer = !this.isPdfViewer)},
+    togglePdf(){
+      console.log('toggling pdf')
+      this.scrollEnabled=  !(this.isPdfViewer = !this.isPdfViewer)
+    },
     itemHeight(){ return 80; },
+    infiniteScroll(done){
+      this.comunicatiDaCaricare+=7
+      done()
+    }
   },
   components: {
     AppPdfviewer,
+    AppCardComunicato,
   }
 }
 </script>
