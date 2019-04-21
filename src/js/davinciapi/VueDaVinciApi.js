@@ -1,5 +1,22 @@
 import DaVinciApi from './DaVinciApi.js'
 
+/**
+ *  VueDaVinciApi
+ *  Wrapper che consente di usare le funzioni di DaVinciApi all'interno
+ *  di Vue.
+ *
+ *  Installazione: è un normale plugin per Vue.use(VueDaVinciApi)
+ *
+ *  Uso: aggiunge alle istanze di Vue l'oggetto $davinciApi, che
+ *  consente di chiamare tutte le funzioni dell'api; aggiunge inoltre
+ *  l'oggetto $davinciApi.vue con le proprietà:
+ *  - comunicatiGenitori, comunicatiStudenti, comunicatiDocenti,
+ *  - readList, prefList, addPref(), removePref(), removePref()
+ *  Che rappresentano una versione "potenziata" dei comunicati, che
+ *  include anche gli attributi "isRead" e "isPref" 
+ */
+
+/* Funzione che specifica come deve
 const serializeComunicato = comunicato => JSON.stringify({
   url: comunicato.url,
 })
