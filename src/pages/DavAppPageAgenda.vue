@@ -1,10 +1,14 @@
 <v-ons<template>
   <dav-app-page :title="monthName">
+
+    <!-- Toolbar -->
     <template slot="icons">
       <dav-icon icon="md-chevron-left"  @click="changeDate(month - 1)"></dav-icon>
       <dav-icon icon="md-chevron-right" @click="changeDate(month + 1)"></dav-icon>
       <dav-icon icon="md-calendar" @click="alert('today')"></dav-icon>
     </template>
+
+    <!-- Agenda -->
     <v-ons-row style="background-color:white;">
       <v-ons-col v-for="day in dayNames"
         style="text-align: center; line-height: 200%"> {{ day }} </v-ons-col>
@@ -14,6 +18,7 @@
         :style="'text-align: center; line-height: 200%; color: ' + (day.isInMonth ? 'black' : 'grey')"
         v-for="day in row"> {{ day.number }} </v-ons-col>
     </v-ons-row>
+    
   </dav-app-page>
 </template>
 <script>

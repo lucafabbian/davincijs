@@ -1,28 +1,29 @@
 <template>
-  <dav-app-page
-  :title="title"
-  scrollable
-  :infinite-scroll="infiniteScroll"
-  >
+  <dav-app-page :title="title" scrollable :infinite-scroll="infiniteScroll" >
+
+    <!-- Toolbar -->
     <template slot="icons">
       <span v-if="isPdfViewer">
         <dav-icon icon="md-share" @click="alert('ciao')"></dav-icon>
         <dav-icon icon="md-close" @click="togglePdf"></dav-icon>
       </span>
     </template>
-    <dav-pdfviewer v-if="isPdfViewer" :url="pdfViewerUrl"></dav-pdfviewer>
-    <span v-if="comunicati.length === 0 && !isPdfViewer">
-       <v-ons-icon icon="md-spinner" size="28px" spin></v-ons-icon>
-    </span>
-    <v-ons-list>
+
+    <!-- Visualizzatore pdf -->
+    <dav-pdfviewer v-show="isPdfViewer" :url="pdfViewerUrl"></dav-pdfviewer>
+
+    <!-- Lista comunicati -->
+    <v-ons-list v-show="!isPdfViewer">
       <dav-comunicato v-for="(comunicato, index) in comunicatiCaricati"
        :comunicato="comunicato"
        :isRead="$root.comunicatiLetti.includes(comunicato)"
-       @openpdf="
-       pdfViewerUrl = comunicato.url;
-       togglePdf()"
+       @openpdf="openPdf(comunicato.url)"
        ></dav-comunicato>
+       <span v-if="comunicati.length === 0 && !isPdfViewer">
+          <v-ons-icon icon="md-spinner" size="28px" spin></v-ons-icon>
+       </span>
     </v-ons-list>
+
   </dav-app-page>
 </template>
 <script>
@@ -45,7 +46,7 @@ export default {
     }
   },
   methods: {
-    togglePdf(){
+    openPdf(url){
       console.log('toggling pdf')
       this.scrollEnabled=  !(this.isPdfViewer = !this.isPdfViewer)
     },

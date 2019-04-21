@@ -45664,6 +45664,11 @@
   //
   //
   //
+  //
+  //
+  //
+  //
+  //
 
   var script$1 = {
     data: function(){ return { dateObj : new Date().toString() } },
@@ -45835,6 +45840,7 @@
   //
   //
   //
+  //
 
   var script$2 = {
     props: ['title', 'comunicati'],
@@ -45855,7 +45861,7 @@
       }
     },
     methods: {
-      togglePdf(){
+      openPdf(url){
         console.log('toggling pdf');
         this.scrollEnabled=  !(this.isPdfViewer = !this.isPdfViewer);
       },
@@ -45909,39 +45915,58 @@
             : _vm._e()
         ]),
         _vm._v(" "),
-        _vm.isPdfViewer
-          ? _c("dav-pdfviewer", { attrs: { url: _vm.pdfViewerUrl } })
-          : _vm._e(),
-        _vm._v(" "),
-        _vm.comunicati.length === 0 && !_vm.isPdfViewer
-          ? _c(
-              "span",
-              [
-                _c("v-ons-icon", {
-                  attrs: { icon: "md-spinner", size: "28px", spin: "" }
-                })
-              ],
-              1
-            )
-          : _vm._e(),
+        _c("dav-pdfviewer", {
+          directives: [
+            {
+              name: "show",
+              rawName: "v-show",
+              value: _vm.isPdfViewer,
+              expression: "isPdfViewer"
+            }
+          ],
+          attrs: { url: _vm.pdfViewerUrl }
+        }),
         _vm._v(" "),
         _c(
           "v-ons-list",
-          _vm._l(_vm.comunicatiCaricati, function(comunicato, index) {
-            return _c("dav-comunicato", {
-              attrs: {
-                comunicato: comunicato,
-                isRead: _vm.$root.comunicatiLetti.includes(comunicato)
-              },
-              on: {
-                openpdf: function($event) {
-                  _vm.pdfViewerUrl = comunicato.url;
-                  _vm.togglePdf();
-                }
+          {
+            directives: [
+              {
+                name: "show",
+                rawName: "v-show",
+                value: !_vm.isPdfViewer,
+                expression: "!isPdfViewer"
               }
-            })
-          }),
-          1
+            ]
+          },
+          [
+            _vm._l(_vm.comunicatiCaricati, function(comunicato, index) {
+              return _c("dav-comunicato", {
+                attrs: {
+                  comunicato: comunicato,
+                  isRead: _vm.$root.comunicatiLetti.includes(comunicato)
+                },
+                on: {
+                  openpdf: function($event) {
+                    return _vm.openPdf(comunicato.url)
+                  }
+                }
+              })
+            }),
+            _vm._v(" "),
+            _vm.comunicati.length === 0 && !_vm.isPdfViewer
+              ? _c(
+                  "span",
+                  [
+                    _c("v-ons-icon", {
+                      attrs: { icon: "md-spinner", size: "28px", spin: "" }
+                    })
+                  ],
+                  1
+                )
+              : _vm._e()
+          ],
+          2
         )
       ],
       2
@@ -47682,13 +47707,14 @@
       last = (last == undefined) ? '' : '/' + last; // aggiungi uno slash solo se last non è nullo
       // aggiungere sempre lo slash alla fine causa dei redirect inutili
       api.get(url + last).then( (result) => {
-        console.log("result", result.data);
+        // Mappa i risultati, aggiungendo proprietà non previste, come titolo e numero
         const comunicati = result.data.map( comunicato => ({
           ...comunicato,
-          number: (comunicato.nome.match(/^[0-9]*/) || ["0"])[0] || "0" ,
+          number: (comunicato.nome.match(/^[0-9]*/) || ["0"])[0] || "000" ,
           title: comunicato.nome.substring(((comunicato.nome.match(/^[0-9]*/) || ["0"])[0] || "0").length + 1).replace(".pdf", "").replace(/\_/g," "),
           urlName: comunicato.url.substring(comunicato.url.lastIndexOf('/')),
         }));
+        // Aggiunge l'elemento al localStorage, in modo da cacharlo
         localStorage[obj] = JSON.stringify(comunicati);
         resolve(this.data[obj] = comunicati);
       });
@@ -48081,12 +48107,18 @@
       undefined
     );
 
+  /**
+   *  Componenti "di base" dell'app: si tratta di quelli
+   *  che vengono usati più spesso, e pertanto ha senso
+   *  registrarli come globali in modo che siano disponibili
+   *  ovunque all'interno dei template (anche nei plugin)
+   */
   var BaseComponents = { install(Vue){
   [
-      DavIcon,
-      DavAppPage,
-      DavPdfviewer,
-      DavComunicato,
+      DavIcon,       // Icone della toolbar
+      DavAppPage,    // Pagina standard
+      DavPdfviewer,  // Visualizzatore pdf
+      DavComunicato, // Oggetto nella lista comunicati
     ].forEach( component => Vue.component(component.name, component));
   }};
 

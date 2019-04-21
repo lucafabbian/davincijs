@@ -34,13 +34,14 @@ export default new function(){
     last = (last == undefined) ? '' : '/' + last; // aggiungi uno slash solo se last non è nullo
     // aggiungere sempre lo slash alla fine causa dei redirect inutili
     api.get(url + last).then( (result) => {
-      console.log("result", result.data)
+      // Mappa i risultati, aggiungendo proprietà non previste, come titolo e numero
       const comunicati = result.data.map( comunicato => ({
         ...comunicato,
-        number: (comunicato.nome.match(/^[0-9]*/) || ["0"])[0] || "0" ,
+        number: (comunicato.nome.match(/^[0-9]*/) || ["0"])[0] || "000" ,
         title: comunicato.nome.substring(((comunicato.nome.match(/^[0-9]*/) || ["0"])[0] || "0").length + 1).replace(".pdf", "").replace(/\_/g," "),
         urlName: comunicato.url.substring(comunicato.url.lastIndexOf('/')),
       }))
+      // Aggiunge l'elemento al localStorage, in modo da cacharlo
       localStorage[obj] = JSON.stringify(comunicati);
       resolve(this.data[obj] = comunicati);
     })
