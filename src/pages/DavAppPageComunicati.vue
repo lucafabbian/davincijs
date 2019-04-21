@@ -1,25 +1,26 @@
 <template>
-  <dav-app-page :title="title" scrollable :infinite-scroll="infiniteScroll" >
+  <dav-app-page :title="title" :scrollable="!isPdfViewer" :infinite-scroll="infiniteScroll">
 
     <!-- Toolbar -->
     <template slot="icons">
       <span v-if="isPdfViewer">
         <dav-icon icon="md-share" @click="alert('ciao')"></dav-icon>
-        <dav-icon icon="md-close" @click="togglePdf"></dav-icon>
+        <dav-icon icon="md-close" @click="closePdf()"></dav-icon>
       </span>
     </template>
 
-    <!-- Visualizzatore pdf -->
-    <dav-pdfviewer v-show="isPdfViewer" :url="pdfViewerUrl"></dav-pdfviewer>
+    <v-ons-list>
+      <!-- Visualizzatore pdf -->
+      <dav-pdfviewer v-if="isPdfViewer" :url="pdfViewerUrl"></dav-pdfviewer>
 
-    <!-- Lista comunicati -->
-    <v-ons-list v-show="!isPdfViewer">
-      <dav-comunicato v-for="(comunicato, index) in comunicatiCaricati"
-       :comunicato="comunicato"
-       :isRead="$root.comunicatiLetti.includes(comunicato)"
-       @openpdf="openPdf(comunicato.url)"
+      <!-- Lista comunicati -->
+      <dav-comunicato v-else v-for="(comunicato, index) in comunicatiCaricati"
+      :comunicato="comunicato"
+       :isRead="comunicato.isRead"
+       @openpdf="openPdf(comunicato)"
+       @togglepref="togglePref(comunicato)"
        ></dav-comunicato>
-       <span v-if="comunicati.length === 0 && !isPdfViewer">
+       <span v-if="comunicati.length === 0">
           <v-ons-icon icon="md-spinner" size="28px" spin></v-ons-icon>
        </span>
     </v-ons-list>
@@ -34,27 +35,36 @@ export default {
       comunicatiDaCaricare: 15,
       isPdfViewer: false,
       pdfViewerUrl: "file.pdf",
-
     }
   },
   computed: {
     comunicatiCaricati(){
-      return this.$davinciApi.data.reactiveWrapper[this.comunicati].slice(
-        0,
-        this.comunicatiDaCaricare
-      )
+      console.log(this.comunicati)
+      return this.$davinciApi.vue[this.comunicati]
+        .slice(0, this.comunicatiDaCaricare)
     }
   },
   methods: {
-    openPdf(url){
-      console.log('toggling pdf')
-      this.scrollEnabled=  !(this.isPdfViewer = !this.isPdfViewer)
-    },
-    itemHeight(){ return 80; },
     infiniteScroll(done){
       this.comunicatiDaCaricare+=7
       done()
+    },
+    openPdf(comunicato){
+      this.$davinciApi.vue.addRead(comunicato)
+      console.log(this.$davinciApi.vue.readList)
+      this.pdfViewerUrl = comunicato.url
+      this.isPdfViewer = true
+    },
+    closePdf(){
+      this.isPdfViewer = false
+    },
+    togglePref(comunicato){
+      console.log('preffff')
+      comunicato.isPref
+        ? this.$davinciApi.vue.removePref(comunicato)
+        : this.$davinciApi.vue.addPref   (comunicato)
     }
+
   },
 }
 </script>

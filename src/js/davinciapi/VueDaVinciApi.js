@@ -1,28 +1,59 @@
 import DaVinciApi from './DaVinciApi.js'
 
-const preferredComponents = JSON.parse(localStorage['da-vinci-api-preferred'] || '[]')
+const serializeComunicato = comunicato => JSON.stringify({
+  url: comunicato.url,
+})
 
 export default { install: function(Vue, options) {
   Vue.prototype.$davinciApi = Object.assign({}, DaVinciApi, {
-    data: new Vue({
+    vue: new Vue({
       data: {
         davinciData: DaVinciApi.data,
+        prefList:    JSON.parse(localStorage.DaVinciApiPrefList || '[]'),
+        readList:    JSON.parse(localStorage.DaVinciApiReadList || '[]'),
       },
-      computed: {
-        reactiveWrapper() {
-          return Object.keys(this.davinciData).map((key, index) => Array.from(this.davinciData[key], (obj) => Object.assign({}, obj, {
-            isPref: preferredComponents.includes(this.davinciData[key].url)
-          })))
+      methods: {
+        mapComunicato(comunicato){
+          return {
+            ...comunicato,
+            isPref: this.prefList.includes(serializeComunicato(comunicato)),
+            isRead: this.readList.includes(serializeComunicato(comunicato)),
+          }
         },
-        preferredList() {
-          return Object.keys(this.davinciData).map((key, index) => Array.from(this.davinciData[key].filter( (obj) => obj.isPref ))) // sistemare
+        addPref(comunicato){
+          const serializedComunicato = serializeComunicato(comunicato)
+          if(!this.prefList.includes(serializedComunicato)) {
+            this.prefList.push(serializedComunicato)
+          }
+        },
+        removePref(comunicato){
+          const serializedComunicato = serializeComunicato(comunicato)
+          this.prefList = this.prefList.filter(
+            comunicato => comunicato !== serializedComunicato
+          )
+        },
+        addRead(comunicato){
+          const serializedComunicato = serializeComunicato(comunicato)
+          if(!this.readList.includes(serializedComunicato)) {
+            this.readList.push(serializedComunicato)
+          }
         }
       },
+      computed: {
+        comunicatiGenitori(){
+          return this.davinciData.comunicatiGenitori.map(this.mapComunicato)
+        },
+        comunicatiStudenti(){
+          return this.davinciData.comunicatiStudenti.map(this.mapComunicato)
+        },
+        comunicatiDocenti(){
+          return this.davinciData.comunicatiDocenti.map(this.mapComunicato)
+        },
+      },
       watch: {
-        preferredList() { localStorage['da-vinci-api-preferred'] = JSON.stringify(this.preferredComponents = Array.from(this.reactiveWrapper.filter(
-          (obj) => obj.isPref
-        )))} // Aggiunge i preferiti al localStorage
-      }
+        prefList(){ localStorage.DaVinciApiPrefList = JSON.stringify(this.prefList) },
+        readList(){ localStorage.DaVinciApiReadList = JSON.stringify(this.readList) },
+      },
     }),
   })
 

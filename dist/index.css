@@ -5,6 +5,11 @@
 }
 
 
+.dav-pdfviewer {
+  width: 100%;
+  height: calc(100vh - 56px);
+}
+
 
 
 
@@ -53,8 +58,9 @@
   padding: 15px;
   box-sizing: border-box;
   vertical-align: middle;
-  border-bottom: 1px solid #cfcfcf;
+  border-bottom: 1px solid #e2e9ee;
   padding-top: 20px;
+  background-color: white;
 }
 .app-comunicato:active{
   background-color: #eee;

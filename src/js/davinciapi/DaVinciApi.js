@@ -22,15 +22,15 @@ export default new function(){
   this.isOnline = () => api.get('api/teapot').catch( (err) => err.response.status === 418 )
 
   // Richieste generiche
-  this.agenda       = (filter)  => api.post('api/agenda', filter)
+  this.fetchAgenda       = (filter)  => api.post('api/agenda', filter)
   // il filtro è una stringa JSON del tipo {"prima":xxxxxxxxxx,"dopo":yyyyyyyyyy} con x e y le rappresentazioni in tempo unix dell'intervallo di tempo da considerare
-  this.classi       = ()        => api.get ('api/classi')
-  this.orarioClasse = (classe)  => api.get ('api/orario/' + classe)
-  this.docenti      = ()        => api.get ('api/docenti')
-  this.orarioDocente= (docente) => api.post('api/orario/docente/', docente)
+  this.fetchClassi       = ()        => api.get ('api/classi')
+  this.fetchOrarioClasse = (classe)  => api.get ('api/orario/' + classe)
+  this.fetchDocenti      = ()        => api.get ('api/docenti')
+  this.fetchOrarioDocente= (docente) => api.post('api/orario/docente/', docente)
 
   // Comunicati
-  const comunicati = (obj, url, last) => new Promise( (resolve, reject) => {
+  const fetchComunicati = (obj, url, last) => new Promise( (resolve, reject) => {
     last = (last == undefined) ? '' : '/' + last; // aggiungi uno slash solo se last non è nullo
     // aggiungere sempre lo slash alla fine causa dei redirect inutili
     api.get(url + last).then( (result) => {
@@ -47,9 +47,9 @@ export default new function(){
     })
   })
 
-  this.comunicatiStudenti = (last) => comunicati('comunicatiStudenti', 'api/comunicati/studenti', last)
-  this.comunicatiGenitori = (last) => comunicati('comunicatiGenitori', 'api/comunicati/genitori', last)
-  this.comunicatiDocenti  = (last) => comunicati('comunicatiDocenti' , 'api/comunicati/docenti' , last)
+  this.fetchComunicatiStudenti = (last) => fetchComunicati('comunicatiStudenti', 'api/comunicati/studenti', last)
+  this.fetchComunicatiGenitori = (last) => fetchComunicati('comunicatiGenitori', 'api/comunicati/genitori', last)
+  this.fetchComunicatiDocenti  = (last) => fetchComunicati('comunicatiDocenti' , 'api/comunicati/docenti' , last)
   this.immaginiSlideshow  = () => new Promise ( (resolve, reject) => {
     var el = document.createElement('html');
 
@@ -59,9 +59,9 @@ export default new function(){
   })
 
   this.refresh = () => {
-    this.comunicatiStudenti()
-    this.comunicatiGenitori()
-    this.comunicatiDocenti()
+    this.fetchComunicatiStudenti()
+    this.fetchComunicatiGenitori()
+    this.fetchComunicatiDocenti()
     //this.immaginiSlideshow()
   }
 

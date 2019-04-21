@@ -4,15 +4,14 @@
 </docs>
 <template functional>
   <div class="app-comunicato">
-    <div>
+    <div @click="listeners.togglepref">
       {{ props.comunicato.number }} <br>
       <div
       :class="props.comunicato.isPref ? 'zmdi-star' : 'zmdi-star-border'"
-      @click="listeners.togglepref || (() => {})"
       ></div>
     </div>
     <div
-    @click="listeners.openpdf || (() => {})"
+    @click="listeners.openpdf"
     :style="'fontWeight: ' + (props.isRead ? '400' : '600')"
     > {{ props.comunicato.title }}</div>
       <a
@@ -47,8 +46,9 @@ export default {
     padding: 15px;
     box-sizing: border-box;
     vertical-align: middle;
-    border-bottom: 1px solid #cfcfcf;
+    border-bottom: 1px solid #e2e9ee;
     padding-top: 20px;
+    background-color: white;
   }
   .app-comunicato:active{
     background-color: #eee;

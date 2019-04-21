@@ -37,10 +37,25 @@ const data = {
     }, {
       name: "comunicati",
       elements:[
-        {name: "Studenti",  icon:"md-graduation-cap", page:"dav-app-page-comunicati", data: { title: 'Comunicati studenti', comunicati:0 } },
-        {name: "Genitori",  icon:"md-accounts",       page:"dav-app-page-comunicati", data: { title: 'Comunicati genitori', comunicati:1 } },
-        {name: "Docenti",   icon:"md-case",           page:"dav-app-page-comunicati", data: { title: 'Comunicati docenti' , comunicati:2 } },
-        {name: "Preferiti",   icon:"md-star",         page:"dav-app-page-comunicati-preferiti"},
+        {
+          name: "Studenti",
+          icon:"md-graduation-cap",
+          page:"dav-app-page-comunicati",
+          data: { title: 'Comunicati studenti', comunicati:'comunicatiStudenti'}
+        },
+        {
+          name: "Genitori",
+          icon:"md-accounts",
+          page:"dav-app-page-comunicati",
+          data: { title: 'Comunicati genitori', comunicati:'comunicatiGenitori'}
+        },
+        {
+          name: "Docenti",
+          icon: "md-case",
+          page:"dav-app-page-comunicati",
+          data: { title: 'Comunicati docenti', comunicati:'comunicatiDocenti'}
+        },
+        {name: "Preferiti", icon:"md-star",         page:"dav-app-page-comunicati-preferiti"},
       ]
     }, {
       name: "utilità",
