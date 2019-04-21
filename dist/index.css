@@ -5,6 +5,48 @@
 }
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* Stile della lista */
 .app-comunicato {
   display: flex;
   width: 100vw;
@@ -17,7 +59,15 @@
 .app-comunicato:active{
   background-color: #eee;
 }
-.app-comunicato :first-child, .app-comunicato :nth-child(3), .app-comunicato :nth-child(4){
+/* Stile del testo */
+.app-comunicato :nth-child(2) {
+  flex:1;
+  text-overflow: ellipsis;
+}
+/* Stile delle icone */
+.app-comunicato :first-child,
+.app-comunicato :nth-child(3),
+.app-comunicato :nth-child(4){
   text-align: center;
   flex: 0 0 50px;
   width: 50px;
@@ -30,20 +80,11 @@
   font-style: normal;
   font-weight: 400;
 }
-.app-comunicato :first-child > div::before {
-  content: '\f27c';
-}
-.app-comunicato .app-comunicato-preferito {
+.app-comunicato .zmdi-star {
   color: #daa900;
 }
-.app-comunicato .app-comunicato-preferito::before {
-  content:'\f27d';
-}
-.app-comunicato :nth-child(2) {
-  flex:1;
-  text-overflow: ellipsis;
-}
-.app-comunicato > a.zmdi-download, .app-comunicato > a.zmdi-share{
+.app-comunicato > a.zmdi-download,
+.app-comunicato > a.zmdi-share{
   text-decoration: none;
   font: normal normal normal 32px/1 'Material-Design-Iconic-Font';
 }
@@ -59,12 +100,13 @@ iframe {
   border: 0;
 }
 
-.fade-enter-active, .fade-leave-active {
-  transition: opacity .5s;
-}
-.fade-enter, .fade-leave-to /* .fade-leave-active below version 2.1.8 */ {
-  opacity: 0;
-}
+/* Varie animazioni usate nell'app */
+
+/* Fade */
+
+.fade-enter-active, .fade-leave-active { transition: opacity .5s; }
+
+.fade-enter, .fade-leave-to { opacity: 0; }
 
 /* Custom Theme for Onsen UI 2.10.6 */
 

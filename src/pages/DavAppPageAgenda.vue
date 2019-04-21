@@ -1,9 +1,9 @@
 <v-ons<template>
-  <app-page :title="monthName">
-    <template slot="actions">
-      <app-nav-action icon="md-chevron-left"  v-on:action="changeDate(month - 1)"></app-nav-action>
-      <app-nav-action icon="md-chevron-right" v-on:action="changeDate(month + 1)"></app-nav-action>
-      <app-nav-action icon="md-calendar" v-on:action="alert('today')"></app-nav-action>
+  <dav-app-page :title="monthName">
+    <template slot="icons">
+      <dav-icon icon="md-chevron-left"  @click="changeDate(month - 1)"></dav-icon>
+      <dav-icon icon="md-chevron-right" @click="changeDate(month + 1)"></dav-icon>
+      <dav-icon icon="md-calendar" @click="alert('today')"></dav-icon>
     </template>
     <v-ons-row style="background-color:white;">
       <v-ons-col v-for="day in dayNames"
@@ -14,7 +14,7 @@
         :style="'text-align: center; line-height: 200%; color: ' + (day.isInMonth ? 'black' : 'grey')"
         v-for="day in row"> {{ day.number }} </v-ons-col>
     </v-ons-row>
-  </app-page>
+  </dav-app-page>
 </template>
 <script>
 export default {

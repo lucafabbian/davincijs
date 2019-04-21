@@ -8,7 +8,7 @@
       </div>
       <div class="center"> {{ title }} </div>
       <div class="right">
-        <slot name="actions"></slot>
+        <slot name="icons"></slot>
       </div>
     </v-ons-toolbar>
     <slot></slot>
@@ -16,7 +16,7 @@
 </template>
 <script>
 export default {
-  name: 'AppPage',
+  name: 'DavAppPage',
   props: {
     title: String,
     scrollable: { type: Boolean, default: true },

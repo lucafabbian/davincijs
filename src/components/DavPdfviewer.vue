@@ -6,6 +6,7 @@
 </template>
 <script>
 export default {
+  name: 'DavPdfviewer',
   props: ['url'],
   data: () => ({ baseUrl: './static/pdfviewer/web/viewer.html?file='}),
 }

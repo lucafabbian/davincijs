@@ -30,28 +30,28 @@ const data = {
   categories: [ {
       name: "",
       elements:[
-        {name: "Home",   icon:"md-home",     page:"app-page-home"},
-        {name: "Agenda", icon:"md-calendar", page:"app-page-agenda"},
+        {name: "Home",   icon:"md-home",     page:"dav-app-page-home"},
+        {name: "Agenda", icon:"md-calendar", page:"dav-app-page-agenda"},
         {name: "Orari",  icon:"md-time"},
       ]
     }, {
       name: "comunicati",
       elements:[
-        {name: "Studenti",  icon:"md-graduation-cap", page:"app-page-comunicati", data: { title: 'Comunicati studenti', comunicati:0 } },
-        {name: "Genitori",  icon:"md-accounts",       page:"app-page-comunicati", data: { title: 'Comunicati genitori', comunicati:1 } },
-        {name: "Docenti",   icon:"md-case",           page:"app-page-comunicati", data: { title: 'Comunicati docenti' , comunicati:2 } },
-        {name: "Preferiti",   icon:"md-star",         page:"app-page-comunicati-preferiti"},
+        {name: "Studenti",  icon:"md-graduation-cap", page:"dav-app-page-comunicati", data: { title: 'Comunicati studenti', comunicati:0 } },
+        {name: "Genitori",  icon:"md-accounts",       page:"dav-app-page-comunicati", data: { title: 'Comunicati genitori', comunicati:1 } },
+        {name: "Docenti",   icon:"md-case",           page:"dav-app-page-comunicati", data: { title: 'Comunicati docenti' , comunicati:2 } },
+        {name: "Preferiti",   icon:"md-star",         page:"dav-app-page-comunicati-preferiti"},
       ]
     }, {
       name: "utilità",
       elements:[
-        {name: "Impostazioni", icon:"md-settings", page:"app-page-impostazioni"}
+        {name: "Impostazioni", icon:"md-settings", page:"dav-app-page-impostazioni"}
       ]
     }, ],
 }
 
 export default {
-  name: 'AppMenu',
+  name: 'DavAppMenu',
   data: function(){
     return data
   },

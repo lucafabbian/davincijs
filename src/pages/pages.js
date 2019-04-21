@@ -1,12 +1,12 @@
-import AppPageAgenda       from './AppPageAgenda.vue'
-import AppPageComunicati   from './AppPageComunicati.vue'
-import AppPageHome         from './AppPageHome.vue'
-import AppPageImpostazioni from './AppPageImpostazioni.vue'
+import DavAppPageAgenda       from './DavAppPageAgenda.vue'
+import DavAppPageComunicati   from './DavAppPageComunicati.vue'
+import DavAppPageHome         from './DavAppPageHome.vue'
+import DavAppPageImpostazioni from './DavAppPageImpostazioni.vue'
 
 
 export default {
-  AppPageAgenda,
-  AppPageComunicati,
-  AppPageHome,
-  AppPageImpostazioni,
+  DavAppPageAgenda,
+  DavAppPageComunicati,
+  DavAppPageHome,
+  DavAppPageImpostazioni,
 }

@@ -1,33 +1,31 @@
 <template>
-  <app-page
+  <dav-app-page
   :title="title"
   scrollable
   :infinite-scroll="infiniteScroll"
   >
-    <template slot="actions">
+    <template slot="icons">
       <span v-if="isPdfViewer">
-        <app-nav-action icon="md-share" v-on:action="alert('ciao')"></app-nav-action>
-        <app-nav-action icon="md-close" v-on:action="togglePdf"></app-nav-action>
+        <dav-icon icon="md-share" @click="alert('ciao')"></dav-icon>
+        <dav-icon icon="md-close" @click="togglePdf"></dav-icon>
       </span>
     </template>
-    <app-pdfviewer v-if="isPdfViewer" :url="pdfViewerUrl"></app-pdfviewer>
+    <dav-pdfviewer v-if="isPdfViewer" :url="pdfViewerUrl"></dav-pdfviewer>
     <span v-if="comunicati.length === 0 && !isPdfViewer">
        <v-ons-icon icon="md-spinner" size="28px" spin></v-ons-icon>
     </span>
     <v-ons-list>
-      <app-card-comunicato v-for="(comunicato, index) in comunicatiCaricati"
+      <dav-comunicato v-for="(comunicato, index) in comunicatiCaricati"
        :comunicato="comunicato"
        :isRead="$root.comunicatiLetti.includes(comunicato)"
        @openpdf="
        pdfViewerUrl = comunicato.url;
        togglePdf()"
-       ></app-card-comunicato>
+       ></dav-comunicato>
     </v-ons-list>
-  </app-page>
+  </dav-app-page>
 </template>
 <script>
-import AppCardComunicato from '../components/AppCardComunicato.vue'
-import AppPdfviewer      from '../components/AppPdfviewer.vue'
 export default {
   props: ['title', 'comunicati'],
   data(){
@@ -57,9 +55,5 @@ export default {
       done()
     }
   },
-  components: {
-    AppPdfviewer,
-    AppCardComunicato,
-  }
 }
 </script>

@@ -45429,28 +45429,28 @@
     categories: [ {
         name: "",
         elements:[
-          {name: "Home",   icon:"md-home",     page:"app-page-home"},
-          {name: "Agenda", icon:"md-calendar", page:"app-page-agenda"},
+          {name: "Home",   icon:"md-home",     page:"dav-app-page-home"},
+          {name: "Agenda", icon:"md-calendar", page:"dav-app-page-agenda"},
           {name: "Orari",  icon:"md-time"},
         ]
       }, {
         name: "comunicati",
         elements:[
-          {name: "Studenti",  icon:"md-graduation-cap", page:"app-page-comunicati", data: { title: 'Comunicati studenti', comunicati:0 } },
-          {name: "Genitori",  icon:"md-accounts",       page:"app-page-comunicati", data: { title: 'Comunicati genitori', comunicati:1 } },
-          {name: "Docenti",   icon:"md-case",           page:"app-page-comunicati", data: { title: 'Comunicati docenti' , comunicati:2 } },
-          {name: "Preferiti",   icon:"md-star",         page:"app-page-comunicati-preferiti"},
+          {name: "Studenti",  icon:"md-graduation-cap", page:"dav-app-page-comunicati", data: { title: 'Comunicati studenti', comunicati:0 } },
+          {name: "Genitori",  icon:"md-accounts",       page:"dav-app-page-comunicati", data: { title: 'Comunicati genitori', comunicati:1 } },
+          {name: "Docenti",   icon:"md-case",           page:"dav-app-page-comunicati", data: { title: 'Comunicati docenti' , comunicati:2 } },
+          {name: "Preferiti",   icon:"md-star",         page:"dav-app-page-comunicati-preferiti"},
         ]
       }, {
         name: "utilità",
         elements:[
-          {name: "Impostazioni", icon:"md-settings", page:"app-page-impostazioni"}
+          {name: "Impostazioni", icon:"md-settings", page:"dav-app-page-impostazioni"}
         ]
       }, ],
   };
 
   var script = {
-    name: 'AppMenu',
+    name: 'DavAppMenu',
     data: function(){
       return data
     },
@@ -45635,7 +45635,7 @@
     
 
     
-    var AppMenu = normalizeComponent_1(
+    var DavAppMenu = normalizeComponent_1(
       { render: __vue_render__, staticRenderFns: __vue_staticRenderFns__ },
       __vue_inject_styles__,
       __vue_script__,
@@ -45708,35 +45708,35 @@
     var _h = _vm.$createElement;
     var _c = _vm._self._c || _h;
     return _c(
-      "app-page",
+      "dav-app-page",
       { attrs: { title: _vm.monthName } },
       [
         _c(
           "template",
-          { slot: "actions" },
+          { slot: "icons" },
           [
-            _c("app-nav-action", {
+            _c("dav-icon", {
               attrs: { icon: "md-chevron-left" },
               on: {
-                action: function($event) {
+                click: function($event) {
                   return _vm.changeDate(_vm.month - 1)
                 }
               }
             }),
             _vm._v(" "),
-            _c("app-nav-action", {
+            _c("dav-icon", {
               attrs: { icon: "md-chevron-right" },
               on: {
-                action: function($event) {
+                click: function($event) {
                   return _vm.changeDate(_vm.month + 1)
                 }
               }
             }),
             _vm._v(" "),
-            _c("app-nav-action", {
+            _c("dav-icon", {
               attrs: { icon: "md-calendar" },
               on: {
-                action: function($event) {
+                click: function($event) {
                   return _vm.alert("today")
                 }
               }
@@ -45797,7 +45797,7 @@
     
 
     
-    var AppPageAgenda = normalizeComponent_1(
+    var DavAppPageAgenda = normalizeComponent_1(
       { render: __vue_render__$1, staticRenderFns: __vue_staticRenderFns__$1 },
       __vue_inject_styles__$1,
       __vue_script__$1,
@@ -45835,203 +45835,8 @@
   //
   //
   //
-  //
-  //
-  //
-  //
-  //
-  //
-  //
-  //
-  //
-  //
-  //
-  //
-  //
-  //
-  //
-  //
-  //
-  //
-  //
-  //
-  //
-  //
-  //
-  //
-  //
-  //
-  //
-  //
-  //
-  //
-  //
-  //
-  //
-  //
-  //
-  //
-  //
-  //
-  //
-  //
-  //
-  //
-  //
-  //
-  //
-  //
-  //
 
   var script$2 = {
-    name: 'AppCardComunicato',
-    props: ['comunicato', 'isRead'],
-    /*
-    methods: {
-      openPdf (){  // Chiede alla pagina madre di aprire un pdf su un url
-        if(!this.isRead) this.$root.comunicatiLetti.push(this.comunicato)
-        this.$emit('openPdf', this.comunicato.url)
-      },
-      togglePref (){ // Cambia stato da preferito a non preferito (e viceversa)
-        this.comunicato.isPref = !this.comunicato.isPref
-      }
-    }*/
-  };
-
-  /* script */
-  const __vue_script__$2 = script$2;
-  /* template */
-  var __vue_render__$2 = function(_h, _vm) {
-    var _c = _vm._c;
-    return _c("div", { staticClass: "app-comunicato" }, [
-      _c("div", [
-        _vm._v("\n    " + _vm._s(_vm.props.comunicato.number) + " "),
-        _c("br"),
-        _vm._v(" "),
-        _c("div", {
-          class: _vm.props.comunicato.isPref ? "app-comunicato-preferito" : "",
-          on: {
-            click: function($event) {
-              _vm.listeners.togglepref || function() {};
-            }
-          }
-        })
-      ]),
-      _vm._v(" "),
-      _c(
-        "div",
-        {
-          style: "fontWeight: " + (_vm.props.isRead ? "400" : "600"),
-          on: {
-            click: function($event) {
-              _vm.listeners.openpdf || function() {};
-            }
-          }
-        },
-        [_vm._v(" " + _vm._s(_vm.props.comunicato.title))]
-      ),
-      _vm._v(" "),
-      _c("a", {
-        staticClass: "zmdi-download",
-        attrs: {
-          href: _vm.props.comunicato.url,
-          download:
-            _vm.props.comunicato.number +
-            "-" +
-            _vm.props.comunicato.title +
-            ".pdf"
-        }
-      }),
-      _vm._v(" "),
-      _c("a", {
-        staticClass: "zmdi-share",
-        attrs: { href: "https://wa.me/?text=" + _vm.props.comunicato.url }
-      })
-    ])
-  };
-  var __vue_staticRenderFns__$2 = [];
-  __vue_render__$2._withStripped = true;
-
-    /* style */
-    const __vue_inject_styles__$2 = undefined;
-    /* scoped */
-    const __vue_scope_id__$2 = undefined;
-    /* module identifier */
-    const __vue_module_identifier__$2 = undefined;
-    /* functional template */
-    const __vue_is_functional_template__$2 = true;
-    /* style inject */
-    
-    /* style inject SSR */
-    
-
-    
-    var AppCardComunicato = normalizeComponent_1(
-      { render: __vue_render__$2, staticRenderFns: __vue_staticRenderFns__$2 },
-      __vue_inject_styles__$2,
-      __vue_script__$2,
-      __vue_scope_id__$2,
-      __vue_is_functional_template__$2,
-      __vue_module_identifier__$2,
-      undefined,
-      undefined
-    );
-
-  //
-  //
-  //
-  //
-  //
-  //
-
-  var script$3 = {
-    props: ['url'],
-    data: () => ({ baseUrl: './static/pdfviewer/web/viewer.html?file='}),
-  };
-
-  /* script */
-  const __vue_script__$3 = script$3;
-
-  /* template */
-  var __vue_render__$3 = function() {
-    var _vm = this;
-    var _h = _vm.$createElement;
-    var _c = _vm._self._c || _h;
-    return _c("iframe", {
-      staticStyle: { width: "100%", height: "100%", display: "block" },
-      attrs: { src: _vm.baseUrl + _vm.$davinciApi.urlComunicato(_vm.url) }
-    })
-  };
-  var __vue_staticRenderFns__$3 = [];
-  __vue_render__$3._withStripped = true;
-
-    /* style */
-    const __vue_inject_styles__$3 = undefined;
-    /* scoped */
-    const __vue_scope_id__$3 = undefined;
-    /* module identifier */
-    const __vue_module_identifier__$3 = undefined;
-    /* functional template */
-    const __vue_is_functional_template__$3 = false;
-    /* style inject */
-    
-    /* style inject SSR */
-    
-
-    
-    var AppPdfviewer = normalizeComponent_1(
-      { render: __vue_render__$3, staticRenderFns: __vue_staticRenderFns__$3 },
-      __vue_inject_styles__$3,
-      __vue_script__$3,
-      __vue_scope_id__$3,
-      __vue_is_functional_template__$3,
-      __vue_module_identifier__$3,
-      undefined,
-      undefined
-    );
-
-  //
-  var script$4 = {
     props: ['title', 'comunicati'],
     data(){
       return {
@@ -46060,22 +45865,18 @@
         done();
       }
     },
-    components: {
-      AppPdfviewer,
-      AppCardComunicato,
-    }
   };
 
   /* script */
-  const __vue_script__$4 = script$4;
+  const __vue_script__$2 = script$2;
 
   /* template */
-  var __vue_render__$4 = function() {
+  var __vue_render__$2 = function() {
     var _vm = this;
     var _h = _vm.$createElement;
     var _c = _vm._self._c || _h;
     return _c(
-      "app-page",
+      "dav-app-page",
       {
         attrs: {
           title: _vm.title,
@@ -46084,23 +45885,23 @@
         }
       },
       [
-        _c("template", { slot: "actions" }, [
+        _c("template", { slot: "icons" }, [
           _vm.isPdfViewer
             ? _c(
                 "span",
                 [
-                  _c("app-nav-action", {
+                  _c("dav-icon", {
                     attrs: { icon: "md-share" },
                     on: {
-                      action: function($event) {
+                      click: function($event) {
                         return _vm.alert("ciao")
                       }
                     }
                   }),
                   _vm._v(" "),
-                  _c("app-nav-action", {
+                  _c("dav-icon", {
                     attrs: { icon: "md-close" },
-                    on: { action: _vm.togglePdf }
+                    on: { click: _vm.togglePdf }
                   })
                 ],
                 1
@@ -46109,7 +45910,7 @@
         ]),
         _vm._v(" "),
         _vm.isPdfViewer
-          ? _c("app-pdfviewer", { attrs: { url: _vm.pdfViewerUrl } })
+          ? _c("dav-pdfviewer", { attrs: { url: _vm.pdfViewerUrl } })
           : _vm._e(),
         _vm._v(" "),
         _vm.comunicati.length === 0 && !_vm.isPdfViewer
@@ -46127,7 +45928,7 @@
         _c(
           "v-ons-list",
           _vm._l(_vm.comunicatiCaricati, function(comunicato, index) {
-            return _c("app-card-comunicato", {
+            return _c("dav-comunicato", {
               attrs: {
                 comunicato: comunicato,
                 isRead: _vm.$root.comunicatiLetti.includes(comunicato)
@@ -46146,30 +45947,30 @@
       2
     )
   };
-  var __vue_staticRenderFns__$4 = [];
-  __vue_render__$4._withStripped = true;
+  var __vue_staticRenderFns__$2 = [];
+  __vue_render__$2._withStripped = true;
 
     /* style */
-    const __vue_inject_styles__$4 = undefined;
+    const __vue_inject_styles__$2 = undefined;
     /* scoped */
-    const __vue_scope_id__$4 = undefined;
+    const __vue_scope_id__$2 = undefined;
     /* module identifier */
-    const __vue_module_identifier__$4 = undefined;
+    const __vue_module_identifier__$2 = undefined;
     /* functional template */
-    const __vue_is_functional_template__$4 = false;
+    const __vue_is_functional_template__$2 = false;
     /* style inject */
     
     /* style inject SSR */
     
 
     
-    var AppPageComunicati = normalizeComponent_1(
-      { render: __vue_render__$4, staticRenderFns: __vue_staticRenderFns__$4 },
-      __vue_inject_styles__$4,
-      __vue_script__$4,
-      __vue_scope_id__$4,
-      __vue_is_functional_template__$4,
-      __vue_module_identifier__$4,
+    var DavAppPageComunicati = normalizeComponent_1(
+      { render: __vue_render__$2, staticRenderFns: __vue_staticRenderFns__$2 },
+      __vue_inject_styles__$2,
+      __vue_script__$2,
+      __vue_scope_id__$2,
+      __vue_is_functional_template__$2,
+      __vue_module_identifier__$2,
       undefined,
       undefined
     );
@@ -46187,28 +45988,28 @@
   //
   //
 
-  var script$5 = {};
+  var script$3 = {};
 
   /* script */
-  const __vue_script__$5 = script$5;
+  const __vue_script__$3 = script$3;
 
   /* template */
-  var __vue_render__$5 = function() {
+  var __vue_render__$3 = function() {
     var _vm = this;
     var _h = _vm.$createElement;
     var _c = _vm._self._c || _h;
     return _c(
-      "app-page",
+      "dav-app-page",
       { attrs: { title: "Home" } },
       [
         _c(
           "template",
-          { slot: "actions" },
+          { slot: "icons" },
           [
-            _c("app-nav-action", {
+            _c("dav-icon", {
               attrs: { icon: "md-menu" },
               on: {
-                action: function($event) {
+                click: function($event) {
                   return _vm.alert("ciao")
                 }
               }
@@ -46232,30 +46033,30 @@
       2
     )
   };
-  var __vue_staticRenderFns__$5 = [];
-  __vue_render__$5._withStripped = true;
+  var __vue_staticRenderFns__$3 = [];
+  __vue_render__$3._withStripped = true;
 
     /* style */
-    const __vue_inject_styles__$5 = undefined;
+    const __vue_inject_styles__$3 = undefined;
     /* scoped */
-    const __vue_scope_id__$5 = undefined;
+    const __vue_scope_id__$3 = undefined;
     /* module identifier */
-    const __vue_module_identifier__$5 = undefined;
+    const __vue_module_identifier__$3 = undefined;
     /* functional template */
-    const __vue_is_functional_template__$5 = false;
+    const __vue_is_functional_template__$3 = false;
     /* style inject */
     
     /* style inject SSR */
     
 
     
-    var AppPageHome = normalizeComponent_1(
-      { render: __vue_render__$5, staticRenderFns: __vue_staticRenderFns__$5 },
-      __vue_inject_styles__$5,
-      __vue_script__$5,
-      __vue_scope_id__$5,
-      __vue_is_functional_template__$5,
-      __vue_module_identifier__$5,
+    var DavAppPageHome = normalizeComponent_1(
+      { render: __vue_render__$3, staticRenderFns: __vue_staticRenderFns__$3 },
+      __vue_inject_styles__$3,
+      __vue_script__$3,
+      __vue_scope_id__$3,
+      __vue_is_functional_template__$3,
+      __vue_module_identifier__$3,
       undefined,
       undefined
     );
@@ -46287,28 +46088,29 @@
   //
   //
 
-  var script$6 = {};
+  var script$4 = {};
 
   /* script */
-  const __vue_script__$6 = script$6;
+  const __vue_script__$4 = script$4;
 
   /* template */
-  var __vue_render__$6 = function() {
+  var __vue_render__$4 = function() {
     var _vm = this;
     var _h = _vm.$createElement;
     var _c = _vm._self._c || _h;
     return _c(
-      "app-page",
+      "dav-app-page",
       { attrs: { title: "Impostazioni" } },
       [
+        _vm._v("action\n   "),
         _c(
           "template",
-          { slot: "actions" },
+          { slot: "icons" },
           [
-            _c("app-nav-action", {
+            _c("dav-icon", {
               attrs: { icon: "md-menu" },
               on: {
-                action: function($event) {
+                click: function($event) {
                   return _vm.alert("ciao")
                 }
               }
@@ -46335,7 +46137,7 @@
                 }
               },
               [
-                _vm._v("Sezione all'avvio\n   "),
+                _vm._v("Sezione all'avvio\n    "),
                 _c(
                   "div",
                   { staticClass: "expandable-content" },
@@ -46376,9 +46178,9 @@
                               },
                               [
                                 _vm._v(
-                                  "\n           " +
+                                  "\n            " +
                                     _vm._s(element.name) +
-                                    "\n         "
+                                    "\n          "
                                 )
                               ]
                             )
@@ -46401,56 +46203,56 @@
       2
     )
   };
-  var __vue_staticRenderFns__$6 = [];
-  __vue_render__$6._withStripped = true;
+  var __vue_staticRenderFns__$4 = [];
+  __vue_render__$4._withStripped = true;
 
     /* style */
-    const __vue_inject_styles__$6 = undefined;
+    const __vue_inject_styles__$4 = undefined;
     /* scoped */
-    const __vue_scope_id__$6 = undefined;
+    const __vue_scope_id__$4 = undefined;
     /* module identifier */
-    const __vue_module_identifier__$6 = undefined;
+    const __vue_module_identifier__$4 = undefined;
     /* functional template */
-    const __vue_is_functional_template__$6 = false;
+    const __vue_is_functional_template__$4 = false;
     /* style inject */
     
     /* style inject SSR */
     
 
     
-    var AppPageImpostazioni = normalizeComponent_1(
-      { render: __vue_render__$6, staticRenderFns: __vue_staticRenderFns__$6 },
-      __vue_inject_styles__$6,
-      __vue_script__$6,
-      __vue_scope_id__$6,
-      __vue_is_functional_template__$6,
-      __vue_module_identifier__$6,
+    var DavAppPageImpostazioni = normalizeComponent_1(
+      { render: __vue_render__$4, staticRenderFns: __vue_staticRenderFns__$4 },
+      __vue_inject_styles__$4,
+      __vue_script__$4,
+      __vue_scope_id__$4,
+      __vue_is_functional_template__$4,
+      __vue_module_identifier__$4,
       undefined,
       undefined
     );
 
   var pages = {
-    AppPageAgenda,
-    AppPageComunicati,
-    AppPageHome,
-    AppPageImpostazioni,
+    DavAppPageAgenda,
+    DavAppPageComunicati,
+    DavAppPageHome,
+    DavAppPageImpostazioni,
   };
 
   //
 
-  var script$7 = {
+  var script$5 = {
     name: 'App',
     components: {
-      AppMenu,
+      DavAppMenu,
       ...pages,
     }
   };
 
   /* script */
-  const __vue_script__$7 = script$7;
+  const __vue_script__$5 = script$5;
 
   /* template */
-  var __vue_render__$7 = function() {
+  var __vue_render__$5 = function() {
     var _vm = this;
     var _h = _vm.$createElement;
     var _c = _vm._self._c || _h;
@@ -46468,7 +46270,7 @@
               swipeable: ""
             }
           },
-          [_c("app-menu")],
+          [_c("dav-app-menu")],
           1
         ),
         _vm._v(" "),
@@ -46498,17 +46300,17 @@
       1
     )
   };
-  var __vue_staticRenderFns__$7 = [];
-  __vue_render__$7._withStripped = true;
+  var __vue_staticRenderFns__$5 = [];
+  __vue_render__$5._withStripped = true;
 
     /* style */
-    const __vue_inject_styles__$7 = undefined;
+    const __vue_inject_styles__$5 = undefined;
     /* scoped */
-    const __vue_scope_id__$7 = undefined;
+    const __vue_scope_id__$5 = undefined;
     /* module identifier */
-    const __vue_module_identifier__$7 = undefined;
+    const __vue_module_identifier__$5 = undefined;
     /* functional template */
-    const __vue_is_functional_template__$7 = false;
+    const __vue_is_functional_template__$5 = false;
     /* style inject */
     
     /* style inject SSR */
@@ -46516,12 +46318,12 @@
 
     
     var App = normalizeComponent_1(
-      { render: __vue_render__$7, staticRenderFns: __vue_staticRenderFns__$7 },
-      __vue_inject_styles__$7,
-      __vue_script__$7,
-      __vue_scope_id__$7,
-      __vue_is_functional_template__$7,
-      __vue_module_identifier__$7,
+      { render: __vue_render__$5, staticRenderFns: __vue_staticRenderFns__$5 },
+      __vue_inject_styles__$5,
+      __vue_script__$5,
+      __vue_scope_id__$5,
+      __vue_is_functional_template__$5,
+      __vue_module_identifier__$5,
       undefined,
       undefined
     );
@@ -47958,16 +47760,16 @@
   //
   //
 
-  var script$8 = {
-    name: 'AppNavAction',
+  var script$6 = {
+    name: 'DavIcon',
     props: ['icon'],
   };
 
   /* script */
-  const __vue_script__$8 = script$8;
+  const __vue_script__$6 = script$6;
 
   /* template */
-  var __vue_render__$8 = function() {
+  var __vue_render__$6 = function() {
     var _vm = this;
     var _h = _vm.$createElement;
     var _c = _vm._self._c || _h;
@@ -47976,7 +47778,7 @@
       {
         on: {
           click: function($event) {
-            return _vm.$emit("action")
+            return _vm.$emit("click")
           }
         }
       },
@@ -47984,30 +47786,30 @@
       1
     )
   };
-  var __vue_staticRenderFns__$8 = [];
-  __vue_render__$8._withStripped = true;
+  var __vue_staticRenderFns__$6 = [];
+  __vue_render__$6._withStripped = true;
 
     /* style */
-    const __vue_inject_styles__$8 = undefined;
+    const __vue_inject_styles__$6 = undefined;
     /* scoped */
-    const __vue_scope_id__$8 = undefined;
+    const __vue_scope_id__$6 = undefined;
     /* module identifier */
-    const __vue_module_identifier__$8 = undefined;
+    const __vue_module_identifier__$6 = undefined;
     /* functional template */
-    const __vue_is_functional_template__$8 = false;
+    const __vue_is_functional_template__$6 = false;
     /* style inject */
     
     /* style inject SSR */
     
 
     
-    var AppNavAction = normalizeComponent_1(
-      { render: __vue_render__$8, staticRenderFns: __vue_staticRenderFns__$8 },
-      __vue_inject_styles__$8,
-      __vue_script__$8,
-      __vue_scope_id__$8,
-      __vue_is_functional_template__$8,
-      __vue_module_identifier__$8,
+    var DavIcon = normalizeComponent_1(
+      { render: __vue_render__$6, staticRenderFns: __vue_staticRenderFns__$6 },
+      __vue_inject_styles__$6,
+      __vue_script__$6,
+      __vue_scope_id__$6,
+      __vue_is_functional_template__$6,
+      __vue_module_identifier__$6,
       undefined,
       undefined
     );
@@ -48029,8 +47831,8 @@
   //
   //
 
-  var script$9 = {
-    name: 'AppPage',
+  var script$7 = {
+    name: 'DavAppPage',
     props: {
       title: String,
       scrollable: { type: Boolean, default: true },
@@ -48039,10 +47841,10 @@
   };
 
   /* script */
-  const __vue_script__$9 = script$9;
+  const __vue_script__$7 = script$7;
 
   /* template */
-  var __vue_render__$9 = function() {
+  var __vue_render__$7 = function() {
     var _vm = this;
     var _h = _vm.$createElement;
     var _c = _vm._self._c || _h;
@@ -48069,13 +47871,187 @@
             _vm._v(" " + _vm._s(_vm.title) + " ")
           ]),
           _vm._v(" "),
-          _c("div", { staticClass: "right" }, [_vm._t("actions")], 2)
+          _c("div", { staticClass: "right" }, [_vm._t("icons")], 2)
         ]),
         _vm._v(" "),
         _vm._t("default")
       ],
       2
     )
+  };
+  var __vue_staticRenderFns__$7 = [];
+  __vue_render__$7._withStripped = true;
+
+    /* style */
+    const __vue_inject_styles__$7 = undefined;
+    /* scoped */
+    const __vue_scope_id__$7 = undefined;
+    /* module identifier */
+    const __vue_module_identifier__$7 = undefined;
+    /* functional template */
+    const __vue_is_functional_template__$7 = false;
+    /* style inject */
+    
+    /* style inject SSR */
+    
+
+    
+    var DavAppPage = normalizeComponent_1(
+      { render: __vue_render__$7, staticRenderFns: __vue_staticRenderFns__$7 },
+      __vue_inject_styles__$7,
+      __vue_script__$7,
+      __vue_scope_id__$7,
+      __vue_is_functional_template__$7,
+      __vue_module_identifier__$7,
+      undefined,
+      undefined
+    );
+
+  //
+  //
+  //
+  //
+  //
+  //
+
+  var script$8 = {
+    name: 'DavPdfviewer',
+    props: ['url'],
+    data: () => ({ baseUrl: './static/pdfviewer/web/viewer.html?file='}),
+  };
+
+  /* script */
+  const __vue_script__$8 = script$8;
+
+  /* template */
+  var __vue_render__$8 = function() {
+    var _vm = this;
+    var _h = _vm.$createElement;
+    var _c = _vm._self._c || _h;
+    return _c("iframe", {
+      staticStyle: { width: "100%", height: "100%", display: "block" },
+      attrs: { src: _vm.baseUrl + _vm.$davinciApi.urlComunicato(_vm.url) }
+    })
+  };
+  var __vue_staticRenderFns__$8 = [];
+  __vue_render__$8._withStripped = true;
+
+    /* style */
+    const __vue_inject_styles__$8 = undefined;
+    /* scoped */
+    const __vue_scope_id__$8 = undefined;
+    /* module identifier */
+    const __vue_module_identifier__$8 = undefined;
+    /* functional template */
+    const __vue_is_functional_template__$8 = false;
+    /* style inject */
+    
+    /* style inject SSR */
+    
+
+    
+    var DavPdfviewer = normalizeComponent_1(
+      { render: __vue_render__$8, staticRenderFns: __vue_staticRenderFns__$8 },
+      __vue_inject_styles__$8,
+      __vue_script__$8,
+      __vue_scope_id__$8,
+      __vue_is_functional_template__$8,
+      __vue_module_identifier__$8,
+      undefined,
+      undefined
+    );
+
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+
+  var script$9 = {
+    name: 'DavComunicato',
+    props: ['comunicato', 'isRead'],
+  };
+    /*
+    methods: {
+      openPdf (){  // Chiede alla pagina madre di aprire un pdf su un url
+        if(!this.isRead) this.$root.comunicatiLetti.push(this.comunicato)
+        this.$emit('openPdf', this.comunicato.url)
+      },
+      togglePref (){ // Cambia stato da preferito a non preferito (e viceversa)
+        this.comunicato.isPref = !this.comunicato.isPref
+      }
+    }*/
+
+  /* script */
+  const __vue_script__$9 = script$9;
+  /* template */
+  var __vue_render__$9 = function(_h, _vm) {
+    var _c = _vm._c;
+    return _c("div", { staticClass: "app-comunicato" }, [
+      _c("div", [
+        _vm._v("\n    " + _vm._s(_vm.props.comunicato.number) + " "),
+        _c("br"),
+        _vm._v(" "),
+        _c("div", {
+          class: _vm.props.comunicato.isPref ? "zmdi-star" : "zmdi-star-border",
+          on: {
+            click: function($event) {
+              _vm.listeners.togglepref || function() {};
+            }
+          }
+        })
+      ]),
+      _vm._v(" "),
+      _c(
+        "div",
+        {
+          style: "fontWeight: " + (_vm.props.isRead ? "400" : "600"),
+          on: {
+            click: function($event) {
+              _vm.listeners.openpdf || function() {};
+            }
+          }
+        },
+        [_vm._v(" " + _vm._s(_vm.props.comunicato.title))]
+      ),
+      _vm._v(" "),
+      _c("a", {
+        staticClass: "zmdi-download",
+        attrs: {
+          href: _vm.props.comunicato.url,
+          download:
+            _vm.props.comunicato.number +
+            "-" +
+            _vm.props.comunicato.title +
+            ".pdf"
+        }
+      }),
+      _vm._v(" "),
+      _c("a", {
+        staticClass: "zmdi-share",
+        attrs: { href: "https://wa.me/?text=" + _vm.props.comunicato.url }
+      })
+    ])
   };
   var __vue_staticRenderFns__$9 = [];
   __vue_render__$9._withStripped = true;
@@ -48087,14 +48063,14 @@
     /* module identifier */
     const __vue_module_identifier__$9 = undefined;
     /* functional template */
-    const __vue_is_functional_template__$9 = false;
+    const __vue_is_functional_template__$9 = true;
     /* style inject */
     
     /* style inject SSR */
     
 
     
-    var AppPage = normalizeComponent_1(
+    var DavComunicato = normalizeComponent_1(
       { render: __vue_render__$9, staticRenderFns: __vue_staticRenderFns__$9 },
       __vue_inject_styles__$9,
       __vue_script__$9,
@@ -48107,8 +48083,10 @@
 
   var BaseComponents = { install(Vue){
   [
-      AppNavAction,
-      AppPage,
+      DavIcon,
+      DavAppPage,
+      DavPdfviewer,
+      DavComunicato,
     ].forEach( component => Vue.component(component.name, component));
   }};
 

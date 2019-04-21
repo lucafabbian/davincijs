@@ -1,7 +1,7 @@
 <template>
   <v-ons-splitter>
     <v-ons-splitter-side id="menu" side="left" width="220px" collapse swipeable>
-      <app-menu></app-menu>
+      <dav-app-menu></dav-app-menu>
     </v-ons-splitter-side>
     <v-ons-splitter-content id="content">
         <keep-alive>
@@ -12,13 +12,13 @@
 </template>
 <script>
 
-import AppMenu from './components/AppMenu.vue'
+import DavAppMenu from './components/DavAppMenu.vue'
 import pages   from './pages/pages.js'
 
 export default {
   name: 'App',
   components: {
-    AppMenu,
+    DavAppMenu,
     ...pages,
   }
 }

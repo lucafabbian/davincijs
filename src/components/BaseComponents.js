@@ -1,9 +1,14 @@
-import AppNavAction      from './AppNavAction.vue'
-import AppPage           from './AppPage.vue'
+import DavIcon       from './DavIcon.vue'
+import DavAppPage    from './DavAppPage.vue'
+import DavPdfviewer  from './DavPdfviewer.vue'
+import DavComunicato from './DavComunicato.vue'
+
 
 export default { install(Vue){
   ;[
-    AppNavAction,
-    AppPage,
+    DavIcon,
+    DavAppPage,
+    DavPdfviewer,
+    DavComunicato,
   ].forEach( component => Vue.component(component.name, component))
 }}
