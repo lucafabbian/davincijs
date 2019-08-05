@@ -46254,7 +46254,7 @@
                 _c(
                   _vm.$root.page[2],
                   _vm._b(
-                    { tag: "component" },
+                    { key: _vm.$root.page[0], tag: "component" },
                     "component",
                     _vm.$root.page[3],
                     false

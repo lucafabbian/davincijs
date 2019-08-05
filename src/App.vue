@@ -51,7 +51,7 @@ export default {
     </v-ons-splitter-side>
     <v-ons-splitter-content id="content">
       <keep-alive>
-        <component :is="$root.page[2]" v-bind="$root.page[3]"></component>
+        <component :key="$root.page[0]" :is="$root.page[2]" v-bind="$root.page[3]"></component>
       </keep-alive>
     </v-ons-splitter-content>
   </v-ons-splitter>
