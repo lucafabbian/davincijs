@@ -1,5 +1,6 @@
 /* Import rollup plugins */
 import { terser } from 'rollup-plugin-terser'     // Js minifier
+import globImport from 'rollup-plugin-glob-import'// Resolve glob inside imports
 import resolve from 'rollup-plugin-node-resolve'  // Import from node_modules
 import replace from 'rollup-plugin-replace'       // Replace values inside code
 import commonjs from 'rollup-plugin-commonjs'     // Vue plugin dependency
@@ -31,6 +32,7 @@ export default {
     output:  { file: 'dist/index.js', format: 'iife' },
     watch:   { clearScreen: true },
     plugins: [
+      globImport({format: 'default'}),
       // Prende i moduli da node
       resolve({jsnext: true, preferBuiltins: true, browser: true }),
       commonjs(),
@@ -47,7 +49,7 @@ export default {
         'process.env.VUE_ENV': JSON.stringify('browser'),
       }),
       // Minifica i js
-      production && terser(),       // Minify only on production
+      !production && terser(),       // Minify only on production
       // Apre un server alla porta :10001 + livereload
       !production && serve({         // Open browser on watch
         open: true,

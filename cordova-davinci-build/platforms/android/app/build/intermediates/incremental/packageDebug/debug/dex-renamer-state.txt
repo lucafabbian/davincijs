@@ -1,4 +1,0 @@
-#Tue Oct 30 20:39:12 CET 2018
-base.0=/home/luca-fabbian/Projects/davincijs/cordova-davinci-build/platforms/android/app/build/intermediates/transforms/dexMerger/debug/0
-path.0=classes.dex
-renamed.0=classes.dex
