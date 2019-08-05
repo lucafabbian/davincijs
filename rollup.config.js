@@ -49,7 +49,7 @@ export default {
         'process.env.VUE_ENV': JSON.stringify('browser'),
       }),
       // Minifica i js
-      !production && terser(),       // Minify only on production
+      production && terser(),       // Minify only on production
       // Apre un server alla porta :10001 + livereload
       !production && serve({         // Open browser on watch
         open: true,

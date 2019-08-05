@@ -2,9 +2,9 @@
 App non ufficiale del Liceo Scientifico Statale "Leonardo Da Vinci" di Treviso.
 Si tratta di un'alternativa all'app del Liceo esistente che, pur appoggiandosi
 sugli stessi meccanismi (l'api presente qui http://www.liceodavinci.tv/api), è
-stata interamente riscritta nel linguaggio javascript (Vue.js),così da essere 
+stata interamente riscritta nel linguaggio javascript (Vue.js),così da essere
 più immediata da modificare aggiungendo nuove funzionalità e, allo stesso tempo,
-funzionare anche sui dispositivi diversi da Android (sia iPhone che computer o 
+funzionare anche sui dispositivi diversi da Android (sia iPhone che computer o
 tablet), oltre che come sito web, mantenendo lo stesso codice.
 
 
@@ -21,24 +21,17 @@ la libreria javascript a cui si appoggia il codice.
 
 
 ## Installazione
-Per rendere il tutto più immediato si è scelto di scrivere l'app semplicemente 
-con normale html/css/javascript, senza fare uso di strumenti preprocessori.
-
-
-Per poter testare il codice, è però necessario avvalersi di node.js, che farà da ponte
-fra il proprio computer e il server della scuola. Dopo aver installato node.js
-sul proprio pc, bisogna aprire un terminale nella cartella api-server e digitare 
+Dalla versione 0.0.2, il codice sorgente di base è ottimizzato grazie a rollup,
+che si può invocare direttamente da Node.js scrivendo:
 ```bash
-npm install  #solo la prima volta
-node index.js
+npm install    # solo la prima volta
+npm run watch  # lancerà il tutto in modalità sviluppatore, ricompila a ogni salvataggio
 ```
-A questo punto è sufficiente aprire un browser su [http://localhost:3000](http://localhost:3000)
+A questo punto è sufficiente aprire un browser su [http://0.0.0.0:10001](http://0.0.0.0:10001)
 per vedere un'anteprima dell'app.
 
 ## Struttura del progetto
-L'intero codice è contenuto nella cartella da-vinci-app, tutte le librerie sono 
-contenute nella sottocartella ```res```, mentre i file javascript sono all'interno della
-sottocartella ```js```.
+Tutto il codice di base è contenuto in `src/`, una volta preprocessato viene copiato in `dist/`, dove sono presenti anche tutte quelle risorse statiche che non necessitano di preprocessing.
 
 
 # Licenza
