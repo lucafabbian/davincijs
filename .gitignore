@@ -1,3 +1,7 @@
+# Remove Dist
+#
+dist/
+
 # Logs
 logs
 *.log
