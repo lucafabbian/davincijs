@@ -1,6 +1,6 @@
 /** Da Vinci Api
 In questo file sono contenuti tutti i metodi necessari per comunicare con il
-server del liceo. **/
+server del liceo. */
 import axios from 'axios'
 
 export default new function(){

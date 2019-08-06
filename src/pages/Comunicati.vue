@@ -30,8 +30,8 @@
 <script>
 
 const types = {
-  "genitori": { title: 'Comunicati studenti', comunicati:'comunicatiStudenti'},
-  "studenti": { title: 'Comunicati genitori', comunicati:'comunicatiGenitori'},
+  "studenti": { title: 'Comunicati studenti', comunicati:'comunicatiStudenti'},
+  "genitori": { title: 'Comunicati genitori', comunicati:'comunicatiGenitori'},
   "docenti" : { title: 'Comunicati docenti',  comunicati:'comunicatiDocenti'},
 }
 

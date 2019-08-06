@@ -1,3 +1,13 @@
 {
-  "title": "ciao"
+  "news": [
+    {
+      "layout": 1,
+      "preview": "./static/img/logo.svg",
+      "title":   "DaVinciJs è in versione demo!",
+      "subtitle":"Clicca per visualizzare il changelog!",
+      "text":"json is lloon"
+    }
+
+
+  ]
 }

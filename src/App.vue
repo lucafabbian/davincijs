@@ -25,7 +25,8 @@ export default {
     changePage(page){
       this.$root.page = page
       document.getElementById('menu').close()
-    }
+    },
+    debug(){ console.log(this.$store.page)  },
   }
 }
 </script>
@@ -33,7 +34,7 @@ export default {
   <v-ons-splitter>
     <v-ons-splitter-side id="menu" side="left" width="220px" collapse swipeable>
       <v-ons-page>
-        <div class="sidemenu"><img src="./static/img/logo-toolbar.svg"></div>
+        <div class="sidemenu" @click="debug"><img src="./static/img/logo-toolbar.svg"></div>
         <v-ons-list>
           <span v-for="(category, name) in sidemenu" :key="name">
             <span v-if=" name != 'default'">
@@ -51,7 +52,7 @@ export default {
     </v-ons-splitter-side>
     <v-ons-splitter-content id="content">
       <keep-alive>
-        <component :key="$root.page[0]" :is="$root.page[2]" v-bind="$root.page[3]"></component>
+        <component :key="$store.page[0]" :is="$store.page[2]" v-bind="$store.page[3]"></component>
       </keep-alive>
     </v-ons-splitter-content>
   </v-ons-splitter>

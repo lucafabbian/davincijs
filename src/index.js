@@ -1,19 +1,14 @@
 // External libs imports
-import Vue from 'vue/dist/vue.esm.browser.js'
+import Vue from 'vue/dist/vue.js'
 import VueOnsen from 'vue-onsenui'
+import VueLocalStorage from 'vue-localstorage'
+
 
 // App imports
 import App from './App.vue'
 import VueDaVinciApi from './js/davinciapi/VueDaVinciApi.js'
-import store from './js/store/store.js'
-
-
-/**
- *  Componenti "di base" dell'app: si tratta di quelli
- *  che vengono usati più spesso, e pertanto ha senso
- *  registrarli come globali in modo che siano disponibili
- *  ovunque all'interno dei template (anche nei plugin)
- */
+import DaVinciApi from './js/DaVinciApi.js'
+import store from './js/Store.js'
 import * as baseComponents from './components/*.vue'
 
 // Css imports
@@ -23,6 +18,7 @@ import './css/onsenTheme.css'
 
 /** Install Vue plugins and base components */
 ;[VueOnsen, VueDaVinciApi].forEach( plugin => Vue.use(plugin))
+Vue.use(VueLocalStorage, {name: 'localStorage', bind: true})
 Object.values(baseComponents).forEach( component => Vue.component(component.name, component))
 Vue.prototype.$vue = Vue
 
@@ -31,20 +27,17 @@ if(process.env.NODE_ENV === 'development'){
   Vue.prototype.$ons.platform.select('android') // Set android
 }
 
+// Load Store
+const localStorage = { ...store, ...DaVinciApi.store}
+Object.keys(localStorage).map(function(key) { localStorage[key] = {type: Object, default: localStorage[key]}})
+Object.defineProperty(Vue.prototype, "$store", { get: () => Vue.prototype.$localStorage })
 
+
+/** Start Vue */
 new Vue({
   el: '#app',
   render: h => h(App),
-  data: {
-    page: JSON.parse(localStorage.page || '{"name": "Home", "icon":"md-home", "page":"app-page-home"}'),
-    comunicatiLetti     : JSON.parse(localStorage.comunicatiLetti     || '[]'),
-    comunicatiPreferiti : JSON.parse(localStorage.comunicatiPreferiti || '[]'),
-  },
-  watch: {
-    comunicatiLetti    () { localStorage.comunicatiLetti     = JSON.stringify(this.comunicatiLetti    )  },
-    comunicatiPreferiti() { localStorage.comunicatiPreferiti = JSON.stringify(this.comunicatiPreferiti)  },
-    page               () { localStorage.page                = JSON.stringify(this.page               )  },
-  },
+  localStorage,
 })
 
-Vue.prototype.$davinciApi.refresh()
+//Vue.prototype.$davinciApi.refresh()
