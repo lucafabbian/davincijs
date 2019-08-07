@@ -56,8 +56,8 @@ export default {
       // Apre un server alla porta :10001 + livereload
       !production && serve({         // Open browser on watch
         open: true,
-        contentBase: 'dist/',
-         openPage: '/debug.html',
+        contentBase: '../',
+         openPage: '/davincijs/dist/debug.html',
         host: 'localhost',
         port: 10001,
       }),
