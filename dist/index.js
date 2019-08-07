@@ -45949,9 +45949,9 @@
 
 
 	const types = {
-	  "studenti": { title: 'Comunicati studenti', comunicati:'comunicatiStudenti'},
-	  "genitori": { title: 'Comunicati genitori', comunicati:'comunicatiGenitori'},
-	  "docenti" : { title: 'Comunicati docenti',  comunicati:'comunicatiDocenti'},
+	  "studenti": { title: 'Comunicati studenti', comunicati:'comunicatiStudenti', url:"studenti"},
+	  "genitori": { title: 'Comunicati genitori', comunicati:'comunicatiGenitori', url:"genitori"},
+	  "docenti" : { title: 'Comunicati docenti',  comunicati:'comunicatiDocenti',  url:"docenti"},
 	};
 
 	var script$1 = {
@@ -45962,11 +45962,13 @@
 	      isPdfViewer: false,
 	      pdfViewerUrl: "file.pdf",
 	      onlyPrefs: false,
+	      refreshing: false,
 	    }
 	  },
 	  computed: {
 	    title()     { return types[this.type].title },
 	    comunicati(){ return types[this.type].comunicati},
+	    url()       { return types[this.type].url},
 
 	    comunicatiCaricati(){
 	      return this.$store[this.comunicati]
@@ -46007,7 +46009,18 @@
 	          serializedComunicato
 	        ];
 	      }
-	    }
+	    },
+	    refresh(){
+	      if(this.refreshing) return
+	      this.refreshing = true;
+	      const finish = (msg) => {
+	          this.$ons.notification.toast(msg, { timeout: 1300 });
+	          this.refreshing = false;
+	      };
+	      this.$davinciApi.fetchComunicati(this.comunicati, this.url)
+	        .then( () => finish('Lista comunicati aggiornata!'))
+	        .catch(() => finish('Errore. Non sono riuscito a connettermi.'));
+	    },
 
 	  },
 	};
@@ -46059,10 +46072,10 @@
 	              "span",
 	              [
 	                _c("dav-icon", {
-	                  attrs: { icon: "md-refresh" },
+	                  attrs: { icon: "md-refresh", spin: _vm.refreshing },
 	                  on: {
 	                    click: function($event) {
-	                      return _vm.changeDate(_vm.month - 1)
+	                      return _vm.refresh()
 	                    }
 	                  }
 	                }),
@@ -46126,27 +46139,17 @@
 	        2
 	      ),
 	      _vm._v(" "),
-	      _c(
-	        "p",
-	        {
-	          staticStyle: {
-	            "text-align": "center",
-	            opacity: "0.6",
-	            "margin-top": "20px"
-	          }
-	        },
-	        [
-	          _vm._v(
-	            "\n    " +
-	              _vm._s(
-	                _vm.onlyPrefs && _vm.comunicatiCaricati.length === 0
-	                  ? "Nessun preferito selezionato!"
-	                  : ""
-	              ) +
-	              "\n  "
-	          )
-	        ]
-	      )
+	      _c("p", { staticStyle: { "text-align": "center", opacity: "0.6" } }, [
+	        _vm._v(
+	          "\n    " +
+	            _vm._s(
+	              _vm.onlyPrefs && _vm.comunicatiCaricati.length === 0
+	                ? "Nessun preferito selezionato!"
+	                : ""
+	            ) +
+	            "\n  "
+	        )
+	      ])
 	    ],
 	    2
 	  )
@@ -47932,10 +47935,10 @@
 	  this.serializeComunicato = comunicato => JSON.stringify({url: comunicato.url});
 
 	  /** Funzione generica*/
-	  const fetchComunicati = (key, url, last) => new Promise( (resolve, reject) => {
+	  this.fetchComunicati = (key, url, last) => new Promise( (resolve, reject) => {
 	    last = (last == undefined) ? '' : '/' + last; // aggiungi uno slash solo se last non è nullo
 	    // aggiungere sempre lo slash alla fine causa dei redirect inutili
-	    api.get(url + last).then( (result) => {
+	    api.get(`api/comunicati/${url}${last}`).then( (result) => {
 	      // Mappa i risultati, aggiungendo proprietà non previste, come titolo e numero
 	      const comunicati = result.data.map( comunicato => ({
 	        ...comunicato,
@@ -47943,20 +47946,16 @@
 	        title: comunicato.nome.substring(((comunicato.nome.match(/^[0-9]*/) || ["0"])[0] || "0").length + 1).replace(".pdf", "").replace(/\_/g," "),
 	        urlName: comunicato.url.substring(comunicato.url.lastIndexOf('/')),
 	      }));
-	      // Aggiunge l'elemento al localStorage, in modo da cacharlo
+	      // Aggiunge l'elemento al localStorage, in modo da cachearlo
 	      resolve(update(key, comunicati));
-	    });
+	    }).catch( ()  => reject() );
 	  });
-
-	  this.fetchComunicatiStudenti = (last) => fetchComunicati('comunicatiStudenti', 'api/comunicati/studenti', last);
-	  this.fetchComunicatiGenitori = (last) => fetchComunicati('comunicatiGenitori', 'api/comunicati/genitori', last);
-	  this.fetchComunicatiDocenti  = (last) => fetchComunicati('comunicatiDocenti' , 'api/comunicati/docenti' , last);
 
 
 	  this.refresh = () => {
-	    this.fetchComunicatiStudenti();
-	    this.fetchComunicatiGenitori();
-	    this.fetchComunicatiDocenti();
+	    this.fetchComunicati('comunicatiStudenti', 'studenti');
+	    this.fetchComunicati('comunicatiGenitori', 'genitori');
+	    this.fetchComunicati('comunicatiDocenti' , 'docenti' );
 	  };
 
 	};
@@ -48197,7 +48196,7 @@
 
 	var script$8 = {
 	  name: 'DavIcon',
-	  props: ['icon'],
+	  props: ['icon', 'spin'],
 	};
 
 	/* script */
@@ -48217,7 +48216,7 @@
 	        }
 	      }
 	    },
-	    [_c("v-ons-icon", { attrs: { icon: _vm.icon } })],
+	    [_c("v-ons-icon", { attrs: { icon: _vm.icon, spin: _vm.spin } })],
 	    1
 	  )
 	};

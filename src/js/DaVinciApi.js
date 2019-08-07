@@ -43,10 +43,10 @@ const $davinciApi = function(Vue){
   this.serializeComunicato = comunicato => JSON.stringify({url: comunicato.url})
 
   /** Funzione generica*/
-  const fetchComunicati = (key, url, last) => new Promise( (resolve, reject) => {
+  this.fetchComunicati = (key, url, last) => new Promise( (resolve, reject) => {
     last = (last == undefined) ? '' : '/' + last; // aggiungi uno slash solo se last non è nullo
     // aggiungere sempre lo slash alla fine causa dei redirect inutili
-    api.get(url + last).then( (result) => {
+    api.get(`api/comunicati/${url}${last}`).then( (result) => {
       // Mappa i risultati, aggiungendo proprietà non previste, come titolo e numero
       const comunicati = result.data.map( comunicato => ({
         ...comunicato,
@@ -54,20 +54,16 @@ const $davinciApi = function(Vue){
         title: comunicato.nome.substring(((comunicato.nome.match(/^[0-9]*/) || ["0"])[0] || "0").length + 1).replace(".pdf", "").replace(/\_/g," "),
         urlName: comunicato.url.substring(comunicato.url.lastIndexOf('/')),
       }))
-      // Aggiunge l'elemento al localStorage, in modo da cacharlo
+      // Aggiunge l'elemento al localStorage, in modo da cachearlo
       resolve(update(key, comunicati));
-    })
+    }).catch( ()  => reject() )
   })
-
-  this.fetchComunicatiStudenti = (last) => fetchComunicati('comunicatiStudenti', 'api/comunicati/studenti', last)
-  this.fetchComunicatiGenitori = (last) => fetchComunicati('comunicatiGenitori', 'api/comunicati/genitori', last)
-  this.fetchComunicatiDocenti  = (last) => fetchComunicati('comunicatiDocenti' , 'api/comunicati/docenti' , last)
 
 
   this.refresh = () => {
-    this.fetchComunicatiStudenti()
-    this.fetchComunicatiGenitori()
-    this.fetchComunicatiDocenti()
+    this.fetchComunicati('comunicatiStudenti', 'studenti')
+    this.fetchComunicati('comunicatiGenitori', 'genitori')
+    this.fetchComunicati('comunicatiDocenti' , 'docenti' )
   }
 
 }

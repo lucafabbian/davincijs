@@ -8,7 +8,7 @@
         <dav-icon icon="md-close" @click="closePdf()"></dav-icon>
       </span>
       <span v-else>
-        <dav-icon icon="md-refresh"  @click="changeDate(month - 1)"></dav-icon>
+        <dav-icon icon="md-refresh"  @click="refresh()" :spin="refreshing"></dav-icon>
         <dav-icon :icon="onlyPrefs ? 'md-long-arrow-return':'md-star'"  @click="onlyPrefs = !onlyPrefs"></dav-icon>
 
       </span>
@@ -30,7 +30,7 @@
           <v-ons-icon :icon="md-spinner" size="28px" spin></v-ons-icon>
        </span>
     </v-ons-list>
-    <p style="text-align: center; opacity: 0.6; margin-top: 20px;">
+    <p style="text-align: center; opacity: 0.6;">
       {{ onlyPrefs && comunicatiCaricati.length === 0 ? 'Nessun preferito selezionato!' :'' }}
     </p>
   </dav-app-page>
@@ -38,9 +38,9 @@
 <script>
 
 const types = {
-  "studenti": { title: 'Comunicati studenti', comunicati:'comunicatiStudenti'},
-  "genitori": { title: 'Comunicati genitori', comunicati:'comunicatiGenitori'},
-  "docenti" : { title: 'Comunicati docenti',  comunicati:'comunicatiDocenti'},
+  "studenti": { title: 'Comunicati studenti', comunicati:'comunicatiStudenti', url:"studenti"},
+  "genitori": { title: 'Comunicati genitori', comunicati:'comunicatiGenitori', url:"genitori"},
+  "docenti" : { title: 'Comunicati docenti',  comunicati:'comunicatiDocenti',  url:"docenti"},
 }
 
 export default {
@@ -51,11 +51,13 @@ export default {
       isPdfViewer: false,
       pdfViewerUrl: "file.pdf",
       onlyPrefs: false,
+      refreshing: false,
     }
   },
   computed: {
     title()     { return types[this.type].title },
     comunicati(){ return types[this.type].comunicati},
+    url()       { return types[this.type].url},
 
     comunicatiCaricati(){
       return this.$store[this.comunicati]
@@ -96,7 +98,18 @@ export default {
           serializedComunicato
         ]
       }
-    }
+    },
+    refresh(){
+      if(this.refreshing) return
+      this.refreshing = true
+      const finish = (msg) => {
+          this.$ons.notification.toast(msg, { timeout: 1300 })
+          this.refreshing = false
+      }
+      this.$davinciApi.fetchComunicati(this.comunicati, this.url)
+        .then( () => finish('Lista comunicati aggiornata!'))
+        .catch(() => finish('Errore. Non sono riuscito a connettermi.'))
+    },
 
   },
 }
