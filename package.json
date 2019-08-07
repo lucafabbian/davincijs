@@ -27,7 +27,7 @@
   "homepage": "https://github.com/lucafabbian/davincijs#readme",
   "dependencies": {
     "axios": "^0.18.1",
-    "onsenui": "^2.10.8",
+    "onsenui": "^2.10.10",
     "vue": "^2.6.10",
     "vue-localstorage": "^0.6.2",
     "vue-onsenui": "^2.6.2",
@@ -35,21 +35,21 @@
   },
   "devDependencies": {
     "eslint": "^5.16.0",
-    "eslint-plugin-html": "^5.0.3",
-    "eslint-plugin-jsdoc": "^4.8.3",
+    "eslint-plugin-html": "^5.0.5",
+    "eslint-plugin-jsdoc": "^4.8.4",
     "postcss-import": "^12.0.1",
     "postcss-url": "^8.0.0",
-    "rollup": "^1.10.1",
+    "rollup": "^1.19.4",
     "rollup-plugin-commonjs": "^9.3.4",
     "rollup-plugin-glob-import": "^0.3.1",
     "rollup-plugin-image": "^1.0.2",
     "rollup-plugin-livereload": "^1.0.1",
-    "rollup-plugin-node-resolve": "^4.2.3",
+    "rollup-plugin-node-resolve": "^4.2.4",
     "rollup-plugin-postcss": "^2.0.3",
     "rollup-plugin-replace": "^2.2.0",
     "rollup-plugin-serve": "^1.0.1",
     "rollup-plugin-terser": "^4.0.4",
-    "rollup-plugin-vue": "^5.0.0",
+    "rollup-plugin-vue": "^5.0.1",
     "vue-template-compiler": "^2.6.10"
   }
 }
