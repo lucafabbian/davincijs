@@ -46195,6 +46195,10 @@
 	//
 	//
 	//
+	//
+	//
+	//
+	//
 
 	fetch('./news/news.json').then(response => response.json()).then(data => {
 	  console.log(data);
@@ -46247,7 +46251,12 @@
 	        [_vm._v("\n    Swipe right to open the menu!\n  ")]
 	      ),
 	      _vm._v(" "),
-	      _c("v-ons-card")
+	      _c("v-ons-card"),
+	      _vm._v(" "),
+	      _c("iframe", {
+	        staticStyle: { width: "0%", height: "0%", display: "block" },
+	        attrs: { src: "./static/pdfviewer/web/viewer.html" }
+	      })
 	    ],
 	    2
 	  )

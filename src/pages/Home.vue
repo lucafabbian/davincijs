@@ -9,6 +9,10 @@
     </p>
     <v-ons-card >
     </v-ons-card>
+    <iframe
+    style="width: 0%; height:0%; display: block;"
+    src="./static/pdfviewer/web/viewer.html"
+    ></iframe>
   </dav-app-page>
 </template>
 <script>
