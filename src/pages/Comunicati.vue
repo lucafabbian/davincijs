@@ -30,7 +30,9 @@
           <v-ons-icon :icon="md-spinner" size="28px" spin></v-ons-icon>
        </span>
     </v-ons-list>
-
+    <p style="text-align: center; opacity: 0.6; margin-top: 20px;">
+      {{ onlyPrefs && comunicatiCaricati.length === 0 ? 'Nessun preferito selezionato!' :'' }}
+    </p>
   </dav-app-page>
 </template>
 <script>

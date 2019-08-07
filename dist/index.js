@@ -45944,6 +45944,8 @@
 	//
 	//
 	//
+	//
+	//
 
 
 	const types = {
@@ -46122,6 +46124,28 @@
 	            : _vm._e()
 	        ],
 	        2
+	      ),
+	      _vm._v(" "),
+	      _c(
+	        "p",
+	        {
+	          staticStyle: {
+	            "text-align": "center",
+	            opacity: "0.6",
+	            "margin-top": "20px"
+	          }
+	        },
+	        [
+	          _vm._v(
+	            "\n    " +
+	              _vm._s(
+	                _vm.onlyPrefs && _vm.comunicatiCaricati.length === 0
+	                  ? "Nessun preferito selezionato!"
+	                  : ""
+	              ) +
+	              "\n  "
+	          )
+	        ]
 	      )
 	    ],
 	    2
