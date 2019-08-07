@@ -5,19 +5,14 @@ import VueLocalStorage from 'vue-localstorage'
 
 
 // App imports
-import App from './App.vue'
-import VueDaVinciApi from './js/davinciapi/VueDaVinciApi.js'
-import DaVinciApi from './js/DaVinciApi.js'
-import store from './js/Store.js'
-import * as baseComponents from './components/*.vue'
+import App from './App.vue'                            // Vue entry point
+import {DaVinciApi, store} from './js/*.js'            // Javascript
+import * as baseComponents from './components/*.vue'   // Base components
+import './css/**/*.css'                                // Css files
 
-// Css imports
-import './css/style.css'
-import './css/animations.css'
-import './css/onsenTheme.css'
 
 /** Install Vue plugins and base components */
-;[VueOnsen, VueDaVinciApi].forEach( plugin => Vue.use(plugin))
+;[VueOnsen, DaVinciApi].forEach( plugin => Vue.use(plugin))
 Vue.use(VueLocalStorage, {name: 'localStorage', bind: true})
 Object.values(baseComponents).forEach( component => Vue.component(component.name, component))
 Vue.prototype.$vue = Vue
@@ -32,7 +27,6 @@ const localStorage = { ...store, ...DaVinciApi.store}
 Object.keys(localStorage).map(function(key) { localStorage[key] = {type: Object, default: localStorage[key]}})
 Object.defineProperty(Vue.prototype, "$store", { get: () => Vue.prototype.$localStorage })
 
-
 /** Start Vue */
 new Vue({
   el: '#app',
@@ -40,4 +34,4 @@ new Vue({
   localStorage,
 })
 
-//Vue.prototype.$davinciApi.refresh()
+Vue.prototype.$davinciApi.refresh()

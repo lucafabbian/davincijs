@@ -11,7 +11,6 @@ const sidemenu = {
     ["Studenti" ,  "md-graduation-cap", "comunicati", {type: 'studenti'}],
     ["Genitori" ,  "md-accounts",       "comunicati", {type: 'genitori'}],
     ["Docenti"  ,  "md-case",           "comunicati", {type: 'docenti' }],
-    ["Preferiti",  "md-star",           "comunicati-preferiti"],
   ],
   "utilità": [
     ["Impostazioni", "md-settings", "impostazioni"],
@@ -26,7 +25,7 @@ export default {
       this.$root.page = page
       document.getElementById('menu').close()
     },
-    debug(){ console.log(this.$store.page)  },
+    debug(){ console.log(this.$store.comunicatiStudenti)  },
   }
 }
 </script>

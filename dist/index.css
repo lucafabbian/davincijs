@@ -95,17 +95,6 @@
   height: calc(100vh - 56px);
 }
 
-
-html, body {
-  overflow-x: hidden;
-}
-iframe {
-  overflow-y: hidden;
-  padding: 0;
-  margin: 0;
-  border: 0;
-}
-
 /* Varie animazioni usate nell'app */
 
 /* Fade */
@@ -1313,3 +1302,14 @@ button.speed-dial__item,ons-fab.speed-dial__item,ons-speed-dial-item.speed-dial_
 @media (orientation:landscape){html[onsflag-iphonex-landscape] .page__content>.list:not(.list--inset){margin-left:-44px;margin-right:-44px}html[onsflag-iphonex-landscape] .page__content>.list:not(.list--inset)>.list-header{padding-left:59px}html[onsflag-iphonex-landscape] .page__content>.list:not(.list--inset)>.list-item{padding-left:58px}html[onsflag-iphonex-landscape] .page__content>.list:not(.list--inset)>.list-item--chevron:before{right:60px}html[onsflag-iphonex-landscape] .page__content>.list:not(.list--inset)>.list-item>.list-item__center:last-child{padding-right:50px}html[onsflag-iphonex-landscape] .page__content>.list:not(.list--inset)>.list-item>.list-item__right{padding-right:56px}html[onsflag-iphonex-landscape] .page__content>.list:not(.list--inset)>.list-item>.list-item--chevron__right{padding-right:74px}}
 
 @media (orientation:landscape){html[onsflag-iphonex-landscape] .dialog .page__content>.list:not(.list--inset){margin-left:0;margin-right:0}html[onsflag-iphonex-landscape] .dialog .page__content>.list:not(.list--inset)>.list-header{padding-left:15px}html[onsflag-iphonex-landscape] .dialog .page__content>.list:not(.list--inset)>.list-item{padding-left:14px}html[onsflag-iphonex-landscape] .dialog .page__content>.list:not(.list--inset)>.list-item--chevron:before{right:16px}html[onsflag-iphonex-landscape] .dialog .page__content>.list:not(.list--inset)>.list-item>.list-item__center:last-child{padding-right:6px}html[onsflag-iphonex-landscape] .dialog .page__content>.list:not(.list--inset)>.list-item>.list-item__right{padding-right:12px}html[onsflag-iphonex-landscape] .dialog .page__content>.list:not(.list--inset)>.list-item>.list-item--chevron__right{padding-right:30px}}
+
+
+html, body {
+  overflow-x: hidden;
+}
+iframe {
+  overflow-y: hidden;
+  padding: 0;
+  margin: 0;
+  border: 0;
+}

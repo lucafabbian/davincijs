@@ -7,6 +7,11 @@
         <dav-icon icon="md-share" @click="alert('ciao')"></dav-icon>
         <dav-icon icon="md-close" @click="closePdf()"></dav-icon>
       </span>
+      <span v-else>
+        <dav-icon icon="md-refresh"  @click="changeDate(month - 1)"></dav-icon>
+        <dav-icon :icon="onlyPrefs ? 'md-long-arrow-return':'md-star'"  @click="onlyPrefs = !onlyPrefs"></dav-icon>
+
+      </span>
     </template>
 
     <v-ons-list>
@@ -16,12 +21,13 @@
       <!-- Lista comunicati -->
       <dav-comunicato v-else v-for="(comunicato, index) in comunicatiCaricati"
       :comunicato="comunicato"
-       :isRead="comunicato.isRead"
+       :isPref="isPref(comunicato)"
+       :isRead="$store.comunicatiLetti.includes($davinciApi.serializeComunicato(comunicato))"
        @openpdf="openPdf(comunicato)"
        @togglepref="togglePref(comunicato)"
        ></dav-comunicato>
        <span v-if="comunicati.length === 0">
-          <v-ons-icon icon="md-spinner" size="28px" spin></v-ons-icon>
+          <v-ons-icon :icon="md-spinner" size="28px" spin></v-ons-icon>
        </span>
     </v-ons-list>
 
@@ -42,6 +48,7 @@ export default {
       comunicatiDaCaricare: 15,
       isPdfViewer: false,
       pdfViewerUrl: "file.pdf",
+      onlyPrefs: false,
     }
   },
   computed: {
@@ -49,7 +56,8 @@ export default {
     comunicati(){ return types[this.type].comunicati},
 
     comunicatiCaricati(){
-      return this.$davinciApi.vue[this.comunicati]
+      return this.$store[this.comunicati]
+        .filter( comunicato => !this.onlyPrefs || this.isPref(comunicato))
         .slice(0, this.comunicatiDaCaricare)
     }
   },
@@ -59,19 +67,33 @@ export default {
       done()
     },
     openPdf(comunicato){
-      this.$davinciApi.vue.addRead(comunicato)
-      console.log(this.$davinciApi.vue.readList)
+      this.$store.comunicatiLetti= [
+        ...this.$store.comunicatiLetti,
+        this.$davinciApi.serializeComunicato(comunicato)
+      ]
       this.pdfViewerUrl = comunicato.url
       this.isPdfViewer = true
     },
     closePdf(){
       this.isPdfViewer = false
     },
+    isPref(comunicato){
+      return this.$store.comunicatiPreferiti.includes(
+        this.$davinciApi.serializeComunicato(comunicato)
+      )
+    },
     togglePref(comunicato){
-      console.log('preffff')
-      comunicato.isPref
-        ? this.$davinciApi.vue.removePref(comunicato)
-        : this.$davinciApi.vue.addPref   (comunicato)
+      let serializedComunicato = this.$davinciApi.serializeComunicato(comunicato)
+      if(this.$store.comunicatiPreferiti.includes(serializedComunicato)){
+        this.$store.comunicatiPreferiti = this.$store.comunicatiPreferiti.filter(
+          comunicato => comunicato !== serializedComunicato
+        )
+      }else{
+        this.$store.comunicatiPreferiti = [
+          ...this.$store.comunicatiPreferiti,
+          serializedComunicato
+        ]
+      }
     }
 
   },

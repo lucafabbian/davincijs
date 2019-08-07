@@ -7,7 +7,7 @@
     <div @click="listeners.togglepref">
       {{ props.comunicato.number }} <br>
       <div
-      :class="props.comunicato.isPref ? 'zmdi-star' : 'zmdi-star-border'"
+      :class="props.isPref ? 'zmdi-star' : 'zmdi-star-border'"
       ></div>
     </div>
     <div
@@ -25,7 +25,7 @@
 <script>
 export default {
   name: 'DavComunicato',
-  props: ['comunicato', 'isRead'],
+  props: ['comunicato', 'isPref', 'isRead'],
 }
   /*
   methods: {
