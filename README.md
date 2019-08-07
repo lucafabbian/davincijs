@@ -10,7 +10,7 @@ tablet), oltre che come sito web, mantenendo lo stesso codice.
 
 # Per gli utenti
 Attualmente l'app è ancora in lavorazione. È però presente una demo qui:
-[https://lucafabbian.github.io/davincijs/](https://lucafabbian.github.io/davincijs/)  
+[https://lucafabbian.github.io/davincijs/](https://lucafabbian.github.io/davincijs/cist/)  
 Enjoy!
 
 
