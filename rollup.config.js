@@ -58,7 +58,7 @@ export default {
         open: true,
         contentBase: 'dist/',
          openPage: '/debug.html',
-        host: '0.0.0.0',
+        host: 'localhost',
         port: 10001,
       }),
       !production && livereload(),  // Livereload on watch

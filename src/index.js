@@ -11,6 +11,14 @@ import * as baseComponents from './components/*.vue'   // Base components
 import './css/**/*.css'                                // Css files
 
 
+// Check that service workers are supported
+if ('serviceWorker' in navigator) {
+  // Use the window load event to keep the page load performant
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('./static/service-worker.js');
+  });
+}
+
 /** Install Vue plugins and base components */
 ;[VueOnsen, DaVinciApi].forEach( plugin => Vue.use(plugin))
 Vue.use(VueLocalStorage, {name: 'localStorage', bind: true})

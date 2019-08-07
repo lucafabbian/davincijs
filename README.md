@@ -36,7 +36,7 @@ rollup, che si può invocare direttamente da Node.js scrivendo:
 npm install    # solo la prima volta
 npm run watch  # lancerà il tutto in modalità sviluppatore, ricompila a ogni salvataggio
 ```
-A questo punto è sufficiente aprire un browser su [http://0.0.0.0:10001/debug.html](http://0.0.0.0:10001/debug.html)
+A questo punto è sufficiente aprire un browser su [http://localhost:10001/debug.html](http://localhost:10001/debug.html)
 per vedere un'anteprima dell'app. Il supporto per il livereload è attivo di
 default, per cui a ogni salvataggio di un file verrà ricompilato tutto e la
 pagina si refresherà automaticamente.
