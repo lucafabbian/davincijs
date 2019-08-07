@@ -18,6 +18,7 @@ Enjoy!
 Modificare l'app non richiede conoscenze approfondite: è sufficiente conoscere
 una base di html, css, javascript e aver seguito la guida preliminare di [Vue.js](https://vuejs.org/v2/guide/),
 la libreria javascript a cui si appoggia il codice.
+Va installato il programma [Node.js](https://nodejs.org/it/), che si occupa di
 
 Per creare un plugin non sono necessari software di alcun genere, ma è sufficiente
 un editor di testo. Riferirsi alla [guida sui plugin](./docs/PLUGIN.md) per
