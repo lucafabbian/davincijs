@@ -29,7 +29,10 @@ const production = !process.env.ROLLUP_WATCH;
  */
 export default {
     input: 'src/index.js',
-    output:  { file: 'dist/index.js', format: 'iife' },
+    output:  {
+      file: production ? 'dist/index.min.js':'dist/index.js',
+      format: 'iife'
+    },
     watch:   { clearScreen: true },
     plugins: [
       globImport({format: 'default'}),
@@ -53,7 +56,8 @@ export default {
       // Apre un server alla porta :10001 + livereload
       !production && serve({         // Open browser on watch
         open: true,
-        contentBase: 'dist',
+        contentBase: 'dist/',
+         openPage: '/debug.html',
         host: '0.0.0.0',
         port: 10001,
       }),
