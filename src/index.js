@@ -15,7 +15,7 @@ import './css/**/*.css'                                // Css files
 if ('serviceWorker' in navigator) {
   // Use the window load event to keep the page load performant
   window.addEventListener('load', () => {
-    navigator.serviceWorker.register('/davincijs/dist/service-worker.js');
+    navigator.serviceWorker.register('/davincijs/dist/sw.js');
   });
 }
 

@@ -30,7 +30,7 @@ const production = !process.env.ROLLUP_WATCH;
 export default {
     input: 'src/index.js',
     output:  {
-      file: production ? 'dist/index.min.js':'dist/index.js',
+      file: production ? 'dist/index.js':'dist/debug.js',
       format: 'iife'
     },
     watch:   { clearScreen: true },
