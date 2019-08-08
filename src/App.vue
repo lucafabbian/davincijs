@@ -25,7 +25,9 @@ export default {
       this.$root.page = page
       document.getElementById('menu').close()
     },
-    debug(){ console.log(this.$store.comunicatiStudenti)  },
+    debug(){
+      this.$davinciApi.fetchSlideshowSito().then( (r) => console.log(r))
+    },
   }
 }
 </script>

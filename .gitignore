@@ -1,3 +1,7 @@
+# Unminified debug files
+dist/debug.js
+dist/debug.css
+
 # Logs
 logs
 *.log

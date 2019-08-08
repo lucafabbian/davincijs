@@ -13,6 +13,7 @@ const store = {
   comunicatiStudenti: [],
   comunicatiGenitori: [],
   comunicatiDocenti:  [],
+  slideshowSito:      [],
 }
 
 /** Funzioni per il DaVinciApi */
@@ -31,11 +32,15 @@ const $davinciApi = function(Vue){
   this.fetchDocenti      = ()        => api.get ('api/docenti')
   this.fetchOrarioDocente= (docente) => api.post('api/orario/docente/', docente)
 
-  this.immaginiSlideshow  = () => new Promise ( (resolve, reject) => {
-    var el = document.createElement('html');
+  this.fetchSlideshowSito  = () => new Promise ( (resolve, reject) => {
     api.get("sitoLiceo/index.php").then((response) => {
-      el.innerHTML = response.data; resolve(console.log(el.getElementsByTagName('ul')))
-    });
+      resolve(update('slideshowSito', [...new DOMParser().parseFromString(response.data, 'text/html')
+        .querySelectorAll ('ul.sprocket-features-img-list li')].map( (el) => ({
+            link: el.children[0].children[0].getAttribute('href'),
+            img:  el.children[0].children[0].children[0].getAttribute('src'),
+          }))
+      ))
+    }).catch( (err) => reject(err))
   })
 
   // Comunicati
