@@ -6,7 +6,8 @@ server del liceo. */
 
 // Fetch configuration
 import axios from 'axios'
-const api = axios.create({ baseURL: 'https://davapi.antonionapolitano.eu/' })
+const baseURL =  'https://davapi.antonionapolitano.eu/'
+const api = axios.create({ baseURL })
 
 /** */
 const store = {
@@ -32,12 +33,16 @@ const $davinciApi = function(Vue){
   this.fetchDocenti      = ()        => api.get ('api/docenti')
   this.fetchOrarioDocente= (docente) => api.post('api/orario/docente/', docente)
 
+
+  this.urlSlideshowImg = (slide) => baseURL + slide.img
+
   this.fetchSlideshowSito  = () => new Promise ( (resolve, reject) => {
     api.get("sitoLiceo/index.php").then((response) => {
       resolve(update('slideshowSito', [...new DOMParser().parseFromString(response.data, 'text/html')
         .querySelectorAll ('ul.sprocket-features-img-list li')].map( (el) => ({
-            link: el.children[0].children[0].getAttribute('href'),
-            img:  el.children[0].children[0].children[0].getAttribute('src'),
+            link:  el.children[0].children[0].getAttribute('href'),
+            img:   el.children[0].children[0].children[0].getAttribute('src'),
+            title: el.children[1].children[0].textContent
           }))
       ))
     }).catch( (err) => reject(err))
