@@ -59,11 +59,21 @@ export default {
   </v-ons-splitter>
 </template>
 <style>
+    @media only screen and (min-width: 1050px) {
+      body {
+        background-color: #cdd1d4;
+        border: 1.2px solid #7b0101;
+        width: 80vw;
+        height: 94vh;
+        transform: translate(10vw, 1.5vh);
+      }
+    }
   .sidemenu-border {
-    border-right: 1px solid #e2e9ee;
+    /*border-right: 1px solid #e2e9ee;*/
+    border-right: 1.1px solid #a0a0a0;
   }
   .sidemenu-border >ons-page > .page__content{
-    background-color: #ccd4da !important;
+    /* background-color: #dae4ea !important; */
   }
   .sidemenu > img {
     display: block;

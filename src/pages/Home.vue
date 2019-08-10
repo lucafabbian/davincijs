@@ -60,7 +60,7 @@ export default {
     setInterval(() => {
       this.carouselIndex++
       if(this.$store.slideshowSito.length === this.carouselIndex) this.carouselIndex = 0
-    }, 4000)
+    }, 6500)
   }
 }
 </script>
