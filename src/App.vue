@@ -33,7 +33,7 @@ export default {
 </script>
 <template>
   <v-ons-splitter>
-    <v-ons-splitter-side id="menu" side="left" width="220px" collapse swipeable>
+    <v-ons-splitter-side class="sidemenu-border" id="menu" side="left" width="220px" :collapse="($root.window.width < 750) ? '' : false" swipeable>
       <v-ons-page>
         <div class="sidemenu" @click="debug"><img src="./static/img/logo-toolbar.svg"></div>
         <v-ons-list>
@@ -59,8 +59,12 @@ export default {
   </v-ons-splitter>
 </template>
 <style>
+  .sidemenu-border {
+    border-right: 1.3px solid #a0a0a0;
+  }
   .sidemenu > img {
     display: block;
-    width: 100%;
+    width: calc(100% + 2px);
+    height: 73px;
   }
 </style>

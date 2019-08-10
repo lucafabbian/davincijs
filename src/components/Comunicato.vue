@@ -42,7 +42,7 @@ export default {
   /* Stile della lista */
   .app-comunicato {
     display: flex;
-    width: 100vw;
+    width: 100%;
     padding: 15px;
     box-sizing: border-box;
     vertical-align: middle;

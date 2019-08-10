@@ -48,6 +48,18 @@ const $davinciApi = function(Vue){
     }).catch( (err) => reject(err))
   })
 
+  this.fetchInternalNews = () => new Promise ( (resolve, reject) => {
+    axios.get("sitoLiceo/index.php").then((response) => {
+      resolve(update('slideshowSito', [...new DOMParser().parseFromString(response.data, 'text/html')
+        .querySelectorAll ('ul.sprocket-features-img-list li')].map( (el) => ({
+            link:  el.children[0].children[0].getAttribute('href'),
+            img:   el.children[0].children[0].children[0].getAttribute('src'),
+            title: el.children[1].children[0].textContent
+          }))
+      ))
+    }).catch( (err) => reject(err))
+  })
+
   // Comunicati
   this.urlComunicato = (url) => url.replace('http://www.liceodavinci.tv/', 'https://davapi.antonionapolitano.eu/')
   this.serializeComunicato = comunicato => JSON.stringify({url: comunicato.url})
@@ -74,6 +86,8 @@ const $davinciApi = function(Vue){
     this.fetchComunicati('comunicatiStudenti', 'studenti')
     this.fetchComunicati('comunicatiGenitori', 'genitori')
     this.fetchComunicati('comunicatiDocenti' , 'docenti' )
+    this.fetchSlideshowSito()
+
   }
 
 }
