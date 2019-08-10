@@ -60,7 +60,10 @@ export default {
 </template>
 <style>
   .sidemenu-border {
-    border-right: 1.3px solid #a0a0a0;
+    border-right: 1px solid #e2e9ee;
+  }
+  .sidemenu-border >ons-page > .page__content{
+    background-color: #ccd4da !important;
   }
   .sidemenu > img {
     display: block;
