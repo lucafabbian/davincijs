@@ -16,6 +16,7 @@ const store = {
   comunicatiDocenti:  [],
   slideshowSito:      [],
   internalNews:       [],
+  classi: [],
   agenda: [],
 }
 
@@ -28,8 +29,7 @@ const $davinciApi = function(Vue){
   this.isOnline = () => api.get('api/teapot').catch( (err) => err.response.status === 418 )
 
   // Richieste generiche
-  this.fetchClassi       = ()        => api.get ('api/classi')
-  this.fetchOrarioClasse = (classe)  => api.get ('api/orario/' + classe)
+  this.fetchOrarioClasse = (classe)  => api.get ('api/orario/classe/' + classe)
   this.fetchDocenti      = ()        => api.get ('api/docenti')
   this.fetchOrarioDocente= (docente) => api.post('api/orario/docente/', docente)
 
@@ -60,6 +60,10 @@ const $davinciApi = function(Vue){
   this.fetchAgenda       = (filter)  => api.post('api/agenda', filter).then((response) =>
     update('agenda', response)
   )
+  this.fetchClassi       = () => new Promise ( (resolve, reject) => {
+    api.get ('api/classi').then( (result) => update('classi', result.data)).catch( (err) => reject(err))
+  })
+
 
 
 
@@ -89,6 +93,7 @@ const $davinciApi = function(Vue){
     this.fetchSlideshowSito()
     this.fetchInternalNews()
     this.fetchAgenda( {"prima":1543618800,"dopo":1538344800})
+    this.fetchClassi()
   }
 
 }

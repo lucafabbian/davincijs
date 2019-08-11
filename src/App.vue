@@ -75,6 +75,7 @@ export default {
   .sidemenu-border >ons-page > .page__content{
     /* background-color: #dae4ea !important; */
     overflow-x: hidden;
+    
   }
   .sidemenu > img {
     display: block;
