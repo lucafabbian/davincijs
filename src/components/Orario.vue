@@ -11,7 +11,7 @@
 
 
 </template>
-<style scoped>
+<style>
   .orario-giorno {
     text-align: center;
     margin-top: 20px;
