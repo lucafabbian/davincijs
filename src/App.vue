@@ -26,7 +26,7 @@ export default {
       document.getElementById('menu').close()
     },
     debug(){
-      console.log(this.$store.internalNews)
+      console.log(this.$store.dav)
     },
   }
 }
@@ -75,7 +75,7 @@ export default {
   .sidemenu-border >ons-page > .page__content{
     /* background-color: #dae4ea !important; */
     overflow-x: hidden;
-    
+
   }
   .sidemenu > img {
     display: block;

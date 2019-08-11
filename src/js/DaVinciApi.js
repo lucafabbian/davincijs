@@ -11,27 +11,30 @@ const api = axios.create({ baseURL })
 
 /** Store dell'api */
 const store = {
-  comunicatiStudenti: [],
-  comunicatiGenitori: [],
-  comunicatiDocenti:  [],
-  slideshowSito:      [],
-  internalNews:       [],
-  classi: [],
-  agenda: [],
+  dav: {
+    comunicatiStudenti: [],
+    comunicatiGenitori: [],
+    comunicatiDocenti:  [],
+    slideshowSito:      [],
+    internalNews:       [],
+    docenti: [],
+    classi:  [],
+    agenda:  [],
+  }
 }
 
 /** Funzioni per il DaVinciApi */
 const $davinciApi = function(Vue){
-  const update = (key, value) => Vue.prototype.$store[key] = value
+  const update = (key, value) => {
+    Vue.prototype.$store.dav = {
+      ...Vue.prototype.$store.dav,
+      [key]: value,
+    }
+  }
 
 
   // Controlla se l'api e' online
   this.isOnline = () => api.get('api/teapot').catch( (err) => err.response.status === 418 )
-
-  // Richieste generiche
-  this.fetchOrarioClasse = (classe)  => api.get ('api/orario/classe/' + classe)
-  this.fetchDocenti      = ()        => api.get ('api/docenti')
-  this.fetchOrarioDocente= (docente) => api.post('api/orario/docente/', docente)
 
 
   // Slideshow e news
@@ -55,7 +58,7 @@ const $davinciApi = function(Vue){
 
 
 
-  // Agenda
+  // Agenda, orari, classi e docenti
   // il filtro è una stringa JSON del tipo {"prima":xxxxxxxxxx,"dopo":yyyyyyyyyy} con x e y le rappresentazioni in tempo unix dell'intervallo di tempo da considerare
   this.fetchAgenda       = (filter)  => api.post('api/agenda', filter).then((response) =>
     update('agenda', response)
@@ -63,6 +66,15 @@ const $davinciApi = function(Vue){
   this.fetchClassi       = () => new Promise ( (resolve, reject) => {
     api.get ('api/classi').then( (result) => update('classi', result.data)).catch( (err) => reject(err))
   })
+  this.fetchDocenti      = () => new Promise ( (resolve, reject) => {
+    api.get('api/docenti').then( (result) =>
+      update('docenti', result.data.sort( (a,b) => (a.cognome.localeCompare(b.cognome))) )
+    ).catch( (err) => reject(err))
+  })
+
+
+  this.fetchOrarioClasse = (classe)  => api.get ('api/orario/classe/' + classe)
+  this.fetchOrarioDocente= (docente) => api.post('api/orario/docente/', docente)
 
 
 
@@ -94,6 +106,8 @@ const $davinciApi = function(Vue){
     this.fetchInternalNews()
     this.fetchAgenda( {"prima":1543618800,"dopo":1538344800})
     this.fetchClassi()
+    this.fetchDocenti()
+
   }
 
 }

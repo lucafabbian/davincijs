@@ -60,7 +60,7 @@ export default {
     url()       { return types[this.type].url},
 
     comunicatiCaricati(){
-      return this.$store[this.comunicati]
+      return this.$store.dav[this.comunicati]
         .filter( comunicato => !this.onlyPrefs || this.isPref(comunicato))
         .slice(0, this.comunicatiDaCaricare)
     }

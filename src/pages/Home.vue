@@ -12,7 +12,7 @@
       <v-ons-card class="davinci-carousel-card">
         <v-ons-carousel swipeable auto-scroll overscrollable
         :index.sync="carouselIndex">
-          <v-ons-carousel-item v-for="slide in $store.slideshowSito" :key="slide.link">
+          <v-ons-carousel-item v-for="slide in $store.dav.slideshowSito" :key="slide.link">
             <div class="imgcontainer">
               <img :src="$davinciApi.urlSlideshowImg(slide)">
               <h2 class="title">{{slide.title}}</h2>
@@ -20,7 +20,7 @@
           </v-ons-carousel-item>
         </v-ons-carousel>
       </v-ons-card>
-      <v-ons-card v-for="news in $store.internalNews"
+      <v-ons-card v-for="news in $store.dav.internalNews"
       @click="currentNews = news; isNews = true; ">
         <img :src="news.preview" style="width: 64px; height: 64px">
         <div style="float:right; width: calc(100% - 100px); line-height: 26px">
@@ -70,6 +70,7 @@
 let interval;
 
 export default {
+  name: 'App',
   data() {
     return {
       carouselIndex: 0,
@@ -81,7 +82,7 @@ export default {
     interval = setInterval(() => {
       try{
         this.carouselIndex++
-        if(this.$store.slideshowSito.length === this.carouselIndex) this.carouselIndex = 0
+        if(this.$store.dav.slideshowSito.length === this.carouselIndex) this.carouselIndex = 0
       }catch(e){}
     }, 6500)
   },
