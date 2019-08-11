@@ -26,7 +26,7 @@ export default {
       document.getElementById('menu').close()
     },
     debug(){
-      this.$davinciApi.fetchSlideshowSito().then( (r) => console.log(r))
+      console.log(this.$store.internalNews)
     },
   }
 }
@@ -59,13 +59,13 @@ export default {
   </v-ons-splitter>
 </template>
 <style>
-    @media only screen and (min-width: 1050px) {
+    @media only screen and (min-width: 1100px) {
       body {
-        background-color: #cdd1d4;
-        border: 1.2px solid #7b0101;
-        width: 80vw;
-        height: 94vh;
-        transform: translate(10vw, 1.5vh);
+        background-color: #696969;
+        border: 1px solid #7b0101;
+        width: calc(1050px);
+        height: 97.4vh;
+        transform: translate(calc((100vw - 1050px) / 2), 0.6vh);
       }
     }
   .sidemenu-border {
@@ -74,10 +74,13 @@ export default {
   }
   .sidemenu-border >ons-page > .page__content{
     /* background-color: #dae4ea !important; */
+    overflow-x: hidden;
   }
   .sidemenu > img {
     display: block;
     width: calc(100% + 2px);
     height: 73px;
+    position: relative;
+    left: -1px;
   }
 </style>

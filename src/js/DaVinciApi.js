@@ -9,12 +9,14 @@ import axios from 'axios'
 const baseURL =  'https://davapi.antonionapolitano.eu/'
 const api = axios.create({ baseURL })
 
-/** */
+/** Store dell'api */
 const store = {
   comunicatiStudenti: [],
   comunicatiGenitori: [],
   comunicatiDocenti:  [],
   slideshowSito:      [],
+  internalNews:       [],
+  agenda: [],
 }
 
 /** Funzioni per il DaVinciApi */
@@ -26,16 +28,14 @@ const $davinciApi = function(Vue){
   this.isOnline = () => api.get('api/teapot').catch( (err) => err.response.status === 418 )
 
   // Richieste generiche
-  this.fetchAgenda       = (filter)  => api.post('api/agenda', filter)
-  // il filtro è una stringa JSON del tipo {"prima":xxxxxxxxxx,"dopo":yyyyyyyyyy} con x e y le rappresentazioni in tempo unix dell'intervallo di tempo da considerare
   this.fetchClassi       = ()        => api.get ('api/classi')
   this.fetchOrarioClasse = (classe)  => api.get ('api/orario/' + classe)
   this.fetchDocenti      = ()        => api.get ('api/docenti')
   this.fetchOrarioDocente= (docente) => api.post('api/orario/docente/', docente)
 
 
+  // Slideshow e news
   this.urlSlideshowImg = (slide) => baseURL + slide.img
-
   this.fetchSlideshowSito  = () => new Promise ( (resolve, reject) => {
     api.get("sitoLiceo/index.php").then((response) => {
       resolve(update('slideshowSito', [...new DOMParser().parseFromString(response.data, 'text/html')
@@ -47,24 +47,25 @@ const $davinciApi = function(Vue){
       ))
     }).catch( (err) => reject(err))
   })
-
   this.fetchInternalNews = () => new Promise ( (resolve, reject) => {
-    axios.get("sitoLiceo/index.php").then((response) => {
-      resolve(update('slideshowSito', [...new DOMParser().parseFromString(response.data, 'text/html')
-        .querySelectorAll ('ul.sprocket-features-img-list li')].map( (el) => ({
-            link:  el.children[0].children[0].getAttribute('href'),
-            img:   el.children[0].children[0].children[0].getAttribute('src'),
-            title: el.children[1].children[0].textContent
-          }))
-      ))
+    axios.get("/davincijs/dist/news/news.json").then((response) => {
+      resolve(update('internalNews', response.data.news))
     }).catch( (err) => reject(err))
   })
+
+
+
+  // Agenda
+  // il filtro è una stringa JSON del tipo {"prima":xxxxxxxxxx,"dopo":yyyyyyyyyy} con x e y le rappresentazioni in tempo unix dell'intervallo di tempo da considerare
+  this.fetchAgenda       = (filter)  => api.post('api/agenda', filter).then((response) =>
+    update('agenda', response)
+  )
+
+
 
   // Comunicati
   this.urlComunicato = (url) => url.replace('http://www.liceodavinci.tv/', 'https://davapi.antonionapolitano.eu/')
   this.serializeComunicato = comunicato => JSON.stringify({url: comunicato.url})
-
-  /** Funzione generica*/
   this.fetchComunicati = (key, url, last) => new Promise( (resolve, reject) => {
     last = (last == undefined) ? '' : '/' + last; // aggiungi uno slash solo se last non è nullo
     // aggiungere sempre lo slash alla fine causa dei redirect inutili
@@ -76,8 +77,7 @@ const $davinciApi = function(Vue){
         title: comunicato.nome.substring(((comunicato.nome.match(/^[0-9]*/) || ["0"])[0] || "0").length + 1).replace(".pdf", "").replace(/\_/g," "),
         urlName: comunicato.url.substring(comunicato.url.lastIndexOf('/')),
       }))
-      // Aggiunge l'elemento al localStorage, in modo da cachearlo
-      resolve(update(key, comunicati));
+      resolve(update(key, comunicati)) // Aggiorna in localStorage, in modo da tenere in cache
     }).catch( ()  => reject() )
   })
 
@@ -87,7 +87,8 @@ const $davinciApi = function(Vue){
     this.fetchComunicati('comunicatiGenitori', 'genitori')
     this.fetchComunicati('comunicatiDocenti' , 'docenti' )
     this.fetchSlideshowSito()
-
+    this.fetchInternalNews()
+    this.fetchAgenda( {"prima":1543618800,"dopo":1538344800})
   }
 
 }
