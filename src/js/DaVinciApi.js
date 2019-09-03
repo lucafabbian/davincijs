@@ -4,9 +4,13 @@ Nuova versione del codice che consente
 In questo file sono contenuti tutti i metodi necessari per comunicare con il
 server del liceo. */
 
+const tenMonths = 26298000 // dieci mesi in secondi
+
 // Fetch configuration
 import axios from 'axios'
-const baseURL =  'https://davapi.antonionapolitano.eu/'
+const davURL = 'http://liceodavinci.edu.it/' // non cifrato e lento, non aggiunge gli header CORS perciò è inutilizzabile per ora
+const cacheURL = 'https://davapi.antonionapolitano.eu/' // utilizza https/2.0 e una cache per rendere sicura la connessione e ridurre il tempo di risposta
+let baseURL = cacheURL // per ora quindi viene utilizzato di default il proxy
 const api = axios.create({ baseURL })
 
 /** Store dell'api */
@@ -61,7 +65,7 @@ const $davinciApi = function(Vue){
   // Agenda, orari, classi e docenti
   // il filtro è una stringa JSON del tipo {"prima":xxxxxxxxxx,"dopo":yyyyyyyyyy} con x e y le rappresentazioni in tempo unix dell'intervallo di tempo da considerare
   this.fetchAgenda       = (filter)  => api.post('api/agenda', filter).then((response) =>
-    update('agenda', response)
+    update('agenda', response.data)
   )
   this.fetchClassi       = () => new Promise ( (resolve, reject) => {
     api.get ('api/classi').then( (result) => update('classi', result.data)).catch( (err) => reject(err))
@@ -104,7 +108,9 @@ const $davinciApi = function(Vue){
     this.fetchComunicati('comunicatiDocenti' , 'docenti' )
     this.fetchSlideshowSito()
     this.fetchInternalNews()
-    this.fetchAgenda( {"prima":1543618800,"dopo":1538344800})
+    let timeNow = new Date(); let currentYear = timeNow.getFullYear()
+    let inizioAS = (timeNow.getMonth() >= 8) ? currentYear : currentYear - 1
+    this.fetchAgenda( {"prima":timeNow+tenMonths,"dopo":+new Date(inizioAS, 8, 1)} )
     this.fetchClassi()
     this.fetchDocenti()
 
