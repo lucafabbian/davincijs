@@ -4,8 +4,6 @@ Nuova versione del codice che consente
 In questo file sono contenuti tutti i metodi necessari per comunicare con il
 server del liceo. */
 
-const tenMonths = 26298000 // dieci mesi in secondi
-
 // Fetch configuration
 import axios from 'axios'
 const davURL = 'http://liceodavinci.edu.it/' // non cifrato e lento, non aggiunge gli header CORS perciò è inutilizzabile per ora
@@ -44,7 +42,7 @@ const $davinciApi = function(Vue){
   // Slideshow e news
   this.urlSlideshowImg = (slide) => baseURL + slide.img
   this.fetchSlideshowSito  = () => new Promise ( (resolve, reject) => {
-    api.get("sitoLiceo/index.php").then((response) => {
+    api.get("sitoLiceo/").then((response) => {
       resolve(update('slideshowSito', [...new DOMParser().parseFromString(response.data, 'text/html')
         .querySelectorAll ('ul.sprocket-features-img-list li')].map( (el) => ({
             link:  el.children[0].children[0].getAttribute('href'),
@@ -110,10 +108,12 @@ const $davinciApi = function(Vue){
     this.fetchInternalNews()
     let timeNow = new Date(); let currentYear = timeNow.getFullYear()
     let inizioAS = (timeNow.getMonth() >= 8) ? currentYear : currentYear - 1
-    this.fetchAgenda( {"prima":timeNow+tenMonths,"dopo":+new Date(inizioAS, 8, 1)} )
+    this.fetchAgenda( {
+      "prima":Math.floor(new Date(inizioAS+1, (timeNow.getMonth() + 10) % 12, 1)/1000),
+      "dopo":Math.floor(new Date(inizioAS, 8, 1)/1000)
+    } )
     this.fetchClassi()
     this.fetchDocenti()
-
   }
 
 }
